@@ -1,0 +1,61 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "cig/fixture.schema.json",
+  "title": "CIG fixture - a recorded UI tree snapshot of one program",
+  "description": "The same node shape the UIA adapter produces from a live program, so rules, locators and the safety layer can be tested with no program running (plan 2.7).",
+  "type": "object",
+  "required": ["cig_fixture", "app", "windows"],
+  "properties": {
+    "cig_fixture": {"const": 1},
+    "captured": {"type": "string"},
+    "notes": {"type": "string"},
+    "app": {
+      "type": "object",
+      "required": ["exe"],
+      "properties": {
+        "exe": {"type": "string"},
+        "pid": {"type": ["integer", "null"]},
+        "product": {"type": "string"},
+        "version": {"type": "string"},
+        "framework": {"type": "string"},
+        "framework_version": {"type": "string"}
+      }
+    },
+    "files": {
+      "description": "Files the fixture's actions write (name -> initial text); the fixture adapter keeps them in memory.",
+      "type": "object",
+      "additionalProperties": {"type": "string"}
+    },
+    "windows": {"type": "array", "items": {"$ref": "#/$defs/node"}}
+  },
+  "$defs": {
+    "node": {
+      "type": "object",
+      "required": ["control_type"],
+      "properties": {
+        "control_type": {"type": "string"},
+        "name": {"type": "string"},
+        "automation_id": {"type": "string"},
+        "class_name": {"type": "string"},
+        "framework_id": {"type": "string"},
+        "patterns": {"type": "array", "items": {"type": "string"}},
+        "rect": {"type": "array", "items": {"type": "integer"}, "minItems": 4, "maxItems": 4},
+        "enabled": {"type": "boolean"},
+        "offscreen": {"type": "boolean"},
+        "is_password": {"type": "boolean"},
+        "is_modal": {"type": "boolean"},
+        "is_read_only": {"type": "boolean"},
+        "value": {"type": "string"},
+        "toggle_state": {"enum": ["On", "Off", "Indeterminate"]},
+        "selected": {"type": "boolean"},
+        "expand_state": {"enum": ["Collapsed", "Expanded", "PartiallyExpanded", "LeafNode"]},
+        "range": {
+          "type": "object",
+          "properties": {"min": {"type": "number"}, "max": {"type": "number"}, "value": {"type": "number"},
+                         "step": {"type": "number"}}
+        },
+        "children": {"type": "array", "items": {"$ref": "#/$defs/node"}}
+      }
+    }
+  }
+}

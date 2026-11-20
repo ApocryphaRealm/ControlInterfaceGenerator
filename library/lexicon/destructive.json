@@ -1,0 +1,17 @@
+{
+  "about": "Words that make an action destructive when they appear in the target element's name, a menu path, a dialog button or a command (plan 2.6 item 1). Matched case-insensitively as whole words (CJK: as substrings). Source: doc (common UI vocabulary); grow it from field observations.",
+  "source": ["doc"],
+  "words": {
+    "en": ["delete", "remove", "uninstall", "reset", "format", "overwrite", "purge", "clear", "discard", "don't save", "do not save", "empty", "erase", "wipe", "destroy", "drop", "factory reset", "replace all", "permanently"],
+    "de": ["löschen", "entfernen", "deinstallieren", "zurücksetzen", "formatieren", "überschreiben", "leeren", "verwerfen", "nicht speichern"],
+    "fr": ["supprimer", "effacer", "désinstaller", "réinitialiser", "formater", "écraser", "vider", "ignorer les modifications", "ne pas enregistrer"],
+    "es": ["eliminar", "borrar", "desinstalar", "restablecer", "formatear", "sobrescribir", "vaciar", "descartar", "no guardar"],
+    "it": ["elimina", "cancella", "rimuovi", "disinstalla", "ripristina", "formatta", "sovrascrivi", "svuota", "non salvare"],
+    "pl": ["usuń", "odinstaluj", "resetuj", "formatuj", "nadpisz", "opróżnij", "odrzuć", "nie zapisuj", "wyczyść"],
+    "pt": ["excluir", "apagar", "remover", "desinstalar", "redefinir", "formatar", "substituir", "esvaziar", "descartar", "não salvar"],
+    "ru": ["удалить", "стереть", "сбросить", "форматировать", "перезаписать", "очистить", "не сохранять"],
+    "ja": ["削除", "消去", "アンインストール", "リセット", "フォーマット", "上書き", "保存しない", "破棄"],
+    "zh": ["删除", "移除", "卸载", "重置", "格式化", "覆盖", "清空", "不保存", "放弃"],
+    "ko": ["삭제", "제거", "초기화", "포맷", "덮어쓰기", "비우기", "저장 안 함", "버리기"]
+  }
+}

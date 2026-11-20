@@ -1,0 +1,21 @@
+{
+  "about": "CIG safety policy (plan 2.6). Deny entries cannot be overridden by confirm. Defaults taken 2026-11-20 (owner may change): third-party apps get the stricter foreground rule; first-party apps (our own host-channel programs) only the idle rule.",
+  "idle_min": 5,
+  "third_party_foreground_min": 30,
+  "first_party_apps": ["ModOrganizer.exe"],
+  "deny": {
+    "actions": ["set_secret"],
+    "apps": [
+      "consent.exe", "SystemSettings.exe", "mmc.exe", "regedit.exe", "SecHealthUI.exe", "WindowsSecurity.exe",
+      "UserAccountControlSettings.exe", "CredentialUIBroker.exe", "LogonUI.exe", "LockApp.exe",
+      "KeePass.exe", "KeePassXC.exe", "1Password.exe", "Bitwarden.exe",
+      "chrome.exe", "msedge.exe", "firefox.exe", "librewolf.exe", "brave.exe", "opera.exe",
+      "SkyrimSE.exe", "skse64_loader.exe"
+    ],
+    "window_title_patterns": [
+      "(?i)\\bpassword\\b", "(?i)\\bsign in\\b", "(?i)\\blog ?in\\b", "(?i)\\bbank", "(?i)\\bpayment", "(?i)\\bcheckout\\b",
+      "(?i)credential", "(?i)user account control"
+    ]
+  },
+  "apps": {}
+}

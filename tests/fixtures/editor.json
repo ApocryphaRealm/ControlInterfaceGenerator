@@ -1,0 +1,38 @@
+{
+  "cig_fixture": 1,
+  "captured": "2026-11-20T19:00:00-05:00",
+  "notes": "Hand-written M0 fixture: a small editor with a menu bar, a text area, a checkbox, a password box, a Delete button and a modal save dialog.",
+  "app": {"exe": "editor.exe", "pid": 4242, "product": "Fixture Editor", "version": "1.0", "framework": "win32"},
+  "windows": [
+    {"control_type": "Window", "name": "notes.txt - Editor", "automation_id": "MainWindow", "class_name": "EditorFrame",
+     "framework_id": "Win32", "patterns": ["Window", "Transform"], "rect": [100, 100, 900, 700],
+     "children": [
+       {"control_type": "MenuBar", "name": "Application", "rect": [100, 120, 900, 140], "children": [
+         {"control_type": "MenuItem", "name": "File", "patterns": ["ExpandCollapse"], "rect": [100, 120, 140, 140], "children": [
+           {"control_type": "MenuItem", "name": "Open...", "patterns": ["Invoke"]},
+           {"control_type": "MenuItem", "name": "Save", "patterns": ["Invoke"]}
+         ]},
+         {"control_type": "MenuItem", "name": "Edit", "patterns": ["ExpandCollapse"], "rect": [140, 120, 180, 140]}
+       ]},
+       {"control_type": "Document", "name": "Text editor", "automation_id": "Body", "patterns": ["Value", "Text"],
+        "is_read_only": false, "value": "hello", "rect": [100, 140, 900, 660]},
+       {"control_type": "CheckBox", "name": "Word wrap", "automation_id": "WrapBox", "patterns": ["Toggle"],
+        "toggle_state": "Off", "rect": [100, 660, 200, 680]},
+       {"control_type": "Edit", "name": "Password", "automation_id": "Pw", "patterns": ["Value"], "is_password": true,
+        "rect": [200, 660, 400, 680]},
+       {"control_type": "Button", "name": "&Delete all", "automation_id": "DeleteAll", "patterns": ["Invoke"],
+        "rect": [400, 660, 480, 680]},
+       {"control_type": "Button", "name": "Löschen", "patterns": ["Invoke"], "rect": [480, 660, 560, 680]},
+       {"control_type": "Button", "name": "Disabled thing", "patterns": ["Invoke"], "enabled": false,
+        "rect": [560, 660, 640, 680]}
+     ]},
+    {"control_type": "Window", "name": "Save changes?", "class_name": "#32770", "is_modal": true,
+     "patterns": ["Window"], "rect": [300, 300, 600, 420],
+     "children": [
+       {"control_type": "Text", "name": "Do you want to save changes to notes.txt?"},
+       {"control_type": "Button", "name": "Save", "patterns": ["Invoke"]},
+       {"control_type": "Button", "name": "Don't Save", "patterns": ["Invoke"]},
+       {"control_type": "Button", "name": "Cancel", "patterns": ["Invoke"]}
+     ]}
+  ]
+}
