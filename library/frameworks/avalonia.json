@@ -1,0 +1,49 @@
+{
+ "framework": "avalonia",
+ "label": "Avalonia UI (.NET)",
+ "versions": "any",
+ "source": [
+  "doc: plan 2.2 and learn.microsoft.com UIA overview (2026-10-24)"
+ ],
+ "adapter_in_v1": true,
+ "detect": {
+  "window_class": [
+   {
+    "re": "^Avalonia-",
+    "w": 0.6
+   }
+  ],
+  "modules": [
+   {
+    "re": "^avalonia\\.(base|win32|controls)\\.dll$",
+    "w": 0.6
+   }
+  ],
+  "uia_framework_id": [
+   {
+    "re": "^Avalonia$",
+    "w": 0.4
+   }
+  ],
+  "exe_strings": [
+   {
+    "re": "Avalonia\\.Base",
+    "w": 0.4
+   }
+  ]
+ },
+ "adapters": [
+  {
+   "name": "uia",
+   "base": 0.8
+  }
+ ],
+ "version_from": {
+  "module_re": "^avalonia\\.base\\.dll$",
+  "exe_file_version": true
+ },
+ "specializes": [
+  "win32"
+ ],
+ "notes": "Avalonia 11+ ships a UIA provider on Windows (doc; NOT yet probed on a real Avalonia program - the only one installed here is Git Credential Manager, which CIG must not drive). A single-file publish has no Avalonia DLLs on disk: the exe's own strings and the window class identify it."
+}

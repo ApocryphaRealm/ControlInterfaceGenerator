@@ -70,7 +70,7 @@
   {
    "app": "claude.exe",
    "version": "6.6395.0",
-   "framework_version": "45.3.3",
+   "framework_version": null,
    "date": "2026-11-20",
    "uia_framework_ids": [
     "Chrome",

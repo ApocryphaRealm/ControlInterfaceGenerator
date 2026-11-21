@@ -337,8 +337,9 @@ def evidence(pid: int, with_uia: bool = True) -> dict:
         ev["cmdline_has_debug_port"] = any("--remote-debugging-port" in a for a in p.cmdline())
     except psutil.Error:
         ev["cmdline_has_debug_port"] = None
-    # exe strings only where they can matter (Chromium-family windows or an asar beside the exe): cost control
-    if exe and (any(c.startswith("Chrome_WidgetWin") for c in ev["window_classes"]) or ev["files_beside"]):
+    # the exe's own strings: Electron/Chromium versions, and the marks of frameworks that leave no DLL or window class
+    # behind (Delphi's TApplication/Embarcadero, a single-file Avalonia app) - bounded by EXE_SCAN_LIMIT
+    if exe:
         pats = [pat["_re"] for e in library() for k, ps in e["detect"].items() if k == "exe_strings" for pat in ps]
         pats += [re.compile(e["version_from"]["exe_regex"]) for e in library() if "exe_regex" in e.get("version_from", {})]
         ev["exe_strings"] = scan_exe(exe, pats)

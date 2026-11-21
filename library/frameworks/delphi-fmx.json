@@ -1,0 +1,40 @@
+{
+ "framework": "delphi-fmx",
+ "label": "Delphi FireMonkey (FMX)",
+ "versions": "any",
+ "source": [
+  "doc: plan 2.2 and learn.microsoft.com UIA overview (2026-10-24)"
+ ],
+ "adapter_in_v1": true,
+ "detect": {
+  "window_class": [
+   {
+    "re": "^FMT\\w+$",
+    "w": 0.7
+   }
+  ],
+  "exe_strings": [
+   {
+    "re": "FMX\\.Forms|FireMonkey",
+    "w": 0.3
+   },
+   {
+    "re": "Embarcadero",
+    "w": 0.2
+   }
+  ]
+ },
+ "adapters": [
+  {
+   "name": "uia",
+   "base": 0.5
+  }
+ ],
+ "version_from": {
+  "exe_file_version": true
+ },
+ "specializes": [
+  "win32"
+ ],
+ "notes": "FMX draws its own controls in one window; accessibility depends on the app adding it."
+}

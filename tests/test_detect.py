@@ -73,3 +73,23 @@ def test_hold_screen_refuses_writes_but_not_reads(idle, monkeypatch):
     d = decide(Request(app="notepad.exe", action="launch", kind=WRITE, confirm="yes"), p, pol)
     assert not d.allowed and "holds the screen" in d.reason
     assert decide(Request(app="notepad.exe", action="get_text", kind="read"), p, pol).allowed
+
+
+def test_rank_delphi_vcl_from_window_class_or_exe_strings():
+    assert detect.rank(ev(window_classes=["TfrmMain", "TButton"]))["framework"] == "delphi-vcl"
+    assert detect.rank(ev(exe_strings={"a": "Embarcadero", "b": "TApplication"}))["framework"] == "delphi-vcl"
+
+
+def test_rank_delphi_fmx():
+    assert detect.rank(ev(window_classes=["FMTfrmMain"], exe_strings={"a": "FMX.Forms"}))["framework"] == "delphi-fmx"
+
+
+def test_rank_avalonia_from_dll_class_or_single_file():
+    assert detect.rank(ev(modules=[r"C:\App\Avalonia.Base.dll"]))["framework"] == "avalonia"
+    assert detect.rank(ev(window_classes=["Avalonia-5f3c2e1a-0000"], exe_strings={"a": "Avalonia.Base"}))[
+        "framework"] == "avalonia"
+
+
+def test_rank_tk():
+    r = detect.rank(ev(window_classes=["TkTopLevel", "TkChild"], modules=[r"C:\Py\DLLs\tk86t.dll"]))
+    assert r["framework"] == "tk" and r["adapters"][0]["name"] == "uia"

@@ -86,8 +86,36 @@ entries = [
     E("flutter", "Flutter", {"window_class": [m(r"^FLUTTER_RUNNER_WIN32_WINDOW$", 0.8)],
                              "modules": [m(r"^flutter_windows\.dll$", 0.7)]},
       [{"name": "uia", "base": 0.6}], in_v1=False),
-    E("delphi-vcl", "Delphi VCL", {"window_class": [m(r"^T(Form|Application)", 0.6)]}, [{"name": "uia", "base": 0.5}],
-      in_v1=False, specializes=["win32"]),
+    E("delphi-vcl", "Delphi / C++Builder VCL",
+      {"window_class": [m(r"^T(Form|frm|Frm|Main|Dlg|Application)\w*$", 0.5), m(r"^T[A-Z]\w*Form\w*$", 0.3),
+                        m(r"^T(Edit|Button|CheckBox|ComboBox|ListBox|Memo|Panel|PageControl|TabSheet|TreeView|"
+                          r"ListView|StatusBar|RichEdit|Label|GroupBox|RadioButton|TrackBar)$", 0.3)],
+       "exe_strings": [m(r"Embarcadero", 0.3), m(r"Borland", 0.2), m(r"TApplication", 0.3)]},
+      [{"name": "uia", "base": 0.75}], {"exe_file_version": True}, specializes=["win32"],
+      notes="VCL wraps Win32 common controls (TEdit = Edit, TButton = Button...), so UIA's Win32 and MSAA providers "
+            "expose them; owner-drawn VCL controls (TSpeedButton, TLabel, grids) are often invisible to UIA."),
+    E("delphi-fmx", "Delphi FireMonkey (FMX)",
+      {"window_class": [m(r"^FMT\w+$", 0.7)], "exe_strings": [m(r"FMX\.Forms|FireMonkey", 0.3), m(r"Embarcadero", 0.2)]},
+      [{"name": "uia", "base": 0.5}], {"exe_file_version": True}, specializes=["win32"],
+      notes="FMX draws its own controls in one window; accessibility depends on the app adding it."),
+    E("avalonia", "Avalonia UI (.NET)",
+      {"window_class": [m(r"^Avalonia-", 0.6)], "modules": [m(r"^avalonia\.(base|win32|controls)\.dll$", 0.6)],
+       "uia_framework_id": [m(r"^Avalonia$", 0.4)], "exe_strings": [m(r"Avalonia\.Base", 0.4)]},
+      [{"name": "uia", "base": 0.8}], {"module_re": r"^avalonia\.base\.dll$", "exe_file_version": True},
+      specializes=["win32"],
+      notes="Avalonia 11+ ships a UIA provider on Windows (doc; NOT yet probed on a real Avalonia program - the only "
+            "one installed here is Git Credential Manager, which CIG must not drive). A single-file publish has no "
+            "Avalonia DLLs on disk: the exe's own strings and the window class identify it."),
+    E("tk", "Tk / Tcl-Tk (incl. Python tkinter)",
+      {"window_class": [m(r"^Tk(TopLevel|Child|Frame)$", 0.7)], "modules": [m(r"^tk\d+t?\.dll$", 0.5),
+                                                                          m(r"^tcl\d+t?\.dll$", 0.2)]},
+      [{"name": "uia", "base": 0.4}], {"module_re": r"^tk\d+t?\.dll$"}, specializes=["win32"],
+      notes="Tk 8.6 implements no accessibility provider (probe 2026-11-20, tk-gallery): UIA sees unnamed TkChild "
+            "panes and four nameless native Button windows - no control can be addressed by name, so CIG offers only "
+            "window-level actions (close_window, and keys as the last resort while the person is away). TIP 733 'Add "
+            "accessibility/screen reader support to Tk' is marked Final for Tk 9.1 (core.tcl-lang.org/tips, read "
+            "2026-11-20); its Windows API (UIA or MSAA) and the 9.1 release were NOT confirmed - a Tk 9.1+ program "
+            "must be probed, not assumed. Python's docs say current installers bundle Tk 9.0."),
     E("wxwidgets", "wxWidgets", {"window_class": [m(r"^wxWindow", 0.7)]}, [{"name": "uia", "base": 0.7}],
       in_v1=False, specializes=["win32"]),
     E("sdl", "SDL / GLFW / custom-drawn", {"window_class": [m(r"^(SDL_app|GLFW30)$", 0.6)],

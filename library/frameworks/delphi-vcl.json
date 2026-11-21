@@ -1,26 +1,148 @@
 {
  "framework": "delphi-vcl",
- "label": "Delphi VCL",
+ "label": "Delphi / C++Builder VCL",
  "versions": "any",
  "source": [
-  "doc: plan 2.2 and learn.microsoft.com UIA overview (2026-10-24)"
+  "doc: plan 2.2 and learn.microsoft.com UIA overview (2026-10-24)",
+  "probe:2026-11-20 dyndolod-start (tools/probe.py)"
  ],
- "adapter_in_v1": false,
+ "adapter_in_v1": true,
  "detect": {
   "window_class": [
    {
-    "re": "^T(Form|Application)",
-    "w": 0.6
+    "re": "^T(Form|frm|Frm|Main|Dlg|Application)\\w*$",
+    "w": 0.5
+   },
+   {
+    "re": "^T[A-Z]\\w*Form\\w*$",
+    "w": 0.3
+   },
+   {
+    "re": "^T(Edit|Button|CheckBox|ComboBox|ListBox|Memo|Panel|PageControl|TabSheet|TreeView|ListView|StatusBar|RichEdit|Label|GroupBox|RadioButton|TrackBar)$",
+    "w": 0.3
+   }
+  ],
+  "exe_strings": [
+   {
+    "re": "Embarcadero",
+    "w": 0.3
+   },
+   {
+    "re": "Borland",
+    "w": 0.2
+   },
+   {
+    "re": "TApplication",
+    "w": 0.3
    }
   ]
  },
  "adapters": [
   {
    "name": "uia",
-   "base": 0.5
+   "base": 0.75
   }
  ],
+ "version_from": {
+  "exe_file_version": true
+ },
  "specializes": [
   "win32"
+ ],
+ "notes": "VCL wraps Win32 common controls (TEdit = Edit, TButton = Button...), so UIA's Win32 and MSAA providers expose them; owner-drawn VCL controls (TSpeedButton, TLabel, grids) are often invisible to UIA.",
+ "probed": [
+  {
+   "probe": "dyndolod-start",
+   "date": "2026-11-20",
+   "app": {
+    "exe": "DynDOLODx64.exe",
+    "title": "DynDOLOD",
+    "adapter": "uia"
+   },
+   "control_types": {
+    "Button": {
+     "count": 2,
+     "patterns": [
+      "Invoke",
+      "LegacyIAccessible"
+     ],
+     "named_pct": 100,
+     "automation_id_pct": 100
+    },
+    "Hyperlink": {
+     "count": 4,
+     "patterns": [
+      "Invoke",
+      "LegacyIAccessible",
+      "Value"
+     ],
+     "named_pct": 100,
+     "automation_id_pct": 0
+    },
+    "Image": {
+     "count": 1,
+     "patterns": [
+      "LegacyIAccessible",
+      "Value"
+     ],
+     "named_pct": 100,
+     "automation_id_pct": 100
+    },
+    "Pane": {
+     "count": 12,
+     "patterns": [
+      "LegacyIAccessible",
+      "Value"
+     ],
+     "named_pct": 25,
+     "automation_id_pct": 25
+    },
+    "RadioButton": {
+     "count": 5,
+     "patterns": [
+      "Invoke",
+      "LegacyIAccessible",
+      "SelectionItem"
+     ],
+     "named_pct": 100,
+     "automation_id_pct": 100
+    },
+    "Text": {
+     "count": 1,
+     "patterns": [
+      "LegacyIAccessible",
+      "Value"
+     ],
+     "named_pct": 100,
+     "automation_id_pct": 100
+    },
+    "TitleBar": {
+     "count": 1,
+     "patterns": [
+      "LegacyIAccessible",
+      "Value"
+     ],
+     "named_pct": 0,
+     "automation_id_pct": 0
+    },
+    "Window": {
+     "count": 1,
+     "patterns": [
+      "LegacyIAccessible",
+      "Transform",
+      "Window"
+     ],
+     "named_pct": 100,
+     "automation_id_pct": 0
+    }
+   }
+  }
+ ],
+ "quirks": [
+  {
+   "id": "delphi-vcl-text-has-value",
+   "source": "probe:2026-11-20 dyndolod-start",
+   "text": "Text exposes Value, which the UIA spec says it must not."
+  }
  ]
 }

@@ -1,0 +1,116 @@
+{
+ "framework": "tk",
+ "label": "Tk / Tcl-Tk (incl. Python tkinter)",
+ "versions": "any",
+ "source": [
+  "doc: plan 2.2 and learn.microsoft.com UIA overview (2026-10-24)",
+  "probe:2026-11-20 tk-gallery (tools/probe.py --actions)"
+ ],
+ "adapter_in_v1": true,
+ "detect": {
+  "window_class": [
+   {
+    "re": "^Tk(TopLevel|Child|Frame)$",
+    "w": 0.7
+   }
+  ],
+  "modules": [
+   {
+    "re": "^tk\\d+t?\\.dll$",
+    "w": 0.5
+   },
+   {
+    "re": "^tcl\\d+t?\\.dll$",
+    "w": 0.2
+   }
+  ]
+ },
+ "adapters": [
+  {
+   "name": "uia",
+   "base": 0.4
+  }
+ ],
+ "version_from": {
+  "module_re": "^tk\\d+t?\\.dll$"
+ },
+ "specializes": [
+  "win32"
+ ],
+ "notes": "Tk 8.6 implements no accessibility provider (probe 2026-11-20, tk-gallery): UIA sees unnamed TkChild panes and four nameless native Button windows - no control can be addressed by name, so CIG offers only window-level actions (close_window, and keys as the last resort while the person is away). TIP 733 'Add accessibility/screen reader support to Tk' is marked Final for Tk 9.1 (core.tcl-lang.org/tips, read 2026-11-20); its Windows API (UIA or MSAA) and the 9.1 release were NOT confirmed - a Tk 9.1+ program must be probed, not assumed. Python's docs say current installers bundle Tk 9.0.",
+ "probed": [
+  {
+   "probe": "tk-gallery",
+   "date": "2026-11-20",
+   "app": {
+    "exe": "python.exe",
+    "title": "CIG Tk Gallery",
+    "adapter": "uia"
+   },
+   "control_types": {
+    "Button": {
+     "count": 7,
+     "patterns": [
+      "Invoke",
+      "LegacyIAccessible"
+     ],
+     "named_pct": 43,
+     "automation_id_pct": 0
+    },
+    "Image": {
+     "count": 2,
+     "patterns": [
+      "LegacyIAccessible"
+     ],
+     "named_pct": 0,
+     "automation_id_pct": 0
+    },
+    "MenuBar": {
+     "count": 1,
+     "patterns": [
+      "LegacyIAccessible"
+     ],
+     "named_pct": 100,
+     "automation_id_pct": 100
+    },
+    "MenuItem": {
+     "count": 1,
+     "patterns": [
+      "ExpandCollapse",
+      "Invoke",
+      "LegacyIAccessible"
+     ],
+     "named_pct": 100,
+     "automation_id_pct": 0
+    },
+    "Pane": {
+     "count": 12,
+     "patterns": [
+      "LegacyIAccessible"
+     ],
+     "named_pct": 0,
+     "automation_id_pct": 0
+    },
+    "TitleBar": {
+     "count": 1,
+     "patterns": [
+      "LegacyIAccessible",
+      "Value"
+     ],
+     "named_pct": 0,
+     "automation_id_pct": 0
+    },
+    "Window": {
+     "count": 1,
+     "patterns": [
+      "LegacyIAccessible",
+      "Transform",
+      "Window"
+     ],
+     "named_pct": 100,
+     "automation_id_pct": 0
+    }
+   }
+  }
+ ]
+}

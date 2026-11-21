@@ -1,0 +1,128 @@
+{
+ "framework": "delphi-vcl",
+ "name": "dyndolod-start",
+ "date": "2026-11-20",
+ "app": {
+  "exe": "DynDOLODx64.exe",
+  "title": "DynDOLOD",
+  "adapter": "uia"
+ },
+ "elements": 27,
+ "survey": {
+  "Button": {
+   "count": 2,
+   "named_pct": 100,
+   "automation_id_pct": 100,
+   "patterns": {
+    "Invoke": 2,
+    "LegacyIAccessible": 2
+   },
+   "framework_ids": {
+    "DirectUI": 2
+   },
+   "spec_required_missing": [],
+   "spec_forbidden_present": []
+  },
+  "Hyperlink": {
+   "count": 4,
+   "named_pct": 100,
+   "automation_id_pct": 0,
+   "patterns": {
+    "Invoke": 4,
+    "Value": 4,
+    "LegacyIAccessible": 4
+   },
+   "framework_ids": {},
+   "spec_required_missing": [],
+   "spec_forbidden_present": []
+  },
+  "Image": {
+   "count": 1,
+   "named_pct": 100,
+   "automation_id_pct": 100,
+   "patterns": {
+    "Value": 1,
+    "LegacyIAccessible": 1
+   },
+   "framework_ids": {
+    "DirectUI": 1
+   },
+   "spec_required_missing": [],
+   "spec_forbidden_present": []
+  },
+  "Pane": {
+   "count": 12,
+   "named_pct": 25,
+   "automation_id_pct": 25,
+   "patterns": {
+    "LegacyIAccessible": 12,
+    "Value": 1
+   },
+   "framework_ids": {
+    "DirectUI": 3,
+    "Win32": 9
+   },
+   "spec_required_missing": [],
+   "spec_forbidden_present": []
+  },
+  "RadioButton": {
+   "count": 5,
+   "named_pct": 100,
+   "automation_id_pct": 100,
+   "patterns": {
+    "Invoke": 5,
+    "SelectionItem": 5,
+    "LegacyIAccessible": 5
+   },
+   "framework_ids": {
+    "DirectUI": 5
+   },
+   "spec_required_missing": [],
+   "spec_forbidden_present": []
+  },
+  "Text": {
+   "count": 1,
+   "named_pct": 100,
+   "automation_id_pct": 100,
+   "patterns": {
+    "Value": 1,
+    "LegacyIAccessible": 1
+   },
+   "framework_ids": {
+    "DirectUI": 1
+   },
+   "spec_required_missing": [],
+   "spec_forbidden_present": [
+    "Value"
+   ]
+  },
+  "TitleBar": {
+   "count": 1,
+   "named_pct": 0,
+   "automation_id_pct": 0,
+   "patterns": {
+    "Value": 1,
+    "LegacyIAccessible": 1
+   },
+   "framework_ids": {},
+   "spec_required_missing": [],
+   "spec_forbidden_present": []
+  },
+  "Window": {
+   "count": 1,
+   "named_pct": 100,
+   "automation_id_pct": 0,
+   "patterns": {
+    "Window": 1,
+    "Transform": 1,
+    "LegacyIAccessible": 1
+   },
+   "framework_ids": {
+    "Win32": 1
+   },
+   "spec_required_missing": [],
+   "spec_forbidden_present": []
+  }
+ },
+ "actions": false
+}

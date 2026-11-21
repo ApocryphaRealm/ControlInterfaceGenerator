@@ -1,0 +1,107 @@
+{
+ "framework": "tk",
+ "name": "tk-gallery",
+ "date": "2026-11-20",
+ "app": {
+  "exe": "python.exe",
+  "title": "CIG Tk Gallery",
+  "adapter": "uia"
+ },
+ "elements": 25,
+ "survey": {
+  "Button": {
+   "count": 7,
+   "named_pct": 43,
+   "automation_id_pct": 0,
+   "patterns": {
+    "Invoke": 7,
+    "LegacyIAccessible": 7
+   },
+   "framework_ids": {
+    "Win32": 4
+   },
+   "spec_required_missing": [],
+   "spec_forbidden_present": []
+  },
+  "Image": {
+   "count": 2,
+   "named_pct": 0,
+   "automation_id_pct": 0,
+   "patterns": {
+    "LegacyIAccessible": 2
+   },
+   "framework_ids": {
+    "Win32": 2
+   },
+   "spec_required_missing": [],
+   "spec_forbidden_present": []
+  },
+  "MenuBar": {
+   "count": 1,
+   "named_pct": 100,
+   "automation_id_pct": 100,
+   "patterns": {
+    "LegacyIAccessible": 1
+   },
+   "framework_ids": {},
+   "spec_required_missing": [],
+   "spec_forbidden_present": []
+  },
+  "MenuItem": {
+   "count": 1,
+   "named_pct": 100,
+   "automation_id_pct": 0,
+   "patterns": {
+    "Invoke": 1,
+    "ExpandCollapse": 1,
+    "LegacyIAccessible": 1
+   },
+   "framework_ids": {},
+   "spec_required_missing": [],
+   "spec_forbidden_present": []
+  },
+  "Pane": {
+   "count": 12,
+   "named_pct": 0,
+   "automation_id_pct": 0,
+   "patterns": {
+    "LegacyIAccessible": 12
+   },
+   "framework_ids": {
+    "Win32": 12
+   },
+   "spec_required_missing": [],
+   "spec_forbidden_present": []
+  },
+  "TitleBar": {
+   "count": 1,
+   "named_pct": 0,
+   "automation_id_pct": 0,
+   "patterns": {
+    "Value": 1,
+    "LegacyIAccessible": 1
+   },
+   "framework_ids": {},
+   "spec_required_missing": [],
+   "spec_forbidden_present": []
+  },
+  "Window": {
+   "count": 1,
+   "named_pct": 100,
+   "automation_id_pct": 0,
+   "patterns": {
+    "Window": 1,
+    "Transform": 1,
+    "LegacyIAccessible": 1
+   },
+   "framework_ids": {
+    "Win32": 1
+   },
+   "spec_required_missing": [],
+   "spec_forbidden_present": []
+  }
+ },
+ "actions": true,
+ "action_results": [],
+ "action_summary": {}
+}
