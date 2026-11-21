@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- SignPath artifact configuration for CIG (paste into SignPath > Artifact configurations).
+     actions/upload-artifact uploads a ZIP, so the root is a zip-file holding the one executable to sign.
+     The product name is checked against the exe's version resource (tools/build_exe.py). A product-version check is
+     left out on purpose: it changes every release, and SignPath's parameter syntax for it was not verified. -->
+<artifact-configuration xmlns="http://signpath.io/artifact-configuration/v1">
+  <zip-file>
+    <pe-file path="cig.exe" product-name="Control Interface Generator">
+      <authenticode-sign />
+    </pe-file>
+  </zip-file>
+</artifact-configuration>

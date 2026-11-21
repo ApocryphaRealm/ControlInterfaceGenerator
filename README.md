@@ -59,7 +59,8 @@ CIG server ── safety layer: presence · deny lists · confirm · provenance 
 | M3 | Mod Organizer 2 (Qt 6) through its plugin channel, including its modal dialogs | 44/44 | [M3](docs/proofs/M3-mo2-host.md) |
 | M4 | Vortex (Electron) over CDP: custom-drawn switches, on an isolated profile | 14/14 | [M4](docs/proofs/M4-vortex.md) |
 | M5 | 7z.exe and a PowerShell module as typed tools (`-WhatIf` dry runs) | 14/14 | [M5](docs/proofs/M5-cli.md) |
-| M6 | probe harness: Win32, WinForms and WPF galleries tested by action; Qt 6, WinUI 3 and Electron probed read-only | 9/9 · 9/11 · 14/14 actions verified | [M6](docs/proofs/M6-probes.md) |
+| M6 | probe harness on CIG's own galleries (Win32, WinForms, WPF) | 9/9 · 9/11 · 14/14 actions verified | [M6](docs/proofs/M6-probes.md) |
+| M6 | official reference galleries: Microsoft **WinUI 3 Gallery** (5 control pages), Microsoft **WPF Gallery**, Qt 6.12, Electron 45 quick-start | 93/97 · 36/39 · 7/9 · 8/10 actions verified | `library/probes/` |
 | M7 | **never-scripted programs:** 7-Zip File Manager (UIA) | 15/15 | [M7 7-Zip](docs/proofs/M7-7zfm.md) |
 | M7 | **never-scripted programs:** FreeTube (Electron, CDP, isolated profile) | 13/13 | [M7 FreeTube](docs/proofs/M7-freetube.md) |
 
@@ -86,12 +87,35 @@ These are recorded because they are why the safety model looks the way it does:
 
 ## Install and register
 
+From a release, use the single `cig.exe`:
+
+```
+claude mcp add --scope user cig -- "C:\path\to\cig.exe" serve
+```
+
+From source (Windows 10/11, Python 3.11+):
+
 ```
 py -3 -m pip install -e .[test]
 claude mcp add --scope user cig -- py -3 "<repo>\cig_server.py"
 ```
 
-Requires Windows 10/11 and Python 3.11+. CIG runs unelevated and starts programs unelevated.
+`cig.exe` also offers `cig detect <program>`, `cig apps`, `cig tree <program>` and `cig log`, all read-only. CIG runs
+unelevated and starts programs unelevated. Uninstall: delete `cig.exe` and `%LOCALAPPDATA%\CIG`.
+
+## Code signing policy
+
+Free code signing provided by [SignPath.io](https://about.signpath.io), certificate by
+[SignPath Foundation](https://signpath.org). This is in progress: until the project is accepted, releases are
+unsigned (see [docs/SIGNING.md](docs/SIGNING.md)).
+
+- Releases are built from this repository's source by the `release` GitHub Actions workflow, on GitHub-hosted runners.
+- Committers and reviewers: [ApocryphaRealm](https://github.com/ApocryphaRealm)
+- Approvers: [ApocryphaRealm](https://github.com/ApocryphaRealm)
+
+**Privacy:** this program will not transfer any information to other networked systems unless specifically requested
+by the user or the person installing or operating it. It talks only to its MCP client over stdio, and to programs on
+the same machine over 127.0.0.1.
 
 ## Licence
 

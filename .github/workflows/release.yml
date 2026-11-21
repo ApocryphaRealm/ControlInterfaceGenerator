@@ -1,0 +1,86 @@
+# Build cig.exe from source on a GitHub-hosted runner, sign it through SignPath Foundation (free for OSS) when the
+# project's SignPath settings exist, and publish it. SignPath requires every job leading to the signing request to run
+# on GitHub-hosted agents and the binary to be built from source in this workflow (docs/SIGNING.md).
+name: release
+
+on:
+  push:
+    tags: ["v*.*.*"]
+  workflow_dispatch:
+
+permissions:
+  contents: write        # create the GitHub release
+  actions: read          # SignPath reads the uploaded artifact
+
+jobs:
+  build-sign-release:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: install
+        run: python -m pip install -e ".[test,build]"
+
+      - name: test
+        run: python -m pytest -q
+
+      - name: build cig.exe
+        run: python tools/build_exe.py
+
+      - name: smoke test the exe
+        shell: pwsh
+        run: |
+          $v = .\dist\cig.exe version | ConvertFrom-Json
+          if (-not $v.frozen) { throw "cig.exe did not run frozen" }
+          $want = (Get-Content VERSION -Raw).Trim()
+          if ($v.cig -ne $want) { throw "cig.exe reports $($v.cig), VERSION says $want" }
+          (Get-Item dist\cig.exe).VersionInfo | Format-List ProductName, ProductVersion
+
+      - name: upload unsigned artifact
+        id: upload-unsigned-artifact
+        uses: actions/upload-artifact@v7
+        with:
+          name: cig-unsigned
+          path: dist/cig.exe
+          if-no-files-found: error
+
+      # Runs only once the owner's SignPath Foundation project exists and its ids are set as repository variables
+      # (Settings > Secrets and variables > Actions): SIGNPATH_ORGANIZATION_ID, SIGNPATH_PROJECT_SLUG,
+      # SIGNPATH_SIGNING_POLICY_SLUG (variables) and SIGNPATH_API_TOKEN (secret). See docs/SIGNING.md.
+      - name: submit signing request (SignPath Foundation)
+        if: ${{ vars.SIGNPATH_ORGANIZATION_ID != '' }}
+        uses: signpath/github-action-submit-signing-request@v3
+        with:
+          connector-url: https://pipelineconnector.connectors.signpath.io/GitHub/GitHubCom
+          api-token: ${{ secrets.SIGNPATH_API_TOKEN }}
+          organization-id: ${{ vars.SIGNPATH_ORGANIZATION_ID }}
+          project-slug: ${{ vars.SIGNPATH_PROJECT_SLUG }}
+          signing-policy-slug: ${{ vars.SIGNPATH_SIGNING_POLICY_SLUG }}
+          artifact-configuration-slug: ${{ vars.SIGNPATH_ARTIFACT_CONFIGURATION_SLUG }}
+          github-artifact-id: ${{ steps.upload-unsigned-artifact.outputs.artifact-id }}
+          wait-for-completion: true
+          output-artifact-directory: signed
+
+      - name: choose the file to publish
+        id: pick
+        shell: pwsh
+        run: |
+          $f = if (Test-Path signed\cig.exe) { "signed\cig.exe" } else { "dist\cig.exe" }
+          $h = (Get-FileHash $f -Algorithm SHA256).Hash.ToLower()
+          "$h  cig.exe" | Out-File -Encoding ascii cig.exe.sha256
+          "file=$f" >> $env:GITHUB_OUTPUT
+          "signed=$(Test-Path signed\cig.exe)" >> $env:GITHUB_OUTPUT
+
+      - name: publish the release (tags only)
+        if: startsWith(github.ref, 'refs/tags/v')
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          Copy-Item "${{ steps.pick.outputs.file }}" cig.exe -Force -ErrorAction SilentlyContinue
+          $note = if ("${{ steps.pick.outputs.signed }}" -eq "True") { "Signed by SignPath Foundation." } else { "Unsigned build (code signing not yet set up)." }
+          gh release create "${{ github.ref_name }}" cig.exe cig.exe.sha256 --title "CIG ${{ github.ref_name }}" --notes "$note See README.md and CHANGELOG.md."
