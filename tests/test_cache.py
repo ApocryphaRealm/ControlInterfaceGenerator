@@ -16,6 +16,7 @@ def test_id_from_an_earlier_run_resolves_after_restart(idle):
     aid = first_id(e1, "set_checked", "Word wrap")
     appcache._last_save.clear()
     e2 = Engine([FixtureAdapter()])              # a new server: no in-memory snapshot
+    e2.register_launch(4242, "editor.exe")
     r = e2.do(APP, aid, {"checked": True})
     assert r["ok"] and r["verified"] is True
 
@@ -23,13 +24,14 @@ def test_id_from_an_earlier_run_resolves_after_restart(idle):
 def test_renamed_element_found_from_cache_after_restart(idle):
     idle(60)
     e1 = Engine([FixtureAdapter()])
-    aid = first_id(e1, "set_text", "Text editor")
+    aid = first_id(e1, "set_checked", "Word wrap")
     e2 = Engine([FixtureAdapter()])
+    e2.register_launch(4242, "editor.exe")
     fx = e2.adapters[0]
     fx.resolve(APP)
-    body = next(c for c in fx.state["editor"]["windows"][0]["children"] if c.get("name") == "Text editor")
-    body["automation_id"], body["name"] = "", "Texteditor"
-    r = e2.do(APP, aid, {"text": "x"}, confirm="ok")
+    box = next(c for c in fx.state["editor"]["windows"][0]["children"] if c.get("name") == "Word wrap")
+    box["automation_id"], box["name"] = "", "Zeilenumbruch"
+    r = e2.do(APP, aid, {"checked": True})
     assert r["ok"], r["reason"]
     from cig import actionlog
     assert actionlog.tail(1)[0]["resolved"].startswith("fingerprint")

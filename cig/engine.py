@@ -22,6 +22,31 @@ class Engine:
         self.adapters = adapters
         self.policy = policy or Policy.load()
         self._snap: dict[str, dict] = {}          # target.key -> {"time", "windows", "elements": {eid: info}}
+        # Provenance (Main Agent's order, 2026-11-20, after the Notepad incident): what CIG itself opened and wrote.
+        # Kept in memory only: after a server restart nothing counts as CIG's own, so the safe answer is "not ours".
+        self.launched: dict[int, dict] = {}       # pid -> {"exe", "time"} for programs started by cig_launch
+        self.authored: dict[str, str] = {}        # "<target.key>|<locator>" -> the text CIG last wrote there
+
+    def register_launch(self, pid: int, exe: str) -> None:
+        self.launched[int(pid)] = {"exe": exe, "time": time.time()}
+
+    def _provenance_refusal(self, target: Target, node: dict, loc: str, action: str, before: dict) -> Optional[str]:
+        """A deny (confirm cannot override): writes go only into windows CIG opened, and a Document is written only
+        when it is empty or still holds exactly what CIG wrote there."""
+        if not self.policy.write_only_to_launched:
+            return None
+        if (target.exe or "").lower() in self.policy.first_party:
+            return None                        # our own host programs (MO2) are driven where the owner runs them
+        if target.pid not in self.launched:
+            return (f"CIG did not open this window ({target.exe}, pid {target.pid}): writes go only into programs "
+                    f"started by cig_launch (confirm cannot override)")
+        if action == "set_text" and node.get("control_type") == "Document":
+            old = str(before.get("value") or "")
+            mine = self.authored.get(f"{target.key}|{loc}")
+            if old.strip() and (mine is None or _norm_text(old) != _norm_text(mine)):
+                return ("this document holds text CIG did not write (a restored session, an opened file, someone's "
+                        "work): CIG writes only into documents it created (confirm cannot override)")
+        return None
 
     # ------------------------------------------------------------------ resolution and snapshots
     def resolve(self, app: str) -> tuple[Adapter, Target]:
@@ -168,10 +193,17 @@ class Engine:
         # the program may have restored someone's own document into it (Notepad session restore, 2026-11-20).
         if action == "set_text" and kind != "read":
             old = str(before.get("value") or "")
-            if old.strip() and old.replace("\r\n", "\n").strip() != str(args.get("text", "")).replace("\r\n", "\n").strip():
+            mine = self.authored.get(f"{target.key}|{loc}")
+            ours = mine is not None and _norm_text(old) == _norm_text(mine)
+            if old.strip() and not ours and _norm_text(old) != _norm_text(args.get("text", "")):
                 kind = "destructive"
                 why = why + [f"replaces {len(old)} characters of existing text"]
         entry.update({"kind": kind, "classify": why})
+        if kind != "read":
+            deny = self._provenance_refusal(target, node, loc, action, before)
+            if deny:
+                return finish(refused=True, status="refused", reason=deny,
+                              preview={"element": loc, "action": action, "kind": kind, "before": before})
         pres = presence.read()
         entry["presence"] = pres.as_dict()
         req = Request(app=target.exe, action=action, kind=kind, pid=target.pid, window_title=target.title,
@@ -205,7 +237,18 @@ class Engine:
                                   reason="", note="the adapter raised, but the read-back shows the element gone")
             return finish(reason=f"adapter failed: {e}", changed={"before": before})
         after = adapter.read(target, loc, node)
+        if not after.get("exists", True) and rule.get("verify") != "gone":
+            # the write may have changed the element's own path (a container named after the text just typed):
+            # find it again the same way an action would - exact locator, else fingerprint, never a guess
+            info2, how2 = self._reresolve(self._snapshot(adapter, target), eid)
+            if info2:
+                after = adapter.read(target, info2["locator"], info2["node"])
+                entry["read_back_resolved"] = how2
+                if action == "set_text":
+                    loc = info2["locator"]
         verified = verify(rule.get("verify"), action, args, after)
+        if action == "set_text" and verified is not False:
+            self.authored[f"{target.key}|{loc}"] = str(args["text"])
         return finish(ok=verified is not False, status="ok", detail=detail,
                       changed={"before": before, "after": after}, verified=verified,
                       reason="" if verified is not False else "read-back does not match what was set")
@@ -230,6 +273,10 @@ class Engine:
             if time.time() - t0 > timeout_s:
                 return {"ok": False, "error": "timeout", "waited_s": round(time.time() - t0, 2)}
             time.sleep(0.25)
+
+
+def _norm_text(s: str) -> str:
+    return str(s).replace("\r\n", "\n").replace("\r", "\n").strip()
 
 
 def _popup_menu_paths(windows: list[dict], known: set) -> set:

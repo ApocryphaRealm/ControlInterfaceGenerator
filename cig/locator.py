@@ -20,8 +20,18 @@ def _q(s: str) -> str:
 def segment(node: dict, siblings: Iterable[dict]) -> str:
     ct = node.get("control_type") or "Custom"
     aid = node.get("automation_id") or ""
-    if aid and not re.fullmatch(r"\d+", aid):            # numeric ids are often runtime handles: not stable
+    if _stable_aid(node):                                # numeric ids are often runtime handles: not stable
         return f"{ct}[aid={_q(aid)}]"
+    if ct in CONTAINERS:
+        # A container's name can be live text (the Win32 file dialog's Pane is named after whatever is typed in its
+        # File name box, 2026-11-20): position among same-type siblings is steadier than a name that changes.
+        n = 0
+        for s in siblings:
+            if s is node:
+                break
+            if (s.get("control_type") or "Custom") == ct and not _stable_aid(s):
+                n += 1
+        return f"{ct}[#{n}]"
     name = node.get("name") or ""
     n = 0
     for s in siblings:
@@ -30,6 +40,14 @@ def segment(node: dict, siblings: Iterable[dict]) -> str:
         if (s.get("control_type") or "Custom") == ct and (s.get("name") or "") == name:
             n += 1
     return f"{ct}[name={_q(name)}][{n}]"
+
+
+CONTAINERS = {"Pane", "Group", "Custom"}
+
+
+def _stable_aid(node: dict) -> bool:
+    aid = node.get("automation_id") or ""
+    return bool(aid) and not re.fullmatch(r"\d+", aid)
 
 
 def element_id(locator: str) -> str:

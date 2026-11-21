@@ -62,6 +62,7 @@ class Policy:
         self.deny_titles = [re.compile(p, re.I) for p in deny.get("window_title_patterns") or []]
         self.apps = {k.lower(): v for k, v in (d.get("apps") or {}).items()}
         self.hold_screen = set(_lower_list(d.get("hold_screen_apps")))
+        self.write_only_to_launched = bool(d.get("write_only_to_launched", True))
 
     @classmethod
     def load(cls, path: Optional[Path] = None) -> "Policy":

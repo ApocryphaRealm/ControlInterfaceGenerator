@@ -19,6 +19,7 @@ APP = "fixture:editor"
 @pytest.fixture
 def eng():
     e = Engine([FixtureAdapter()])
+    e.register_launch(4242, "editor.exe")          # the fixture program counts as started by cig_launch
     server.set_engine(e)
     yield e
     server.set_engine(None)
@@ -36,21 +37,27 @@ def body_value(eng):
     return next(r for r in t if r["name"] == "Text editor")["value"]
 
 
+def empty_body(eng):
+    fx = eng.adapters[0]
+    fx.resolve(APP)
+    next(c for c in fx.state["editor"]["windows"][0]["children"] if c.get("name") == "Text editor")["value"] = ""
+
+
 def test_set_text_when_away_is_done_and_verified(eng, idle):
     idle(10)
-    r = server.cig_do(APP, act(eng, "set_text", "Text editor"), {"text": "written by CIG"},
-                      confirm="the owner asked to replace it")
+    empty_body(eng)
+    r = server.cig_do(APP, act(eng, "set_text", "Text editor"), {"text": "written by CIG"})
     assert r["ok"] and r["verified"] is True
-    assert r["changed"]["before"]["value"] == "hello" and r["changed"]["after"]["value"] == "written by CIG"
+    assert r["changed"]["before"]["value"] == "" and r["changed"]["after"]["value"] == "written by CIG"
     assert body_value(eng) == "written by CIG"
     assert actionlog.tail(1)[0]["log_id"] == r["log_id"]
 
 
 def test_set_text_while_active_is_refused_and_changes_nothing(eng, idle):
     idle(1)
-    r = server.cig_do(APP, act(eng, "set_text", "Text editor"), {"text": "nope"})
+    r = server.cig_do(APP, act(eng, "set_checked", "Word wrap"), {"checked": True})
     assert not r["ok"] and r["refused"] and r["status"] == "confirm_required"
-    assert body_value(eng) == "hello"
+    assert next(x for x in eng.tree(APP)["elements"] if x["name"] == "Word wrap")["toggle_state"] == "Off"
     assert actionlog.tail(1)[0]["refused"] is True
 
 
@@ -58,9 +65,9 @@ def test_dry_run_changes_nothing(eng, idle):
     idle(10)
     fx = REPO / "tests" / "fixtures" / "editor.json"
     h0 = hashlib.sha256(fx.read_bytes()).hexdigest()
-    r = server.cig_do(APP, act(eng, "set_text", "Text editor"), {"text": "dry"}, dry_run=True, confirm="ok")
-    assert r["ok"] and r["status"] == "dry_run" and r["preview"]["before"]["value"] == "hello"
-    assert body_value(eng) == "hello"
+    r = server.cig_do(APP, act(eng, "set_checked", "Word wrap"), {"checked": True}, dry_run=True)
+    assert r["ok"] and r["status"] == "dry_run" and r["preview"]["before"]["toggle_state"] == "Off"
+    assert next(x for x in eng.tree(APP)["elements"] if x["name"] == "Word wrap")["toggle_state"] == "Off"
     assert hashlib.sha256(fx.read_bytes()).hexdigest() == h0
 
 
@@ -113,11 +120,11 @@ def test_stale_element_is_refused_not_guessed(eng, idle):
 
 def test_renamed_element_reresolved_by_fingerprint(eng, idle):
     idle(60)
-    aid = act(eng, "set_text", "Text editor")
-    body = next(c for c in eng.adapters[0].state["editor"]["windows"][0]["children"] if c.get("name") == "Text editor")
-    body["automation_id"] = ""            # locator now changes ...
-    body["name"] = "Texteditor"           # ... and so does the name (a language switch)
-    r = server.cig_do(APP, aid, {"text": "still found"}, confirm="ok")
+    aid = act(eng, "set_checked", "Word wrap")
+    box = next(c for c in eng.adapters[0].state["editor"]["windows"][0]["children"] if c.get("name") == "Word wrap")
+    box["automation_id"] = ""             # locator now changes ...
+    box["name"] = "Zeilenumbruch"         # ... and so does the name (a language switch)
+    r = server.cig_do(APP, aid, {"checked": True})
     assert r["ok"] and str(r.get("verified")) == "True"
     assert actionlog.tail(1)[0]["resolved"].startswith("fingerprint")
 
@@ -160,12 +167,35 @@ def test_stdio_mcp_handshake_lists_the_meta_tools(tmp_path):
     assert acts["ok"] and any(a["action"] == "set_text" for a in acts["actions"])
 
 
-def test_overwriting_existing_text_needs_confirm_even_when_away(eng, idle):
-    """Notepad 2026-11-20: a restored session tab held the owner's document; replacing it is an overwrite."""
+def test_tonights_case_restored_document_is_never_written_even_confirmed(eng, idle):
+    """Notepad, 2026-11-20 19:08: CIG launched Notepad, Notepad restored a session tab holding the owner's document,
+    and a set_text replaced it. A document CIG did not write is refused - confirm cannot override (Main Agent's order)."""
     idle(120)
-    r = server.cig_do(APP, act(eng, "set_text", "Text editor"), {"text": "something else"})
-    assert r["refused"] and r["status"] == "confirm_required" and r["preview"]["kind"] == "destructive"
+    for confirm in (None, "yes, replace it"):
+        r = server.cig_do(APP, act(eng, "set_text", "Text editor"), {"text": "CIG M2 proof"}, confirm=confirm)
+        assert r["refused"] and r["status"] == "refused" and "did not write" in r["reason"]
     assert body_value(eng) == "hello"
+
+
+def test_window_cig_did_not_open_is_never_written_even_confirmed(idle):
+    idle(120)
+    e = Engine([FixtureAdapter()])                 # nothing registered as launched
+    server.set_engine(e)
+    try:
+        r = server.cig_do(APP, act(e, "set_checked", "Word wrap"), {"checked": True}, confirm="yes")
+        assert r["refused"] and "did not open" in r["reason"]
+        assert server.cig_tree(APP)["ok"]          # reads stay allowed
+    finally:
+        server.set_engine(None)
+
+
+def test_cig_may_replace_its_own_text(eng, idle):
+    idle(120)
+    empty_body(eng)
+    aid = act(eng, "set_text", "Text editor")
+    assert server.cig_do(APP, aid, {"text": "first"})["ok"]
+    r = server.cig_do(APP, aid, {"text": "second"})
+    assert r["ok"] and r["verified"] is True and body_value(eng) == "second"
 
 
 def test_filling_an_empty_field_is_a_plain_write(eng, idle):

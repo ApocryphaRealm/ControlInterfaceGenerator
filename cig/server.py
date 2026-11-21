@@ -89,7 +89,10 @@ def cig_launch(exe: str, args: Optional[list[str]] = None) -> dict:
         from .launch import launch                    # M2
     except ImportError:
         return {"ok": False, "error": "launching arrives in milestone M2"}
-    return _guard(launch, exe, args or [], engine().policy)
+    r = _guard(launch, exe, args or [], engine().policy)
+    if r.get("ok") and r.get("pid"):
+        engine().register_launch(r["pid"], exe)      # provenance: the only windows CIG may write into
+    return r
 
 
 @mcp.tool(annotations=RO)

@@ -34,14 +34,14 @@ def matches(rule: dict, node: dict) -> bool:
     return True
 
 
-def _child_names(node: dict, types: set) -> list[str]:
+def _child_names(node: dict, types: set, skip_into: frozenset = frozenset()) -> list[str]:
     out = []
 
     def rec(n, depth):
         for c in n.get("children") or []:
             if c.get("control_type") in types and c.get("name"):
                 out.append(c["name"])
-            if depth < 3:
+            if depth < 3 and c.get("control_type") not in skip_into:
                 rec(c, depth + 1)
     rec(node, 0)
     return list(dict.fromkeys(out))
@@ -66,7 +66,8 @@ def _schema(rule: dict, node: dict) -> dict:
         s = {"type": spec["type"]}
         src = spec.get("enum_from")
         if src == "child_buttons":
-            s["enum"] = _child_names(node, {"Button", "SplitButton"})
+            # a combo box's drop-down arrow is not one of the dialog's answers
+            s["enum"] = _child_names(node, {"Button", "SplitButton"}, frozenset({"ComboBox", "TitleBar"}))
         elif src == "child_items":
             items = _child_names(node, {"ListItem", "MenuItem", "DataItem"})
             if items:

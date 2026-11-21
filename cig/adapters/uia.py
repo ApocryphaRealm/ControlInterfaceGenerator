@@ -181,11 +181,24 @@ class UiaAdapter(Adapter):
             return {"detail": "LegacyIAccessible.DoDefaultAction"}
 
     def _answer(self, dlg, button: str) -> dict:
+        """The dialog's own button with that text: the shallowest match, never a button that belongs to a combo box
+        (the Win32 file dialog has four 'Open' buttons - three are combo-box drop-down arrows, 2026-11-20)."""
         want = _norm(button)
-        for b, _d in auto.WalkControl(dlg, maxDepth=4):
+        found = []
+        for b, depth in auto.WalkControl(dlg, maxDepth=4):
             if b.ControlTypeName in ("ButtonControl", "SplitButtonControl") and _norm(b.Name) == want:
-                return {**self._invoke(b), "button": b.Name}
-        raise AdapterError(f"no button '{button}' in the dialog")
+                try:
+                    parent = b.GetParentControl()
+                    if parent is not None and parent.ControlTypeName == "ComboBoxControl":
+                        continue
+                except Exception:                              # noqa: BLE001
+                    pass
+                found.append((depth, b))
+        if not found:
+            raise AdapterError(f"no button '{button}' in the dialog")
+        depth, b = min(found, key=lambda x: x[0])
+        name = b.Name
+        return {**self._invoke(b), "button": name, "depth": depth}
 
     def _choose(self, combo, option: str) -> dict:
         try:

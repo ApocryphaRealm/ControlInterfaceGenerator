@@ -1,6 +1,7 @@
 {
   "about": "CIG safety policy (plan 2.6). Deny entries cannot be overridden by confirm. Defaults taken 2026-11-20 (owner may change): third-party apps get the stricter foreground rule; first-party apps (our own host-channel programs) only the idle rule.",
   "idle_min": 5,
+  "write_only_to_launched": true,
   "third_party_foreground_min": 30,
   "first_party_apps": ["ModOrganizer.exe"],
   "hold_screen_apps": ["SkyrimSE.exe", "SkyrimVR.exe", "OblivionRemastered-Win64-Shipping.exe", "witcher3.exe",
