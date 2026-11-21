@@ -29,6 +29,16 @@ def default_adapters() -> list:
         from .adapters.fixture import FixtureAdapter
         out.append(FixtureAdapter())
     try:
+        from .adapters.host_mo2 import HostMo2Adapter  # M3: claims only 'mo2' / 'host:mo2...' / 'mo2:<instance>'
+        out.append(HostMo2Adapter())
+    except ImportError:
+        pass
+    try:
+        from .adapters.cdp import CdpAdapter         # M4: before UIA - only programs CIG launched with cdp=true
+        out.append(CdpAdapter())
+    except ImportError:
+        pass
+    try:
         from .adapters.uia import UiaAdapter          # M2
         out.append(UiaAdapter())
     except ImportError:
@@ -83,16 +93,31 @@ def cig_detect(target: str) -> dict:
 
 
 @mcp.tool(annotations=RW)
-def cig_launch(exe: str, args: Optional[list[str]] = None) -> dict:
-    """Start a program at normal integrity (never elevated). Refused while the person is using the machine."""
-    try:
-        from .launch import launch                    # M2
-    except ImportError:
-        return {"ok": False, "error": "launching arrives in milestone M2"}
-    r = _guard(launch, exe, args or [], engine().policy)
+def cig_launch(exe: str, args: Optional[list[str]] = None, cdp: bool = False,
+               profile_flag: Optional[str] = None) -> dict:
+    """Start a program at normal integrity (never elevated). Refused while the person is using the machine.
+    cdp=true (Chromium / Electron): also open a debugging port on 127.0.0.1 and use a SEPARATE data folder inside
+    CIG's own space - profile_flag is the program's option for that folder (Vortex '--user-data', Chromium
+    '--user-data-dir='). The program is then driven through CDP instead of UIA."""
+    from .launch import launch
+    r = _guard(launch, exe, args or [], engine().policy, None, 25.0, cdp, profile_flag)
     if r.get("ok") and r.get("pid"):
         engine().register_launch(r["pid"], exe)      # provenance: the only windows CIG may write into
     return r
+
+
+@mcp.tool(annotations=RW)
+def cig_close(app: str) -> dict:
+    """Close a program CIG launched, gracefully (WM_CLOSE to its windows; never forced). A save prompt that appears
+    is left open and reported - answer it with cig_do."""
+    try:
+        _a, t = engine().resolve(app)
+    except AdapterError as e:
+        return {"ok": False, "error": str(e)}
+    if t.pid not in engine().launched:
+        return {"ok": False, "refused": True, "reason": "CIG closes only programs it launched"}
+    from .launch import close
+    return close(t.pid)
 
 
 @mcp.tool(annotations=RO)

@@ -9,6 +9,7 @@ from __future__ import annotations
 
 import ctypes
 import os
+import socket
 import subprocess
 import time
 from typing import Optional
@@ -17,7 +18,7 @@ import psutil
 import win32con
 import win32gui
 
-from . import actionlog, presence
+from . import actionlog, config, guards, presence
 from .detect import windows_of
 from .policy import Policy, Request, WRITE, decide
 
@@ -40,17 +41,57 @@ def _windowed_pids(name: str) -> set[int]:
     return out
 
 
+def _free_port() -> int:
+    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    s.bind(("127.0.0.1", 0))
+    port = s.getsockname()[1]
+    s.close()
+    return port
+
+
+def profile_dir(exe: str) -> str:
+    d = config.home() / "profiles" / (os.path.splitext(os.path.basename(exe))[0].lower() + "-cig")
+    d.mkdir(parents=True, exist_ok=True)
+    return str(d)
+
+
 def launch(exe: str, args: list[str], policy: Optional[Policy] = None, confirm: Optional[str] = None,
-           wait_s: float = 25.0) -> dict:
+           wait_s: float = 25.0, cdp: bool = False, profile_flag: Optional[str] = None) -> dict:
+    """cdp=True: start with a debugging port on 127.0.0.1 and a separate data folder (profile_flag names the
+    program's own option for it, e.g. Vortex '--user-data', Chromium '--user-data-dir='). Without a separate data
+    folder a CDP launch is refused: CIG never drives a program over CDP inside someone's real profile (plan 2.6)."""
     policy = policy or Policy.load()
     name = os.path.basename(exe)
+    args = list(args or [])
     pres = presence.read()
     dec = decide(Request(app=name, action="launch", kind=WRITE, confirm=confirm), pres, policy)
     entry = {"app": name, "action": "launch", "kind": WRITE, "args": args, "presence": pres.as_dict(),
-             "policy": dec.as_dict(), "confirm": confirm}
+             "policy": dec.as_dict(), "confirm": confirm, "cdp": cdp}
+    if dec.allowed and cdp:
+        if not profile_flag:
+            dec.allowed, dec.reason = False, ("a CDP launch needs profile_flag (the program's own option for a "
+                                              "separate data folder) - CIG never uses a real profile over CDP")
+        elif _elevated():
+            dec.allowed, dec.reason = False, "CIG runs elevated and cannot pass a CDP launch's arguments unelevated"
     if not dec.allowed:
         entry.update(ok=False, refused=True, reason=dec.reason)
         return {**entry, "log_id": actionlog.write(entry)}
+    port = None
+    if cdp:
+        port = _free_port()
+        prof = profile_dir(exe)
+        args += [f"--remote-debugging-port={port}", "--remote-debugging-address=127.0.0.1"]
+        args += [profile_flag + prof] if profile_flag.endswith("=") else [profile_flag, prof]
+        entry.update(args=args, profile=prof, port=port)
+    # system side effects the library knows this program causes (e.g. Vortex takes over nxm://): export them first
+    tag = f"pending-{os.path.splitext(name)[0].lower()}-{int(time.time() * 1000)}"
+    try:
+        guard = guards.take(exe, tag)
+    except RuntimeError as e:
+        entry.update(ok=False, refused=True, reason=f"cannot guard the program's known system side effects: {e}")
+        return {**entry, "log_id": actionlog.write(entry)}
+    if guard:
+        entry["guarded"] = [k["key"] for k in guard["keys"]]
     before = _windowed_pids(name)
     t0 = time.time()
     try:
@@ -74,10 +115,28 @@ def launch(exe: str, args: list[str], policy: Optional[Policy] = None, confirm: 
         time.sleep(0.4)
     if pid is None:
         entry.update(ok=False, refused=False, reason=f"no new window for {name} within {wait_s:g}s")
+        if guard:
+            entry["guard_restore"] = guards.restore(tag)
     else:
+        if guard:
+            guards.rename(tag, f"pid-{pid}")
         h = windows_of(pid)
         entry.update(ok=True, refused=False, pid=pid, title=win32gui.GetWindowText(h[0]) if h else "",
                      waited_s=round(time.time() - t0, 1))
+        if port:
+            from .adapters import cdp as cdp_mod
+            t1 = time.time()
+            while time.time() - t1 < 20:
+                try:
+                    if cdp_mod.pages(port):
+                        break
+                except Exception:                              # noqa: BLE001 - not listening yet
+                    pass
+                time.sleep(0.5)
+            else:
+                entry.update(ok=False, reason=f"the program started but no debugger answered on 127.0.0.1:{port} "
+                                              f"(it may strip the flag; fall back to UIA)")
+            cdp_mod.register(pid, port)
     return {**entry, "log_id": actionlog.write(entry)}
 
 
@@ -96,5 +155,11 @@ def close(pid: int, wait_s: float = 10.0) -> dict:
     res = {"ok": gone, "pid": pid, "closed": gone}
     if not gone:
         res["still_open"] = [win32gui.GetWindowText(h) for h in windows_of(pid)]
+    else:
+        time.sleep(1.0)                                    # let its child processes finish their own writes
+        g = guards.restore(f"pid-{pid}")
+        if g.get("guard"):
+            res["side_effects_restored"] = g
+            res["ok"] = bool(g.get("all_restored"))
     actionlog.write({"action": "close_app", "kind": WRITE, "pid": pid, **res})
     return res

@@ -1,0 +1,11 @@
+{
+  "app": "vortex",
+  "label": "Vortex (Nexus Mods)",
+  "exe": ["Vortex.exe"],
+  "source": ["field:2026-11-20 Vortex 2.8.0, started by CIG with --user-data <test folder>"],
+  "cdp": {"profile_flag": "--user-data"},
+  "system_side_effects": {
+    "registry_keys": ["HKCU\\Software\\Classes\\nxm"],
+    "note": "Even on a separate, fresh --user-data folder Vortex makes itself the nxm:// handler at start-up (seen 2026-11-20: MO2's nxmhandler.exe was replaced). CIG exports these keys before the launch and restores them when it closes the program."
+  }
+}

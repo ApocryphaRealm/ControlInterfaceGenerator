@@ -1,0 +1,25 @@
+{
+  "about": "DOM widget kits: custom-drawn web controls that expose NOTHING to the accessibility tree (no role, no state). Each entry describes a component pattern by CSS selectors - container, its label, which class means on, what to click - so the CDP adapter can add the control to the tree as an ordinary control type and the normal rules apply. Data about a UI component library, not code for one program: any page using the same component gets it.",
+  "widgets": [
+    {
+      "id": "toggle-container-switch",
+      "source": "field:2026-11-20 Vortex 2.8.0 Settings (Electron 44): div.toggle-container > div.toggle.toggle-on|toggle-off + div.toggle-children label; no input, no ARIA",
+      "container": ".toggle-container",
+      "control_type": "CheckBox",
+      "patterns": ["Toggle"],
+      "name": {"selector": ".toggle-children", "own_text_only": true},
+      "state": {"selector": ".toggle", "on_class": "toggle-on", "off_class": "toggle-off"},
+      "click": ".toggle"
+    },
+    {
+      "id": "react-toggle",
+      "source": "doc: react-toggle (aaronshaf/react-toggle) markup - div.react-toggle with react-toggle--checked, a visually hidden input",
+      "container": ".react-toggle",
+      "control_type": "CheckBox",
+      "patterns": ["Toggle"],
+      "name": {"aria_label_or_next_label": true},
+      "state": {"selector": ":scope", "on_class": "react-toggle--checked"},
+      "click": ":scope"
+    }
+  ]
+}
