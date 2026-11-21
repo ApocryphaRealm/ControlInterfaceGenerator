@@ -43,11 +43,19 @@ def main() -> int:
     version = (REPO / "VERSION").read_text(encoding="utf-8").strip()
     vf = version_file(version)
     sep = ";"
+    # the in-process bridges travel inside the exe (cig/adapters/bridge.py assets_dir copies them out on first use)
+    rc = subprocess.call([sys.executable, str(REPO / "tools" / "build_bridges.py")], cwd=str(REPO))
+    dll = REPO / "var" / "bridges" / "dotnet" / "Cig.Bridge.DotNet.dll"
+    if rc != 0 or not dll.is_file():
+        print(f"the .NET bridge did not build ({dll}); refusing to make an exe without it")
+        return 1
     cmd = [sys.executable, "-m", "PyInstaller", "--noconfirm", "--clean", "--onefile", "--console", "--name", "cig",
            "--version-file", str(vf),
            "--add-data", f"{REPO / 'library'}{sep}library",
            "--add-data", f"{REPO / 'config'}{sep}config",
            "--add-data", f"{REPO / 'VERSION'}{sep}.",
+           "--add-data", f"{REPO / 'var' / 'bridges' / 'dotnet'}{sep}bridge-assets/dotnet",
+           "--add-data", f"{REPO / 'bridges' / 'python'}{sep}bridge-assets/python",
            "--collect-all", "uiautomation", "--collect-submodules", "comtypes", "--collect-submodules", "cig",
            # only the MCP parts CIG uses: collecting all of 'mcp' pulls in mcp.cli, which needs typer
            "--collect-submodules", "mcp.server", "--collect-submodules", "mcp.shared", "--hidden-import", "mcp.types",

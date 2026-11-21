@@ -43,8 +43,9 @@ def main(argv: list[str] | None = None) -> int:
         return 0
     if cmd == "version":
         from . import __version__, config
+        from .adapters.bridge import status
         _print({"cig": __version__, "library": str(config.LIBRARY_DIR), "data": str(config.home()),
-                "frozen": bool(getattr(sys, "frozen", False))})
+                "frozen": bool(getattr(sys, "frozen", False)), "bridges": status()})
         return 0
     sys.stdout.write(__doc__ or "")
     return 0 if cmd in ("help", "-h", "--help") else 2

@@ -237,17 +237,16 @@ def launch(exe: str, args: list[str], policy: Optional[Policy] = None, confirm: 
 def bridge_env(kind: str, exe: str, args: list) -> tuple:
     """(environment for the launch, channel file) - or (None, reason) when this bridge cannot be used."""
     import uuid
-    from .adapters.bridge import bridge_dir
-    d = bridge_dir()
-    d.mkdir(parents=True, exist_ok=True)
-    channel = str(d / f"channel-{uuid.uuid4().hex}.json")
+    from .adapters.bridge import assets_dir, bridge_dir
+    assets = assets_dir()
+    channel = str(bridge_dir() / f"channel-{uuid.uuid4().hex}.json")
     if kind == "dotnet":
-        dll = d / "dotnet" / "Cig.Bridge.DotNet.dll"
+        dll = assets / "dotnet" / "Cig.Bridge.DotNet.dll"
         if not dll.is_file():
             return None, f"the .NET bridge is not built ({dll}); run tools/build_bridges.py"
         return {"DOTNET_STARTUP_HOOKS": str(dll), "CIG_BRIDGE_CHANNEL": channel}, channel
     if kind == "python":
-        boot = config.REPO / "bridges" / "python" / "cig_bridge_boot.py"
+        boot = assets / "python" / "cig_bridge_boot.py"
         if not boot.is_file():
             return None, "the Python bridge is missing (bridges/python)"
         # the program is a Python script: start the same interpreter with the bridge first, then the script itself

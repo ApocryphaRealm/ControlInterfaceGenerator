@@ -26,8 +26,46 @@ _LOCK = threading.Lock()
 
 
 def bridge_dir() -> Path:
+    """Where CIG writes bridge CHANNEL files (its own data folder, never next to the program)."""
     import os
-    return Path(os.environ.get("CIG_BRIDGES") or (config.REPO / "var" / "bridges"))
+    d = Path(os.environ.get("CIG_BRIDGE_CHANNELS") or (config.home() / "bridges"))
+    d.mkdir(parents=True, exist_ok=True)
+    return d
+
+
+def assets_dir() -> Path:
+    """Where the bridge FILES are: the .NET hook (dotnet/Cig.Bridge.DotNet.dll) and the Python boot (python/).
+    From source: var/bridges/dotnet (tools/build_bridges.py) and bridges/python. Inside cig.exe they are bundled, but a
+    one-file exe unpacks to a temporary folder that goes away when CIG exits while a launched program still uses its
+    bridge - so they are copied once to %LOCALAPPDATA%/CIG/bridges/<version>/ and used from there."""
+    import os
+    import shutil
+    if os.environ.get("CIG_BRIDGES"):
+        return Path(os.environ["CIG_BRIDGES"])
+    if not config.FROZEN:
+        d = config.REPO / "var" / "bridges"
+        py = d / "python"
+        src = config.REPO / "bridges" / "python"
+        if src.is_dir() and not py.exists():
+            shutil.copytree(src, py)                    # one layout for both: <assets>/dotnet and <assets>/python
+        elif src.is_dir():
+            for f in src.glob("*.py"):
+                if not (py / f.name).exists() or (py / f.name).read_bytes() != f.read_bytes():
+                    shutil.copy2(f, py / f.name)
+        return d
+    from .. import __version__
+    stable = config.home() / "bridges" / __version__
+    if not (stable / "dotnet" / "Cig.Bridge.DotNet.dll").is_file() or not (stable / "python").is_dir():
+        bundled = config.REPO / "bridge-assets"
+        if bundled.is_dir():
+            shutil.copytree(bundled, stable, dirs_exist_ok=True)
+    return stable
+
+
+def status() -> dict:
+    a = assets_dir()
+    return {"assets": str(a), "dotnet": (a / "dotnet" / "Cig.Bridge.DotNet.dll").is_file(),
+            "python": (a / "python" / "cig_bridge_boot.py").is_file()}
 
 
 def register(pid: int, info: dict) -> None:

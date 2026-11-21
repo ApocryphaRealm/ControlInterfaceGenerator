@@ -81,7 +81,9 @@ listens on loopback only, with a fresh token, and its tree feeds the same rules,
 | `python` (`bridges/python`) | launch wrapper that starts the bridge, then runs the script | Tk (tkinter) | 0; Tk 8.6 has no accessibility | **17/17** |
 | `python` | same | FireMonkey through Embarcadero's delphifmx | 0; FMX publishes no controls | **12/12** |
 
-Use `cig_launch(..., bridge="dotnet" | "python")`. Native Delphi FireMonkey executables have no documented way in,
+Use `cig_launch(..., bridge="dotnet" | "python")`. `cig.exe` carries both bridges and copies them once to
+`%LOCALAPPDATA%\CIG\bridges\<version>\`; `cig version` reports whether they are there, and the release build refuses
+to publish an exe without them (`tools/prove_exe_bridge.py` drives the Avalonia gallery through the built exe). Native Delphi FireMonkey executables have no documented way in,
 so they stay at window level unless their developer adds accessibility.
 
 ## What went wrong on the way, and what it changed
