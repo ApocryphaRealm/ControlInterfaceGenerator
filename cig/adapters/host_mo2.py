@@ -19,7 +19,8 @@ Window whose buttons are its answers (action answer_dialog), and its own control
 open, only that dialog's elements are listed - nothing behind it can be acted on, by the plugin's own rule.
 
 LISTS AND MENUS (plugin 1.1.0 with ui_items / ui_item / ui_menus / ui_menu). A list, table or tree becomes a List or
-Tree node whose children are its first rows (VIEW_ROWS of them; `list_items` pages the rest): a row with a box takes
+Tree node whose children are ALL its rows, read page by page (VIEW_PAGE a call, the plugin's own maximum, up to
+VIEW_ROWS in all): a row with a box takes
 set_checked, any other row select, a tree row with rows under it expand. The window's menu bar and tool bar entries
 become one MenuBar node, driven by the library's `menu` action with a path ("Tools/Tool Plugins/My Tool").
 
@@ -383,10 +384,27 @@ class HostMo2Adapter(Adapter):
                 continue
             loc = view_node(c, controls, window, unique, None)["host"]
             try:
-                out[id(c)] = self._call(inst, "ui_items", dict(_view_loc(loc), limit=VIEW_ROWS))
+                out[id(c)] = self._all_rows(inst, _view_loc(loc))
             except AdapterError:
                 continue                    # a list that cannot be read stays a list with no rows
         return out
+
+    def _all_rows(self, inst: str, view_loc: dict) -> dict:
+        """Every row of one list, page by page through the plugin's own paging (its 'next'), up to VIEW_ROWS. A snapshot
+        holding only the first page left every row past it out of reach (request ad4d, 2026-11-21: the scratch mod
+        list's only rows with a box were 78-85 and the snapshot held rows 0-59)."""
+        first = self._call(inst, "ui_items", dict(view_loc, limit=VIEW_PAGE))
+        rows, nxt = list(first.get("rows") or []), first.get("next")
+        while nxt is not None and len(rows) < VIEW_ROWS:
+            if not isinstance(nxt, int) or isinstance(nxt, bool) or (rows and nxt <= rows[-1].get("row", -1)):
+                break                       # a cursor that does not move on is never followed round in a loop
+            page = self._call(inst, "ui_items", dict(view_loc, start=nxt, limit=min(VIEW_PAGE, VIEW_ROWS - len(rows))))
+            got = page.get("rows") or []
+            if not got:
+                break
+            rows.extend(got)
+            nxt = page.get("next")
+        return dict(first, rows=rows, next=nxt)
 
     def _menus(self, inst: str, window: Optional[str]) -> Optional[dict]:
         if not window or not self._has(inst, "ui_menus"):
@@ -521,11 +539,12 @@ def _view_loc(host: dict) -> dict:
 
 
 # ------------------------------------------------------------------------------- lists, trees and menus (plugin 1.1.0+)
-VIEW_ROWS = 60          # rows of each list read into a snapshot; the rest are reached with the plugin's own paging
+VIEW_PAGE = 1000        # rows a ui_items call returns at most (the plugin's MAX_ROWS)
+VIEW_ROWS = 20000       # every row of a list is read into a snapshot, page by page, up to this many
 
 
 def view_node(c: dict, controls: list[dict], window: Optional[str], unique_names: set, rows_reply: Optional[dict]) -> dict:
-    """A list, table or tree as a node whose children are its first rows. A row with a box is settable (set_checked),
+    """A list, table or tree as a node whose children are its rows (all of them, VIEW_ROWS at most). A row with a box is settable (set_checked),
     any other row selectable; a tree row with rows under it can be opened."""
     loc = host_locator(c, controls, window)
     if loc is None:                                   # no objectName: kind + its place among the window's views

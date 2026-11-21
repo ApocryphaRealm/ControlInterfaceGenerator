@@ -46,6 +46,7 @@ class FakeMo2:
                         {"path": "Tools > Tool Plugins > MO2 Modlist Manager", "enabled": True},
                         {"path": "Tools > Remove orphans", "enabled": True},
                         {"path": "View > Log", "enabled": True, "checked": False}, {"path": "Refresh", "enabled": True}]
+        self.max_rows = 1000                # the plugin's MAX_ROWS: no page it returns is longer
         self.menu_chosen = []
         self.calls, self.confirms, self.answers = [], [], []
 
@@ -92,7 +93,7 @@ class FakeMo2:
         if cmd == "ui_items":
             if self.state != "main" or args.get("name") != "modList":
                 raise ValueError("no visible control matches")
-            start, limit = args.get("start", 0), args.get("limit", 100)
+            start, limit = args.get("start", 0), min(args.get("limit", 100), self.max_rows)
             rows = copy.deepcopy(self.rows[start:start + limit])
             nxt = start + limit if start + limit < len(self.rows) else None
             return {"ok": True, "view": {"kind": "view", "name": "modList", "tree": True}, "total": len(self.rows), "start": start,
@@ -352,6 +353,29 @@ def test_mod_list_rows_are_typed_actions(eng, mo2):
     tree = {e["name"]: e for e in server.cig_tree(APP)["elements"] if e["type"] == "TreeItem"}
     assert tree["Alpha"]["toggle_state"] == "On" and tree["Bravo"]["toggle_state"] == "Off"
     assert tree["Alpha"]["value"] == "Alpha | 0"
+
+
+def test_rows_past_the_first_pages_are_reached(eng, mo2, idle):
+    """Request ad4d (2026-11-21): on the scratch MO2 the mod list's only rows with a box were 78-85 and the adapter read
+    60 rows into its snapshot, so no mod could be ticked. Here a list of 150 rows, read in pages of 50 (the fake caps a
+    page as the plugin caps it at 1000), whose only boxes are rows 120-124: every row is in the tree and a box past
+    row 60 is ticked through the plugin."""
+    mo2.max_rows = 50
+    mo2.rows = ([{"row": i, "cells": [f"DLC entry {i}", str(i)]} for i in range(120)]
+                + [{"row": 120 + i, "cells": [f"Mod {i}", str(120 + i)], "checked": i % 2 == 0} for i in range(5)]
+                + [{"row": 125 + i, "cells": [f"Tail {i}", str(125 + i)]} for i in range(25)])
+    next(c for c in mo2.trees["main"]["controls"] if c.get("name") == "modList")["rows"] = len(mo2.rows)
+    tree = [e for e in server.cig_tree(APP, max_nodes=2000)["elements"] if e["type"] == "TreeItem"]
+    assert len(tree) == 150 and tree[-1]["name"] == "Tail 24"
+    starts = [c[1].get("start", 0) for c in mo2.calls if c[0] == "ui_items"]
+    assert starts[:3] == [0, 50, 100]                                   # paged by the plugin's own 'next'
+    labels = {a["label"] for a in eng.actions(APP)["actions"]}
+    assert {f"set_checked TreeItem 'Mod {i}'" for i in range(5)} <= labels
+    assert not any(lb.startswith("set_checked TreeItem 'DLC entry") for lb in labels)
+    idle(30)
+    r = server.cig_do(APP, act(eng, "set_checked", "Mod 1")["id"], {"checked": True})
+    assert r["ok"] and r["verified"] is True and mo2.rows[121]["checked"] is True
+    assert [c for c in mo2.calls if c[0] == "ui_item"][-1][1]["match"] == "Mod 1"
 
 
 def test_ticking_a_mod_goes_through_the_plugins_model_command(eng, mo2, idle):
