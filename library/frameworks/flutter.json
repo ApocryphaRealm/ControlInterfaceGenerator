@@ -1,0 +1,29 @@
+{
+ "framework": "flutter",
+ "label": "Flutter",
+ "versions": "any",
+ "source": [
+  "doc: plan 2.2 and learn.microsoft.com UIA overview (2026-10-24)"
+ ],
+ "adapter_in_v1": false,
+ "detect": {
+  "window_class": [
+   {
+    "re": "^FLUTTER_RUNNER_WIN32_WINDOW$",
+    "w": 0.8
+   }
+  ],
+  "modules": [
+   {
+    "re": "^flutter_windows\\.dll$",
+    "w": 0.7
+   }
+  ]
+ },
+ "adapters": [
+  {
+   "name": "uia",
+   "base": 0.6
+  }
+ ]
+}

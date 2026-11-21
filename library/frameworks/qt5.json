@@ -1,0 +1,42 @@
+{
+ "framework": "qt5",
+ "label": "Qt 5",
+ "versions": "any",
+ "source": [
+  "doc: plan 2.2 and learn.microsoft.com UIA overview (2026-10-24)"
+ ],
+ "adapter_in_v1": true,
+ "detect": {
+  "modules": [
+   {
+    "re": "^qt5core\\.dll$",
+    "w": 0.8
+   }
+  ],
+  "window_class": [
+   {
+    "re": "^Qt5\\d*QWindow",
+    "w": 0.3
+   }
+  ],
+  "uia_framework_id": [
+   {
+    "re": "^Qt$",
+    "w": 0.1
+   }
+  ]
+ },
+ "adapters": [
+  {
+   "name": "uia",
+   "base": 0.75
+  }
+ ],
+ "version_from": {
+  "module_re": "^qt5core\\.dll$"
+ },
+ "specializes": [
+  "win32"
+ ],
+ "notes": "Qt 5 exposes UIA through its MSAA bridge: names yes, AutomationIds rarely (to verify by probe)."
+}

@@ -72,11 +72,25 @@ def foreground_pid() -> Optional[int]:
         return None
 
 
+def exe_of(pid: Optional[int]) -> str:
+    seam = os.environ.get("CIG_FOREGROUND_EXE")
+    if seam is not None:
+        return seam
+    if not pid:
+        return ""
+    try:
+        import psutil
+        return psutil.Process(pid).name()
+    except Exception:                                      # noqa: BLE001
+        return ""
+
+
 @dataclass
 class Presence:
     idle_min: Optional[float]      # minutes since the last input we trust; None = unknown
     source: str                    # "watcher" | "system" | "unknown"
     foreground_pid: Optional[int]
+    foreground_exe: str = ""
 
     def as_dict(self) -> dict:
         d = asdict(self)
@@ -89,6 +103,7 @@ def read() -> Presence:
     t = now()
     w = _read_watcher()
     fg = foreground_pid()
+    fx = exe_of(fg)
     if w:
         try:
             alive = float(w.get("watcher_alive_epoch") or 0)
@@ -96,8 +111,8 @@ def read() -> Presence:
         except (TypeError, ValueError):
             alive = last = 0.0
         if alive and (t - alive) / 60.0 < WATCHER_STALE_MIN and last:
-            return Presence(max(0.0, (t - last) / 60.0), "watcher", fg)
+            return Presence(max(0.0, (t - last) / 60.0), "watcher", fg, fx)
     sys_idle = system_idle_minutes()
     if sys_idle is not None:
-        return Presence(sys_idle, "system", fg)
-    return Presence(None, "unknown", fg)
+        return Presence(sys_idle, "system", fg, fx)
+    return Presence(None, "unknown", fg, fx)

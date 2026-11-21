@@ -1,0 +1,33 @@
+{
+ "framework": "java",
+ "label": "Java AWT / Swing / SWT",
+ "versions": "any",
+ "source": [
+  "doc: plan 2.2 and learn.microsoft.com UIA overview (2026-10-24)"
+ ],
+ "adapter_in_v1": false,
+ "detect": {
+  "window_class": [
+   {
+    "re": "^SunAwt",
+    "w": 0.7
+   },
+   {
+    "re": "^SWT_Window",
+    "w": 0.6
+   }
+  ],
+  "modules": [
+   {
+    "re": "^jvm\\.dll$",
+    "w": 0.6
+   }
+  ]
+ },
+ "adapters": [
+  {
+   "name": "java-access-bridge",
+   "base": 0.7
+  }
+ ]
+}

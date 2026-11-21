@@ -68,7 +68,8 @@ def cig_status() -> dict:
 @mcp.tool(annotations=RO)
 def cig_apps() -> dict:
     """Programs with windows that CIG can see now (pid, exe, title, detected framework where known)."""
-    return {"ok": True, "apps": engine().apps()}
+    from .detect import list_apps
+    return {"ok": True, "apps": list_apps()}
 
 
 @mcp.tool(annotations=RO)

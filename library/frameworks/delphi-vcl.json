@@ -1,0 +1,26 @@
+{
+ "framework": "delphi-vcl",
+ "label": "Delphi VCL",
+ "versions": "any",
+ "source": [
+  "doc: plan 2.2 and learn.microsoft.com UIA overview (2026-10-24)"
+ ],
+ "adapter_in_v1": false,
+ "detect": {
+  "window_class": [
+   {
+    "re": "^T(Form|Application)",
+    "w": 0.6
+   }
+  ]
+ },
+ "adapters": [
+  {
+   "name": "uia",
+   "base": 0.5
+  }
+ ],
+ "specializes": [
+  "win32"
+ ]
+}

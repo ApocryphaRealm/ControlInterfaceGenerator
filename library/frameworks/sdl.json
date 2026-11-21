@@ -1,0 +1,30 @@
+{
+ "framework": "sdl",
+ "label": "SDL / GLFW / custom-drawn",
+ "versions": "any",
+ "source": [
+  "doc: plan 2.2 and learn.microsoft.com UIA overview (2026-10-24)"
+ ],
+ "adapter_in_v1": false,
+ "detect": {
+  "window_class": [
+   {
+    "re": "^(SDL_app|GLFW30)$",
+    "w": 0.6
+   }
+  ],
+  "modules": [
+   {
+    "re": "^(sdl2|sdl3|glfw3)\\.dll$",
+    "w": 0.4
+   }
+  ]
+ },
+ "adapters": [
+  {
+   "name": "none",
+   "base": 0.0,
+   "needs": "an in-process bridge (the DevBench pattern)"
+  }
+ ]
+}

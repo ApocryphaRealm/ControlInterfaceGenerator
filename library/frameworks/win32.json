@@ -1,0 +1,41 @@
+{
+ "framework": "win32",
+ "label": "Win32 (USER32 / common controls)",
+ "versions": "any",
+ "source": [
+  "doc: plan 2.2 and learn.microsoft.com UIA overview (2026-10-24)"
+ ],
+ "adapter_in_v1": true,
+ "detect": {
+  "window_class": [
+   {
+    "re": "^#32770$",
+    "w": 0.3
+   },
+   {
+    "re": "^(SysListView32|SysTreeView32|Edit|Button|ToolbarWindow32|msctls_.*|ComboBox|RichEdit.*)$",
+    "w": 0.2
+   },
+   {
+    "re": ".",
+    "w": 0.05
+   }
+  ],
+  "uia_framework_id": [
+   {
+    "re": "^Win32$",
+    "w": 0.35
+   }
+  ]
+ },
+ "adapters": [
+  {
+   "name": "uia",
+   "base": 0.85
+  }
+ ],
+ "version_from": {
+  "exe_file_version": true
+ },
+ "notes": "The fallback for any native window. Low weights on purpose: every richer framework also shows Win32 evidence."
+}

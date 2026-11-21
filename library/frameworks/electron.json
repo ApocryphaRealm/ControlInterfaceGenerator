@@ -1,0 +1,85 @@
+{
+ "framework": "electron",
+ "label": "Electron",
+ "versions": "any",
+ "source": [
+  "doc: plan 2.2 and learn.microsoft.com UIA overview (2026-10-24)",
+  "probe:2026-11-20 detection of installed apps (tools/prove_m1.py)"
+ ],
+ "adapter_in_v1": true,
+ "detect": {
+  "files_beside_exe": [
+   {
+    "re": "^resources[\\\\/]app\\.asar$",
+    "w": 0.6
+   },
+   {
+    "re": "^resources[\\\\/]app[\\\\/]package\\.json$",
+    "w": 0.4
+   }
+  ],
+  "exe_strings": [
+   {
+    "re": "Electron/\\d+\\.\\d+\\.\\d+",
+    "w": 0.5
+   }
+  ],
+  "window_class": [
+   {
+    "re": "^Chrome_WidgetWin_1$",
+    "w": 0.1
+   }
+  ]
+ },
+ "adapters": [
+  {
+   "name": "cdp",
+   "base": 0.9,
+   "needs": "--remote-debugging-port (fuse permitting)"
+  },
+  {
+   "name": "uia",
+   "base": 0.6
+  }
+ ],
+ "version_from": {
+  "exe_regex": "Electron/(\\d+\\.\\d+\\.\\d+)"
+ },
+ "specializes": [
+  "chromium",
+  "win32"
+ ],
+ "observed": [
+  {
+   "app": "Discord.exe",
+   "version": "1.0.9269",
+   "framework_version": "44.10.2",
+   "date": "2026-11-20",
+   "uia_framework_ids": [
+    "Chrome",
+    "Win32"
+   ],
+   "window_classes": [
+    "Chrome_WidgetWin_1",
+    "Intermediate D3D Window"
+   ],
+   "richness": 0.69
+  },
+  {
+   "app": "claude.exe",
+   "version": "6.6395.0",
+   "framework_version": "45.3.3",
+   "date": "2026-11-20",
+   "uia_framework_ids": [
+    "Chrome",
+    "Win32"
+   ],
+   "window_classes": [
+    "Chrome_WidgetWin_1",
+    "Chrome_RenderWidgetHostHWND",
+    "Intermediate D3D Window"
+   ],
+   "richness": 0.79
+  }
+ ]
+}

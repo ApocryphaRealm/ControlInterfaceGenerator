@@ -1,0 +1,44 @@
+{
+ "framework": "winui3",
+ "label": "WinUI 3 (Windows App SDK)",
+ "versions": "any",
+ "source": [
+  "doc: plan 2.2 and learn.microsoft.com UIA overview (2026-10-24)"
+ ],
+ "adapter_in_v1": true,
+ "detect": {
+  "window_class": [
+   {
+    "re": "^WinUIDesktopWin32WindowClass$",
+    "w": 0.6
+   }
+  ],
+  "modules": [
+   {
+    "re": "^microsoft\\.ui\\.xaml\\.dll$",
+    "w": 0.6,
+    "version": ">=3"
+   }
+  ],
+  "uia_framework_id": [
+   {
+    "re": "^XAML$",
+    "w": 0.2
+   }
+  ]
+ },
+ "adapters": [
+  {
+   "name": "uia",
+   "base": 0.9
+  }
+ ],
+ "version_from": {
+  "module_re": "^microsoft\\.ui\\.xaml\\.dll$"
+ },
+ "specializes": [
+  "win32",
+  "uwp"
+ ],
+ "notes": "Microsoft.UI.Xaml.dll at 3.x is WinUI 3; at 2.x it is WinUI 2 (a UWP control library, also in XAML islands)."
+}

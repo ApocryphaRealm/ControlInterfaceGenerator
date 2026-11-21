@@ -1,0 +1,68 @@
+{
+ "framework": "uwp",
+ "label": "UWP / system XAML / WinUI 2 (CoreWindow, XAML islands)",
+ "versions": "any",
+ "source": [
+  "doc: plan 2.2 and learn.microsoft.com UIA overview (2026-10-24)",
+  "probe:2026-11-20 detection of installed apps (tools/prove_m1.py)"
+ ],
+ "adapter_in_v1": true,
+ "detect": {
+  "window_class": [
+   {
+    "re": "^(Windows\\.UI\\.Core\\.CoreWindow|ApplicationFrameWindow)$",
+    "w": 0.5
+   }
+  ],
+  "modules": [
+   {
+    "re": "^windows\\.ui\\.xaml\\.dll$",
+    "w": 0.4
+   },
+   {
+    "re": "^microsoft\\.ui\\.xaml\\.dll$",
+    "w": 0.2,
+    "version": "<3"
+   }
+  ],
+  "uia_framework_id": [
+   {
+    "re": "^XAML$",
+    "w": 0.2
+   }
+  ],
+  "msix": [
+   {
+    "re": ".",
+    "w": 0.1
+   }
+  ]
+ },
+ "adapters": [
+  {
+   "name": "uia",
+   "base": 0.85
+  }
+ ],
+ "version_from": {
+  "exe_file_version": true
+ },
+ "specializes": [
+  "win32"
+ ],
+ "observed": [
+  {
+   "app": "SystemSettings.exe",
+   "version": "10.0.26100.9549",
+   "framework_version": "10.0.26100.9549",
+   "date": "2026-11-20",
+   "uia_framework_ids": [
+    "Win32"
+   ],
+   "window_classes": [
+    "Windows.UI.Core.CoreWindow"
+   ],
+   "richness": 0.0
+  }
+ ]
+}

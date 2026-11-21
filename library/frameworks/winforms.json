@@ -1,0 +1,58 @@
+{
+ "framework": "winforms",
+ "label": "Windows Forms (.NET)",
+ "versions": "any",
+ "source": [
+  "doc: plan 2.2 and learn.microsoft.com UIA overview (2026-10-24)",
+  "probe:2026-11-20 detection of installed apps (tools/prove_m1.py)"
+ ],
+ "adapter_in_v1": true,
+ "detect": {
+  "window_class": [
+   {
+    "re": "^WindowsForms10\\.",
+    "w": 0.6
+   }
+  ],
+  "modules": [
+   {
+    "re": "^system\\.windows\\.forms(\\.ni)?\\.dll$",
+    "w": 0.4
+   }
+  ],
+  "uia_framework_id": [
+   {
+    "re": "^WinForm$",
+    "w": 0.3
+   }
+  ]
+ },
+ "adapters": [
+  {
+   "name": "uia",
+   "base": 0.85
+  }
+ ],
+ "version_from": {
+  "module_re": "^system\\.windows\\.forms(\\.ni)?\\.dll$"
+ },
+ "specializes": [
+  "win32"
+ ],
+ "observed": [
+  {
+   "app": "LibreHardwareMonitor.exe",
+   "version": "0.9.6+3d331e3370efb858411f19511373eff65a218701",
+   "framework_version": null,
+   "date": "2026-11-20",
+   "uia_framework_ids": [
+    "WinForm"
+   ],
+   "window_classes": [
+    "WindowsForms10.Window.8.app.0.141b42a_r6_ad1",
+    "WindowsForms10.SCROLLBAR.app.0.141b42a_r6_ad1"
+   ],
+   "richness": 0.57
+  }
+ ]
+}

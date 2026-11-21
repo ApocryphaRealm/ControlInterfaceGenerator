@@ -1,0 +1,52 @@
+{
+ "framework": "console",
+ "label": "Console program",
+ "versions": "any",
+ "source": [
+  "doc: plan 2.2 and learn.microsoft.com UIA overview (2026-10-24)",
+  "probe:2026-11-20 detection of installed apps (tools/prove_m1.py)"
+ ],
+ "adapter_in_v1": true,
+ "detect": {
+  "pe_subsystem": [
+   {
+    "re": "^console$",
+    "w": 0.7
+   }
+  ],
+  "window_class": [
+   {
+    "re": "^(ConsoleWindowClass|PseudoConsoleWindow)$",
+    "w": 0.4
+   }
+  ]
+ },
+ "adapters": [
+  {
+   "name": "cli",
+   "base": 0.9
+  },
+  {
+   "name": "uia",
+   "base": 0.3
+  }
+ ],
+ "version_from": {
+  "exe_file_version": true
+ },
+ "observed": [
+  {
+   "app": "powershell.exe",
+   "version": "10.0.26100.8972",
+   "framework_version": "10.0.26100.8972",
+   "date": "2026-11-20",
+   "uia_framework_ids": [
+    "Win32"
+   ],
+   "window_classes": [
+    "ConsoleWindowClass"
+   ],
+   "richness": 0.57
+  }
+ ]
+}

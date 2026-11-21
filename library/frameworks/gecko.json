@@ -1,0 +1,41 @@
+{
+ "framework": "gecko",
+ "label": "Firefox / Gecko",
+ "versions": "any",
+ "source": [
+  "doc: plan 2.2 and learn.microsoft.com UIA overview (2026-10-24)"
+ ],
+ "adapter_in_v1": false,
+ "detect": {
+  "window_class": [
+   {
+    "re": "^MozillaWindowClass$",
+    "w": 0.7
+   }
+  ],
+  "modules": [
+   {
+    "re": "^xul\\.dll$",
+    "w": 0.5
+   }
+  ],
+  "uia_framework_id": [
+   {
+    "re": "^Gecko$",
+    "w": 0.2
+   }
+  ]
+ },
+ "adapters": [
+  {
+   "name": "uia",
+   "base": 0.6
+  }
+ ],
+ "version_from": {
+  "exe_file_version": true
+ },
+ "specializes": [
+  "win32"
+ ]
+}

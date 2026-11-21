@@ -29,6 +29,7 @@ DEFAULT_POLICY = {
     "idle_min": 5,
     "third_party_foreground_min": 30,
     "first_party_apps": ["modorganizer.exe"],
+    "hold_screen_apps": [],
     "deny": {
         "actions": ["set_secret"],
         "apps": [],
@@ -60,6 +61,7 @@ class Policy:
         self.deny_apps = set(_lower_list(deny.get("apps")))
         self.deny_titles = [re.compile(p, re.I) for p in deny.get("window_title_patterns") or []]
         self.apps = {k.lower(): v for k, v in (d.get("apps") or {}).items()}
+        self.hold_screen = set(_lower_list(d.get("hold_screen_apps")))
 
     @classmethod
     def load(cls, path: Optional[Path] = None) -> "Policy":
@@ -139,6 +141,12 @@ def decide(req: Request, presence: Presence, policy: Policy) -> Decision:
     if req.dry_run:
         checks.append("dry run: stopping before the adapter")
         return Decision(True, "dry_run", "", checks)
+
+    # 4b. a full-screen program the person (or another session's test) is running holds the screen: a write may
+    #     steal its focus (a launch always does), so nothing writes while one is in front
+    if (presence.foreground_exe or "").lower() in policy.hold_screen:
+        return _refuse(f"'{presence.foreground_exe}' is in the foreground and holds the screen "
+                       f"(a write could take its focus); confirm cannot override", checks)
 
     idle = presence.idle_min
     active = idle is None or idle < policy.idle_min

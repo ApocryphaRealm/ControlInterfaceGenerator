@@ -1,0 +1,30 @@
+{
+ "framework": "game-engine",
+ "label": "Unity / Unreal",
+ "versions": "any",
+ "source": [
+  "doc: plan 2.2 and learn.microsoft.com UIA overview (2026-10-24)"
+ ],
+ "adapter_in_v1": false,
+ "detect": {
+  "window_class": [
+   {
+    "re": "^(UnityWndClass|UnrealWindow)$",
+    "w": 0.8
+   }
+  ],
+  "modules": [
+   {
+    "re": "^unityplayer\\.dll$",
+    "w": 0.6
+   }
+  ]
+ },
+ "adapters": [
+  {
+   "name": "none",
+   "base": 0.0,
+   "needs": "an in-process bridge"
+  }
+ ]
+}

@@ -1,0 +1,11 @@
+{
+  "app": "mo2",
+  "label": "Mod Organizer 2",
+  "exe": ["ModOrganizer.exe"],
+  "source": ["doc: MO2AgentControl docs/PROTOCOL.md (protocol 1)"],
+  "host_channels": [
+    {"adapter": "host:mo2-agent-control", "channel_file": "plugins/data/ApocryphaAgentControl/channel.json",
+     "relative_to": "exe_dir", "loopback_only": true, "base": 0.98}
+  ],
+  "notes": "Per-app generated tools are on for MO2 only (default taken 2026-11-20). The host adapter is milestone M3."
+}

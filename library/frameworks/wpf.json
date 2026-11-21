@@ -1,0 +1,45 @@
+{
+ "framework": "wpf",
+ "label": "WPF (.NET)",
+ "versions": "any",
+ "source": [
+  "doc: plan 2.2 and learn.microsoft.com UIA overview (2026-10-24)"
+ ],
+ "adapter_in_v1": true,
+ "detect": {
+  "window_class": [
+   {
+    "re": "^HwndWrapper\\[",
+    "w": 0.6
+   }
+  ],
+  "modules": [
+   {
+    "re": "^presentationframework(\\.ni)?\\.dll$",
+    "w": 0.4
+   },
+   {
+    "re": "^wpfgfx_",
+    "w": 0.2
+   }
+  ],
+  "uia_framework_id": [
+   {
+    "re": "^WPF$",
+    "w": 0.4
+   }
+  ]
+ },
+ "adapters": [
+  {
+   "name": "uia",
+   "base": 0.9
+  }
+ ],
+ "version_from": {
+  "module_re": "^presentationframework(\\.ni)?\\.dll$"
+ },
+ "specializes": [
+  "win32"
+ ]
+}

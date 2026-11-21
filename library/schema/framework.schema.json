@@ -1,0 +1,40 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "cig/framework.schema.json",
+  "title": "CIG capability library - one framework entry (library/frameworks/<framework>.json)",
+  "type": "object",
+  "required": ["framework", "label", "source", "detect", "adapters", "adapter_in_v1"],
+  "properties": {
+    "framework": {"type": "string", "pattern": "^[a-z0-9-]+$"},
+    "label": {"type": "string"},
+    "versions": {"type": "string"},
+    "source": {"type": "array", "items": {"type": "string", "pattern": "^(doc|probe|field)"}, "minItems": 1},
+    "adapter_in_v1": {"type": "boolean"},
+    "specializes": {"type": "array", "items": {"type": "string"}},
+    "notes": {"type": "string"},
+    "detect": {
+      "type": "object",
+      "propertyNames": {"enum": ["modules", "window_class", "uia_framework_id", "files_beside_exe", "exe_strings", "pe_subsystem", "msix"]},
+      "additionalProperties": {
+        "type": "array",
+        "items": {"type": "object", "required": ["re", "w"],
+                  "properties": {"re": {"type": "string"}, "w": {"type": "number", "minimum": 0, "maximum": 1},
+                                 "version": {"type": "string", "pattern": "^(>=|<=|>|<|==)[0-9.]+$"}},
+                  "additionalProperties": false}
+      }
+    },
+    "version_from": {
+      "type": "object",
+      "properties": {"module_re": {"type": "string"}, "exe_file_version": {"type": "boolean"},
+                     "exe_regex": {"type": "string"}},
+      "additionalProperties": false
+    },
+    "adapters": {
+      "type": "array",
+      "items": {"type": "object", "required": ["name", "base"],
+                "properties": {"name": {"type": "string"}, "base": {"type": "number"}, "needs": {"type": "string"}}}
+    },
+    "observed": {"type": "array", "description": "probe / field observations: {app, version, date, uia_framework_ids, window_classes, richness}"},
+    "quirks": {"type": "array", "items": {"type": "object", "required": ["id", "text"]}}
+  }
+}

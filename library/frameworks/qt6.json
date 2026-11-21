@@ -1,0 +1,58 @@
+{
+ "framework": "qt6",
+ "label": "Qt 6",
+ "versions": "any",
+ "source": [
+  "doc: plan 2.2 and learn.microsoft.com UIA overview (2026-10-24)",
+  "probe:2026-11-20 detection of installed apps (tools/prove_m1.py)"
+ ],
+ "adapter_in_v1": true,
+ "detect": {
+  "modules": [
+   {
+    "re": "^qt6core\\.dll$",
+    "w": 0.8
+   }
+  ],
+  "window_class": [
+   {
+    "re": "^Qt6\\d*QWindow",
+    "w": 0.3
+   }
+  ],
+  "uia_framework_id": [
+   {
+    "re": "^Qt$",
+    "w": 0.1
+   }
+  ]
+ },
+ "adapters": [
+  {
+   "name": "uia",
+   "base": 0.8
+  }
+ ],
+ "version_from": {
+  "module_re": "^qt6core\\.dll$"
+ },
+ "specializes": [
+  "win32"
+ ],
+ "notes": "Qt 6 has a native UIA provider (qtbase src/plugins/platforms/windows/uiautomation).",
+ "observed": [
+  {
+   "app": "ModOrganizer.exe",
+   "version": "2.5.2",
+   "framework_version": "6.7.1.0",
+   "date": "2026-11-20",
+   "uia_framework_ids": [
+    "Qt"
+   ],
+   "window_classes": [
+    "Qt671QWindowIcon"
+   ],
+   "richness": 0.82
+  }
+ ]
+}

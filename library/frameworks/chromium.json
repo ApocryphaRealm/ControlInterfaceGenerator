@@ -1,0 +1,91 @@
+{
+ "framework": "chromium",
+ "label": "Chromium / CEF",
+ "versions": "any",
+ "source": [
+  "doc: plan 2.2 and learn.microsoft.com UIA overview (2026-10-24)",
+  "probe:2026-11-20 detection of installed apps (tools/prove_m1.py)"
+ ],
+ "adapter_in_v1": true,
+ "detect": {
+  "window_class": [
+   {
+    "re": "^Chrome_WidgetWin_\\d+$",
+    "w": 0.4
+   },
+   {
+    "re": "^Chrome_RenderWidgetHostHWND$",
+    "w": 0.2
+   }
+  ],
+  "modules": [
+   {
+    "re": "^libcef\\.dll$",
+    "w": 0.6
+   },
+   {
+    "re": "^chrome_elf\\.dll$",
+    "w": 0.2
+   }
+  ],
+  "uia_framework_id": [
+   {
+    "re": "^Chrome$",
+    "w": 0.2
+   }
+  ]
+ },
+ "adapters": [
+  {
+   "name": "cdp",
+   "base": 0.9,
+   "needs": "--remote-debugging-port on a separate profile"
+  },
+  {
+   "name": "uia",
+   "base": 0.6
+  }
+ ],
+ "version_from": {
+  "module_re": "^libcef\\.dll$",
+  "exe_regex": "Chrome/(\\d+\\.\\d+\\.\\d+\\.\\d+)",
+  "exe_file_version": true
+ },
+ "specializes": [
+  "win32"
+ ],
+ "observed": [
+  {
+   "app": "Spotify.exe",
+   "version": "1.3.10.2586",
+   "framework_version": "156.0.15.0",
+   "date": "2026-11-20",
+   "uia_framework_ids": [
+    "Chrome",
+    "Win32"
+   ],
+   "window_classes": [
+    "Chrome_WidgetWin_1",
+    "Chrome_RenderWidgetHostHWND",
+    "Intermediate D3D Window"
+   ],
+   "richness": 0.67
+  },
+  {
+   "app": "chrome.exe",
+   "version": "157.0.8103.79",
+   "framework_version": "157.0.8103.79",
+   "date": "2026-11-20",
+   "uia_framework_ids": [
+    "Chrome",
+    "Win32"
+   ],
+   "window_classes": [
+    "Chrome_WidgetWin_1",
+    "Chrome_RenderWidgetHostHWND",
+    "Intermediate D3D Window"
+   ],
+   "richness": 0.76
+  }
+ ]
+}

@@ -3,6 +3,8 @@
   "idle_min": 5,
   "third_party_foreground_min": 30,
   "first_party_apps": ["ModOrganizer.exe"],
+  "hold_screen_apps": ["SkyrimSE.exe", "SkyrimVR.exe", "OblivionRemastered-Win64-Shipping.exe", "witcher3.exe",
+                       "Norse-Win64-Shipping.exe", "Norse.exe"],
   "deny": {
     "actions": ["set_secret"],
     "apps": [
