@@ -10,7 +10,7 @@ from typing import Optional
 
 import jsonschema
 
-from . import actionlog, backups, classify, locator, presence, rules
+from . import actionlog, appcache, backups, classify, locator, presence, rules
 from .adapters.base import Adapter, AdapterError, Target
 from .policy import Policy, Request, decide
 
@@ -41,11 +41,17 @@ class Engine:
             eid = locator.element_id(loc)
             elements[eid] = {"locator": loc, "node": node,
                              "fingerprint": locator.fingerprint(node, parents, win.get("rect"))}
-        # keep the previous elements for the fingerprint second chance
-        prev = (cached or {}).get("elements", {})
+        # keep the previous elements for the fingerprint second chance - from this run, else from the per-app cache
+        known = (cached or {}).get("known") or appcache.load_known(target.key)
+        menus = set((cached or {}).get("menu_paths") or appcache.load_menu_paths(target.key))
+        for node, loc, _p, _w in locator.walk(windows):
+            if node.get("control_type") == "MenuBar":
+                menus.update(rules.menu_paths(node))
+        menus.update(_popup_menu_paths(windows, menus))
         snap = {"time": time.time(), "windows": windows, "elements": elements,
-                "known": {**(cached or {}).get("known", {}), **{k: v for k, v in prev.items()}, **elements}}
+                "known": {**known, **elements}, "menu_paths": sorted(menus)}
         self._snap[target.key] = snap
+        appcache.save(target.key, snap)
         return snap
 
     def _reresolve(self, snap: dict, eid: str) -> tuple[Optional[dict], str]:
@@ -98,6 +104,9 @@ class Engine:
         acts = rules.actions_for(snap["windows"])
         for a in acts:
             a.pop("locator", None)
+            if a["action"] == "menu" and snap.get("menu_paths"):
+                # paths seen so far, this run or an earlier one (a submenu is in the tree only while it is open)
+                a["input_schema"]["properties"]["path"]["examples"] = snap["menu_paths"][:80]
         return {"ok": True, "target": target.as_dict(), "actions": acts}
 
     def read(self, app: str, element_id: str) -> dict:
@@ -203,6 +212,23 @@ class Engine:
             if time.time() - t0 > timeout_s:
                 return {"ok": False, "error": "timeout", "waited_s": round(time.time() - t0, 2)}
             time.sleep(0.25)
+
+
+def _popup_menu_paths(windows: list[dict], known: set) -> set:
+    """An open submenu shows up as a Menu holding MenuItems (often in its own popup window). Its parent's path is the
+    known path whose last part names the menu, so 'File' + popup items 'Open...' -> 'File/Open...'."""
+    out = set()
+    by_last = {p.split("/")[-1].replace("&", "").lower(): p for p in known}
+    for node, _loc, _p, _w in locator.walk(windows):
+        if node.get("control_type") != "Menu":
+            continue
+        parent = by_last.get((node.get("name") or "").replace("&", "").lower())
+        if not parent:
+            continue
+        for c in node.get("children") or []:
+            if c.get("control_type") == "MenuItem" and c.get("name"):
+                out.add(f"{parent}/{c['name']}")
+    return out
 
 
 def verify(how: Optional[str], action: str, args: dict, after: dict) -> Optional[bool]:
