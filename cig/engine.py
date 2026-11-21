@@ -26,6 +26,9 @@ class Engine:
         # Kept in memory only: after a server restart nothing counts as CIG's own, so the safe answer is "not ours".
         self.launched: dict[int, dict] = {}       # pid -> {"exe", "time"} for programs started by cig_launch
         self.authored: dict[str, str] = {}        # "<target.key>|<locator>" -> the text CIG last wrote there
+        # windows that appeared as the direct result of CIG's own write in a program it launched (a dialog it
+        # opened): text pre-filled there is the program's default, not anyone's work (7-Zip FM, 2026-11-20)
+        self.opened_windows: set[str] = set()     # "<target.key>|<top-level locator segment>"
 
     def register_launch(self, pid: int, exe: str) -> None:
         self.launched[int(pid)] = {"exe": exe, "time": time.time()}
@@ -202,6 +205,10 @@ class Engine:
             old = str(before.get("value") or "")
             mine = self.authored.get(f"{target.key}|{loc}")
             ours = mine is not None and _norm_text(old) == _norm_text(mine)
+            prefix = target.key + "|"
+            if any(loc.startswith(w[len(prefix):] + "/") for w in self.opened_windows if w.startswith(prefix)):
+                ours = True                     # a default in a dialog CIG itself opened
+                why = why + ["default text in a window CIG opened"]
             if old.strip() and not ours and _norm_text(old) != _norm_text(args.get("text", "")):
                 kind = "destructive"
                 why = why + [f"replaces {len(old)} characters of existing text"]
@@ -236,6 +243,7 @@ class Engine:
             # a host channel has its own in-use check and logs who approved: it gets the same note (M3)
             adapter.set_confirm(confirm)
         try:
+            wins_before = _window_locs(snap)
             detail = adapter.execute(target, loc, node, action, args)
         except AdapterError as e:
             if getattr(e, "refused", False):
@@ -253,6 +261,17 @@ class Engine:
                     return finish(ok=True, status="ok", changed={"before": before, "after": after}, verified=True,
                                   reason="", note="the adapter raised, but the read-back shows the element gone")
             return finish(reason=f"adapter failed: {e}", changed={"before": before})
+        if action in ("invoke", "menu", "system_menu") and (target.pid in self.launched):
+            # a dialog often opens a moment after the click returns: look a few times
+            for _ in range(6):
+                try:
+                    new = _window_locs(self._snapshot(adapter, target)) - wins_before
+                except AdapterError:
+                    break
+                if new:
+                    self.opened_windows.update(f"{target.key}|{w}" for w in new)
+                    break
+                time.sleep(0.3)
         after = adapter.read(target, loc, node)
         if not after.get("exists", True) and rule.get("verify") != "gone":
             # the write may have changed the element's own path (a container named after the text just typed):
@@ -290,6 +309,11 @@ class Engine:
             if time.time() - t0 > timeout_s:
                 return {"ok": False, "error": "timeout", "waited_s": round(time.time() - t0, 2)}
             time.sleep(0.25)
+
+
+def _window_locs(snap: dict) -> set:
+    """Locators of every Window element (top-level or nested, e.g. a dialog shown inside its owner's tree)."""
+    return {i["locator"] for i in snap["elements"].values() if i["node"].get("control_type") == "Window"}
 
 
 def _files_written(adapter, target, action, args, node) -> list:

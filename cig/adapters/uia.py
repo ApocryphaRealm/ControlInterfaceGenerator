@@ -167,7 +167,7 @@ class UiaAdapter(Adapter):
                 return {"detail": "WindowPattern.Close"}
             if action == "answer_dialog":
                 return self._answer(c, str(args["button"]))
-            if action == "menu":
+            if action in ("menu", "system_menu"):
                 return self._menu(target, c, str(args["path"]))
             if action == "keys":
                 c.SetFocus()
