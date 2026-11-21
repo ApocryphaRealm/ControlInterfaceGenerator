@@ -49,6 +49,24 @@ def _free_port() -> int:
     return port
 
 
+def isolation_env(exe: str, profile: Optional[str]) -> dict:
+    """Environment variables a program's library entry needs so that ALL its data goes to the separate profile
+    (library/apps/<app>.json, "isolation": {"env": {...}}; '{profile}' is the CIG profile folder)."""
+    if not profile:
+        return {}
+    from .detect import app_entries
+    name = os.path.basename(exe).lower()
+    out = {}
+    for app in app_entries():
+        if name in [x.lower() for x in app.get("exe", [])]:
+            iso = app.get("isolation") or {}
+            for k, v in (iso.get("env") or {}).items():
+                out[k] = str(v).replace("{profile}", profile)
+            for d in iso.get("mkdirs") or []:          # folders the redirected paths must already have
+                os.makedirs(str(d).replace("{profile}", profile), exist_ok=True)
+    return out
+
+
 def profile_dir(exe: str) -> str:
     d = config.home() / "profiles" / (os.path.splitext(os.path.basename(exe))[0].lower() + "-cig")
     d.mkdir(parents=True, exist_ok=True)
@@ -83,6 +101,12 @@ def launch(exe: str, args: list[str], policy: Optional[Policy] = None, confirm: 
         args += [f"--remote-debugging-port={port}", "--remote-debugging-address=127.0.0.1"]
         args += [profile_flag + prof] if profile_flag.endswith("=") else [profile_flag, prof]
         entry.update(args=args, profile=prof, port=port)
+    # the library's isolation for this program (a separate profile is only real if every path moves with it)
+    env = None
+    iso = isolation_env(exe, entry.get("profile")) if cdp else {}
+    if iso:
+        env = {**os.environ, **iso}
+        entry["isolation_env"] = sorted(iso)
     # system side effects the library knows this program causes (e.g. Vortex takes over nxm://): export them first
     tag = f"pending-{os.path.splitext(name)[0].lower()}-{int(time.time() * 1000)}"
     try:
@@ -101,7 +125,7 @@ def launch(exe: str, args: list[str], policy: Optional[Policy] = None, confirm: 
         else:
             subprocess.Popen([exe, *args], close_fds=True, creationflags=subprocess.DETACHED_PROCESS
                              | subprocess.CREATE_NEW_PROCESS_GROUP, stdin=subprocess.DEVNULL,
-                             stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+                             stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, env=env)
             entry["via"] = "direct (CIG is not elevated)"
     except OSError as e:
         entry.update(ok=False, refused=False, reason=f"could not start: {e}")

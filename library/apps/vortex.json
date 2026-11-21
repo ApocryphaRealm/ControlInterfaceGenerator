@@ -4,6 +4,14 @@
   "exe": ["Vortex.exe"],
   "source": ["field:2026-11-20 Vortex 2.8.0, started by CIG with --user-data <test folder>"],
   "cdp": {"profile_flag": "--user-data"},
+  "isolation": {
+    "env": {"VORTEX_E2E": "1", "ELECTRON_USERDATA": "{profile}\\userdata", "ELECTRON_APPDATA": "{profile}\\appdata"},
+    "mkdirs": ["{profile}\\appdata\\Vortex", "{profile}\\userdata"],
+    "userdata_why": "field:2026-11-20 - ELECTRON_USERDATA must NOT equal the --user-data folder: Vortex attaches state.v2 from both, and the second attach quits with 'Database is locked'",
+    "mkdirs_why": "field:2026-11-20 - without it Vortex quits at start ('unrecoverable error', ENOENT on appdata\\Vortex\\startup.json): an isolated launch that never reaches its main window proves nothing about isolation",
+    "source": "field:2026-11-20 - Vortex 2.8 opens the DEFAULT %APPDATA%\\Vortex\\state.v2 for ~50 ms before it applies --user-data, and Chromium's folders never move with it. Its own end-to-end test hook (VORTEX_E2E=1) calls app.setPath('userData'/'appData') from ELECTRON_USERDATA / ELECTRON_APPDATA at module load, before the database or any window. Other effects of the hook: the single-instance lock is skipped (harmless with separate data); VORTEX_E2E_HEADLESS is a separate switch and is NOT set.",
+    "proof_required": "one idle launch with a before/after byte diff of the real data folder (tools/folder_snapshot.py) before any proof run"
+  },
   "system_side_effects": {
     "registry_keys": ["HKCU\\Software\\Classes\\nxm"],
     "note": "Even on a separate, fresh --user-data folder Vortex makes itself the nxm:// handler at start-up (seen 2026-11-20: MO2's nxmhandler.exe was replaced). CIG exports these keys before the launch and restores them when it closes the program."

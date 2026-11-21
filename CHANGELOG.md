@@ -18,7 +18,7 @@
   - Containers are located by position, because a Win32 Pane takes its edit's text as its name.
   - A read-back that loses the element re-resolves it by fingerprint.
   - An action that closes its own element is judged by the read-back.
-- M4 (not done): the CDP adapter for Chromium and Electron. It translates the AX tree into the same nodes, so the UIA rules apply unchanged.
+- M4 (done after isolation, 14/14 - see the next entry): the CDP adapter for Chromium and Electron. It translates the AX tree into the same nodes, so the UIA rules apply unchanged.
   - Added a widget-kit library for custom-drawn controls that are missing from the accessibility tree.
   - `cig_launch(cdp=true, profile_flag=...)` uses a loopback port and a separate data folder.
   - System side-effect guards (registry keys exported before a launch, restored and verified on close) and `cig_close`.
@@ -28,4 +28,9 @@
   - Native tools become typed commands from their own help text, read through a format in `library/cli/help-formats.json`.
   - Runs are argument lists, never shell strings, and secret parameters are never offered.
   - Proof: 7z.exe and Microsoft.PowerShell.Archive, 14 of 14 steps.
+- M4 done:
+  - A program's library entry can declare an isolation block: environment variables and folders that move ALL of its data into CIG's profile (Vortex: its own end-to-end test hook).
+  - `tools/folder_snapshot.py` backs up and byte-diffs a real data folder.
+  - `tools/prove_isolation.py` accepts isolation only when the program reached its main UI and the real folder is unchanged byte for byte.
+  - Proof: Vortex settings toggled and read back over CDP, 14 of 14, with the owner's Vortex folder byte-identical and the nxm:// handler unchanged.
 
