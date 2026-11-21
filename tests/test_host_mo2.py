@@ -31,6 +31,21 @@ class FakeMo2:
         self.info = load("info")
         self.state = "main"
         self.busy = False
+        # lists and menus (plugin 1.1.0's second half): the recorded run predates them, so the fake carries its own
+        self.info["reads"] = self.info["reads"] + ["ui_items", "ui_menus"]
+        self.info["writes"] = self.info["writes"] + ["ui_item", "ui_menu"]
+        self.trees["main"]["controls"].append({"kind": "view", "class": "QTreeView", "name": "modList", "enabled": True,
+                                               "visible": True, "rows": 4, "columns": 2, "tree": True, "where": ""})
+        self.rows = [{"row": 0, "cells": ["Alpha", "0"], "checked": True}, {"row": 1, "cells": ["Bravo", "1"], "checked": False},
+                     {"row": 2, "cells": ["Armour_separator", "2"], "children": True, "expanded": False},
+                     {"row": 3, "cells": ["Charlie", "3"], "checked": False}]
+        self.entries = [{"path": "File", "enabled": True, "menu": True}, {"path": "File > Install Mod...", "enabled": True},
+                        {"path": "Tools", "enabled": True, "menu": True},
+                        {"path": "Tools > Tool Plugins", "enabled": True, "menu": True},
+                        {"path": "Tools > Tool Plugins > MO2 Modlist Manager", "enabled": True},
+                        {"path": "Tools > Remove orphans", "enabled": True},
+                        {"path": "View > Log", "enabled": True, "checked": False}, {"path": "Refresh", "enabled": True}]
+        self.menu_chosen = []
         self.calls, self.confirms, self.answers = [], [], []
 
     # -- the plugin's own locate(): exact, and never a guess
@@ -73,6 +88,19 @@ class FakeMo2:
     def _handle(self, cmd, args, confirm):
         if cmd == "info":
             return dict(self.info, in_use=self.busy)
+        if cmd == "ui_items":
+            if self.state != "main" or args.get("name") != "modList":
+                raise ValueError("no visible control matches")
+            start, limit = args.get("start", 0), args.get("limit", 100)
+            rows = copy.deepcopy(self.rows[start:start + limit])
+            nxt = start + limit if start + limit < len(self.rows) else None
+            return {"ok": True, "view": {"kind": "view", "name": "modList", "tree": True}, "total": len(self.rows), "start": start,
+                    "columns": [{"column": 0, "title": "Mod Name", "hidden": False}, {"column": 1, "title": "Priority", "hidden": False}],
+                    "rows": rows, "next": nxt}
+        if cmd == "ui_menus":
+            if self.state != "main":
+                return {"ok": True, "entries": [], "total": 0, "truncated": False}
+            return {"ok": True, "entries": copy.deepcopy(self.entries), "total": len(self.entries), "truncated": False}
         if cmd == "ui_tree":
             if args.get("window") in (MAIN,) and self.state != "main":
                 return copy.deepcopy(self.trees["main"])
@@ -82,6 +110,39 @@ class FakeMo2:
                     "ago (activity file)) - send confirm with a note saying who approved this"}
         if confirm:
             self.confirms.append((cmd, confirm))
+        if cmd == "ui_item":
+            if self.state != "main" or args.get("name") != "modList":
+                raise ValueError("a modal dialog is open - answer it first")
+            hits = [r for r in self.rows if ("row" in args and r["row"] == args["row"]) or
+                    ("match" in args and r["cells"][0] == args["match"])]
+            if len(hits) != 1:
+                raise ValueError(f"{len(hits)} rows match")
+            r = hits[0]
+            was = copy.deepcopy(r)
+            act = args["action"]
+            if act in ("check", "uncheck"):
+                if "checked" not in r:
+                    raise ValueError("that row has no box to tick")
+                r["checked"] = act == "check"
+            elif act == "select":
+                for x in self.rows:
+                    x.pop("selected", None)
+                r["selected"] = True
+            elif act in ("expand", "collapse"):
+                r["expanded"] = act == "expand"
+            return {"ok": True, "action": act, "was": was, "row": copy.deepcopy(r), "applied": True, "returned": True,
+                    "modal": None, "backup": "X:/MO2/backups/b3"}
+        if cmd == "ui_menu":
+            e = next((x for x in self.entries if x["path"] == args.get("path")), None)
+            if e is None:
+                raise ValueError("no menu entry")
+            self.menu_chosen.append(e["path"])
+            if e["path"].endswith("MO2 Modlist Manager"):
+                self.state = "mm"
+                return {"ok": True, "chosen": e, "returned": False, "modal": self._modal()}
+            if "checked" in e:
+                e["checked"] = not e["checked"]
+            return {"ok": True, "chosen": e, "returned": True, "modal": None, **({"checked": e["checked"]} if "checked" in e else {})}
         if cmd == "ui_click":
             c = self._locate(args)
             if not c["enabled"]:
@@ -170,7 +231,7 @@ def test_main_window_becomes_typed_actions_with_no_mo2_rule(eng):
     assert "select TabItem 'Archives'" in labels
     assert not any("Update Mod Organizer" in a["label"] for a in acts)     # disabled: no action generated
     assert {a["rule"] for a in acts} <= {"button", "combo", "selectable", "edit-value", "text-read", "checkable",
-                                         "keys-fallback", "range", "dialog-answer"}
+                                         "keys-fallback", "range", "dialog-answer", "menu-bar", "tree-expand", "list-read"}
 
 
 def test_every_generated_locator_names_exactly_one_control(mo2):
@@ -276,3 +337,67 @@ def test_value_sets_are_read_back(eng, mo2, idle):
     assert sent[1] == {"kind": "combo", "name": "profileBox", "window": MAIN, "value": "Default"}
     r = server.cig_do(APP, act(eng, "choose", "Profile")["id"], {"option": "Nope"})
     assert not r["ok"] and "bad args" in r["reason"]
+
+
+# ---------------------------------------------------------------------------------------------- lists and menus
+def test_mod_list_rows_are_typed_actions(eng, mo2):
+    acts = eng.actions(APP)["actions"]
+    labels = {a["label"]: a for a in acts}
+    assert "set_checked TreeItem 'Alpha'" in labels and "set_checked TreeItem 'Bravo'" in labels
+    assert "expand TreeItem 'Armour_separator'" in labels            # a row with rows under it and no box
+    assert "list_items Tree 'modList'" in labels and "menu MenuBar 'Menus'" in labels
+    tree = {e["name"]: e for e in server.cig_tree(APP)["elements"] if e["type"] == "TreeItem"}
+    assert tree["Alpha"]["toggle_state"] == "On" and tree["Bravo"]["toggle_state"] == "Off"
+    assert tree["Alpha"]["value"] == "Alpha | 0"
+
+
+def test_ticking_a_mod_goes_through_the_plugins_model_command(eng, mo2, idle):
+    idle(30)
+    r = server.cig_do(APP, act(eng, "set_checked", "Bravo")["id"], {"checked": True})
+    assert r["ok"] and r["verified"] is True and r["changed"]["after"]["toggle_state"] == "On"
+    sent = [c for c in mo2.calls if c[0] == "ui_item"][-1]
+    assert sent[1] == {"name": "modList", "window": MAIN, "action": "check", "match": "Bravo"}
+    assert mo2.rows[1]["checked"] is True
+    r = server.cig_do(APP, act(eng, "set_checked", "Alpha")["id"], {"checked": False})
+    assert r["ok"] and mo2.rows[0]["checked"] is False
+
+
+def test_opening_a_tree_row_and_reading_the_rows(eng, mo2, idle):
+    idle(30)
+    r = server.cig_do(APP, act(eng, "expand", "Armour_separator")["id"], {"expanded": True})
+    assert r["ok"] and r["verified"] is True and mo2.rows[2]["expanded"] is True
+    r = server.cig_do(APP, act(eng, "list_items", "modList")["id"])
+    assert r["ok"] and r["detail"]["columns"] == ["Mod Name", "Priority"] and len(r["detail"]["rows"]) == 4
+    assert not any(c[0] == "ui_item" for c in mo2.calls[-2:])        # a read sends no write
+
+
+def test_a_menu_entry_without_a_toolbar_button(eng, mo2, idle):
+    idle(30)
+    bar = act(eng, "menu", "Menus")
+    assert "Tools/Tool Plugins/MO2 Modlist Manager" in bar["input_schema"]["properties"]["path"]["examples"]
+    r = server.cig_do(APP, bar["id"], {"path": "Tools/Tool Plugins/MO2 Modlist Manager"})
+    assert r["ok"] and r["detail"]["returned"] is False and r["detail"]["modal_open"]["title"] == MM
+    assert mo2.menu_chosen == ["Tools > Tool Plugins > MO2 Modlist Manager"] and mo2.state == "mm"
+
+
+def test_menu_safety(eng, mo2, idle):
+    idle(30)
+    bar = act(eng, "menu", "Menus")["id"]
+    r = server.cig_do(APP, bar, {"path": "Tools/Nope"})
+    assert not r["ok"] and "no menu entry" in r["reason"] and mo2.menu_chosen == []
+    r = server.cig_do(APP, bar, {"path": "Tools/Tool Plugins"})          # a submenu is not an entry to choose
+    assert not r["ok"] and mo2.menu_chosen == []
+    r = server.cig_do(APP, bar, {"path": "Tools/Remove orphans"})        # a destructive word in the path: confirm first
+    assert not r["ok"] and r["refused"] and r["status"] == "confirm_required" and mo2.menu_chosen == []
+    r = server.cig_do(APP, bar, {"path": "Tools/Remove orphans"}, confirm="the owner said: remove them")
+    assert r["ok"] and mo2.menu_chosen == ["Tools > Remove orphans"]
+
+
+def test_an_older_plugin_without_lists_still_works(mo2, idle):
+    idle(30)
+    mo2.info["reads"] = [x for x in mo2.info["reads"] if x not in ("ui_items", "ui_menus")]
+    mo2.info["writes"] = [x for x in mo2.info["writes"] if x not in ("ui_item", "ui_menu")]
+    e = Engine([HostMo2Adapter(transport=mo2, instances=lambda: ["X:/MO2"])])
+    labels = {a["label"] for a in e.actions(APP)["actions"]}
+    assert "invoke Button 'Run'" in labels and not any("TreeItem" in x or "MenuBar" in x for x in labels)
+    assert not any(c[0] in ("ui_items", "ui_menus") for c in mo2.calls)

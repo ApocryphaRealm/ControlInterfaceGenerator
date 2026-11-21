@@ -18,6 +18,11 @@ MODALS. A press that opens a dialog does not return until the dialog closes; the
 Window whose buttons are its answers (action answer_dialog), and its own controls can be acted on. While a dialog is
 open, only that dialog's elements are listed - nothing behind it can be acted on, by the plugin's own rule.
 
+LISTS AND MENUS (plugin 1.1.0 with ui_items / ui_item / ui_menus / ui_menu). A list, table or tree becomes a List or
+Tree node whose children are its first rows (VIEW_ROWS of them; `list_items` pages the rest): a row with a box takes
+set_checked, any other row select, a tree row with rows under it expand. The window's menu bar and tool bar entries
+become one MenuBar node, driven by the library's `menu` action with a path ("Tools/Tool Plugins/My Tool").
+
 An app reference this adapter claims: "mo2", "host:mo2", "host:mo2-agent-control" (the one running MO2 with a live
 channel; more than one is an error naming them) or "mo2:<instance folder>". It never claims an exe name or a pid, so
 "ModOrganizer.exe" still resolves to the UIA adapter for the cross-check of plan 4.2 item 3.
@@ -204,7 +209,8 @@ def control_node(c: dict, controls: list[dict], window: Optional[str], unique_na
     return [node]
 
 
-def window_node(w: dict, controls: Optional[list[dict]], modal: Optional[dict], window_arg: Optional[str]) -> dict:
+def window_node(w: dict, controls: Optional[list[dict]], modal: Optional[dict], window_arg: Optional[str],
+                rows: Optional[dict] = None, menus: Optional[dict] = None) -> dict:
     """One window as a fixture node. controls None: listed but not readable now (it is behind a modal dialog)."""
     node: dict = {"control_type": "Window", "name": w.get("title") or "", "is_modal": bool(w.get("modal")),
                   "patterns": [], "children": [], "window_class": w.get("class") or ""}
@@ -226,7 +232,12 @@ def window_node(w: dict, controls: Optional[list[dict]], modal: Optional[dict], 
             counts[n] = counts.get(n, 0) + 1
     unique = {n for n, k in counts.items() if k == 1}
     for c in controls:
-        node["children"] += control_node(c, controls, window_arg, unique)
+        if c.get("kind") == "view":
+            node["children"].append(view_node(c, controls, window_arg, unique, (rows or {}).get(id(c))))
+        else:
+            node["children"] += control_node(c, controls, window_arg, unique)
+    if menus:
+        node["children"].append(menus)
     return node
 
 
@@ -342,7 +353,8 @@ class HostMo2Adapter(Adapter):
                 is_it = (not placed and w.get("modal") and w.get("title") == shown.get("title")
                          and w.get("class") == shown.get("class") and w.get("name") == shown.get("name"))
                 if is_it:
-                    out.append(window_node(w, top.get("controls") or [], modal, None))
+                    cs = top.get("controls") or []
+                    out.append(window_node(w, cs, modal, None, self._rows(inst, cs, None)))
                     placed = True
                 else:
                     out.append(window_node(w, None, None, None))
@@ -355,9 +367,39 @@ class HostMo2Adapter(Adapter):
                     out.append(window_node(w, [], None, None))       # cannot be named: listed, nothing actionable
                     continue
                 one = self._call(inst, "ui_tree", {"window": ident, "labels": True, "limit": TREE_LIMIT})
-                out.append(window_node(w, one.get("controls") or [], None, ident))
+                cs = one.get("controls") or []
+                out.append(window_node(w, cs, None, ident, self._rows(inst, cs, ident), self._menus(inst, ident)))
         self._tree[target.key] = {"time": time.time(), "windows": out}
         return out
+
+    def _rows(self, inst: str, controls: list[dict], window: Optional[str]) -> dict:
+        """{id(control): the plugin's ui_items reply} for every list, table and tree among the controls."""
+        out = {}
+        if not self._has(inst, "ui_items"):
+            return out
+        unique: set = set()
+        for c in controls:
+            if c.get("kind") != "view" or not c.get("rows"):
+                continue
+            loc = view_node(c, controls, window, unique, None)["host"]
+            try:
+                out[id(c)] = self._call(inst, "ui_items", dict(_view_loc(loc), limit=VIEW_ROWS))
+            except AdapterError:
+                continue                    # a list that cannot be read stays a list with no rows
+        return out
+
+    def _menus(self, inst: str, window: Optional[str]) -> Optional[dict]:
+        if not window or not self._has(inst, "ui_menus"):
+            return None
+        try:
+            return menu_node(self._call(inst, "ui_menus", {"window": window}).get("entries") or [], window)
+        except AdapterError:
+            return None
+
+    def _has(self, inst: str, cmd: str) -> bool:
+        """Does this MO2's plugin know the command? (lists and menus arrived after the first window commands)"""
+        info = next((i for k, i in self._info.items() if self._instance.get(k) == inst), None) or {}
+        return cmd in (info.get("reads") or []) + (info.get("writes") or [])
 
     def snapshot(self, target: Target, depth: int = 12) -> list[dict]:
         return json.loads(json.dumps(self._windows(target, fresh=True)))
@@ -374,7 +416,7 @@ class HostMo2Adapter(Adapter):
         live = self._find(target, locator, fresh=False)
         if live is None:
             return {"exists": False}
-        keys = ("name", "value", "toggle_state", "selected", "range", "enabled")
+        keys = ("name", "value", "toggle_state", "selected", "expand_state", "range", "enabled")
         return {"exists": True, **{k: live[k] for k in keys if k in live}}
 
     # ---------------------------------------------------------------- execute
@@ -384,6 +426,10 @@ class HostMo2Adapter(Adapter):
         if live is None:
             raise AdapterError(f"element gone: {locator}")
         host = live.get("host")
+        if action == "list_items" and host and host.get("view"):
+            r = self._call(inst, "ui_items", dict(_view_loc(host), limit=int(args.get("limit", 200)) if args else 200))
+            return {"detail": f"{r.get('total')} rows", "columns": [c.get("title") for c in r.get("columns") or []],
+                    "rows": r.get("rows"), "next": r.get("next")}
         if action in ("get_text", "list_items"):
             return {"detail": live.get("value", ""), "items": [c.get("name") for c in live.get("children") or []]}
         if not host:
@@ -397,6 +443,23 @@ class HostMo2Adapter(Adapter):
             if expect:
                 a["expect"] = expect
             cmd = "ui_answer_modal"
+        elif host.get("menu"):
+            if action != "menu":
+                raise AdapterError(f"the menus take the 'menu' action, not '{action}'")
+            want = str(args["path"]).strip().strip("/")
+            real = host["paths"].get(want) or next((v for k, v in host["paths"].items() if k.lower() == want.lower()), None)
+            if not real:
+                raise AdapterError(f"no menu entry '{want}' - entries: " + "; ".join(sorted(host["paths"])[:25]))
+            cmd, a = "ui_menu", {"path": real}
+            if host.get("window"):
+                a["window"] = host["window"]
+        elif host.get("item"):
+            verb = {"set_checked": lambda: "check" if args["checked"] else "uncheck", "select": lambda: "select",
+                    "expand": lambda: "expand" if args.get("expanded", True) else "collapse"}.get(action)
+            if verb is None:
+                raise AdapterError(f"a row cannot '{action}'")
+            cmd, a = "ui_item", dict(_view_loc(host), action=verb())
+            a.update({"match": host["match"]} if "match" in host else {"row": host["row"]})
         elif action == "invoke":
             cmd, a = "ui_click", _loc(host)
         elif action == "set_checked":
@@ -427,7 +490,7 @@ class HostMo2Adapter(Adapter):
             if reply.get("returned") is False:
                 out["note"] = ("the press opened a dialog and is waiting in it: cig_actions now lists the dialog "
                                "(answer_dialog, or act on its controls)")
-        if cmd == "ui_set" and reply.get("applied") is False:
+        if cmd in ("ui_set", "ui_item") and reply.get("applied") is False:
             raise AdapterError(f"MO2 holds {reply.get('value')!r} after the set, not {reply.get('asked')!r}")
         return out
 
@@ -435,7 +498,7 @@ class HostMo2Adapter(Adapter):
     def files_written(self, target: Target, action: str, args: dict) -> list[str]:
         """A press in MO2 can rewrite the profile's lists (Apply, Restore): CIG backs the three files up first, beside
         the plugin's own copy. Value sets (a filter box, a tab) write nothing."""
-        if action not in ("invoke", "answer_dialog", "set_checked"):
+        if action not in ("invoke", "answer_dialog", "set_checked", "menu"):
             return []
         info = self._info.get(target.key) or {}
         inst, prof = info.get("instance") or self._instance.get(target.key), info.get("profile")
@@ -447,3 +510,80 @@ class HostMo2Adapter(Adapter):
 
 def _loc(host: dict) -> dict:
     return {k: host[k] for k in ("kind", "name", "text", "window", "index") if k in host}
+
+
+def _view_loc(host: dict) -> dict:
+    """The plugin's locator of a list: its objectName, or kind=view with the window and its index."""
+    out = {k: host[k] for k in ("name", "window", "index") if k in host}
+    if "name" not in out:
+        out["kind"] = "view"
+    return out
+
+
+# ------------------------------------------------------------------------------- lists, trees and menus (plugin 1.1.0+)
+VIEW_ROWS = 60          # rows of each list read into a snapshot; the rest are reached with the plugin's own paging
+
+
+def view_node(c: dict, controls: list[dict], window: Optional[str], unique_names: set, rows_reply: Optional[dict]) -> dict:
+    """A list, table or tree as a node whose children are its first rows. A row with a box is settable (set_checked),
+    any other row selectable; a tree row with rows under it can be opened."""
+    loc = host_locator(c, controls, window)
+    if loc is None:                                   # no objectName: kind + its place among the window's views
+        views = [x for x in controls if x.get("kind") == "view" and not x.get("name")]
+        loc = {"kind": "view"}
+        if window:
+            loc["window"] = window
+        if len(views) > 1:
+            loc["index"] = next(i for i, x in enumerate(views) if x is c)
+    is_tree = bool(c.get("tree"))
+    node: dict = {"control_type": "Tree" if is_tree else "List", "name": c.get("name") or "", "patterns": [],
+                  "enabled": bool(c.get("enabled", True)), "children": [], "host": dict(loc, view=True),
+                  "rows_total": c.get("rows")}
+    oname = c.get("name") or ""
+    if oname and oname in unique_names:
+        node["automation_id"] = oname
+    rows = (rows_reply or {}).get("rows") or []
+    firsts = [(r.get("cells") or [""])[0] for r in rows]
+    complete = (rows_reply or {}).get("next") is None
+    for r in rows:
+        cells = r.get("cells") or [""]
+        kid: dict = {"control_type": "TreeItem" if is_tree else "ListItem", "name": cells[0], "value": " | ".join(cells),
+                     "patterns": [], "enabled": r.get("enabled", True) is not False}
+        how = {"match": cells[0]} if complete and cells[0] and firsts.count(cells[0]) == 1 else {"row": r["row"]}
+        kid["host"] = dict(loc, item=True, expect=cells[0], **how)
+        if "checked" in r:
+            kid["patterns"].append("Toggle")
+            kid["toggle_state"] = "On" if r["checked"] is True else "Off" if r["checked"] is False else "Indeterminate"
+        else:
+            kid["patterns"].append("SelectionItem")
+        kid["selected"] = bool(r.get("selected"))
+        if r.get("children") and is_tree:
+            kid["patterns"].append("ExpandCollapse")
+            kid["expand_state"] = "Expanded" if r.get("expanded") else "Collapsed"
+        node["children"].append(kid)
+    if not complete:
+        node["rows_shown"] = len(rows)
+    return node
+
+
+def menu_node(entries: list[dict], window: Optional[str]) -> Optional[dict]:
+    """The window's menu bar and tool bar entries as one MenuBar node (the library's 'menu' action takes a path)."""
+    if not entries:
+        return None
+    root: dict = {"control_type": "MenuBar", "name": "Menus", "patterns": [], "children": [],
+                  "host": {"menu": True, "window": window, "paths": {}}}
+    by_path = {(): root}
+    for e in entries:
+        parts = [p.strip() for p in str(e.get("path", "")).split(" > ")]
+        parent = by_path.get(tuple(parts[:-1]))
+        if parent is None or not parts[-1]:
+            continue
+        item: dict = {"control_type": "MenuItem", "name": parts[-1], "patterns": [], "enabled": bool(e.get("enabled", True)),
+                      "children": []}
+        if "checked" in e:
+            item["toggle_state"] = "On" if e["checked"] else "Off"
+        parent["children"].append(item)
+        by_path[tuple(parts)] = item
+        if not e.get("menu") and e.get("enabled", True):
+            root["host"]["paths"]["/".join(parts)] = e["path"]
+    return root
