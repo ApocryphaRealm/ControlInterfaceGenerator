@@ -35,8 +35,11 @@ class Engine:
         when it is empty or still holds exactly what CIG wrote there."""
         if not self.policy.write_only_to_launched:
             return None
-        if (target.exe or "").lower() in self.policy.first_party:
-            return None                        # our own host programs (MO2) are driven where the owner runs them
+        if (target.exe or "").lower() in self.policy.first_party and (target.adapter or "").startswith("host:"):
+            # our own host programs (MO2) are driven where the owner runs them - but ONLY through their own channel,
+            # whose in-use check and backups apply (Main Agent, 2026-11-20); UIA / CDP writes into an MO2 that CIG
+            # did not launch stay refused
+            return None
         if target.pid not in self.launched:
             return (f"CIG did not open this window ({target.exe}, pid {target.pid}): writes go only into programs "
                     f"started by cig_launch (confirm cannot override)")

@@ -206,3 +206,38 @@ def test_filling_an_empty_field_is_a_plain_write(eng, idle):
     body["value"] = ""
     r = server.cig_do(APP, act(eng, "set_text", "Text editor"), {"text": "new"})
     assert r["ok"] and r["verified"] is True
+
+
+def _mo2_fixture_engine(adapter_name):
+    """The fixture program dressed as ModOrganizer.exe, reached through a given adapter name."""
+    from cig.adapters.fixture import FixtureAdapter as FA
+
+    class Dressed(FA):
+        name = adapter_name
+
+        def resolve(self, app):
+            t = super().resolve(app)
+            if t:
+                t.exe, t.adapter = "ModOrganizer.exe", adapter_name
+            return t
+
+        def _data(self, target):
+            return next(iter(self.state.values()))
+    e = Engine([Dressed()])                         # nothing launched by CIG
+    server.set_engine(e)
+    return e
+
+
+def test_first_party_exemption_is_host_channel_only(idle):
+    """Main Agent 2026-11-20: MO2 (first party) is exempt from 'CIG launched it' only through its host channel;
+    a UIA or CDP write into an MO2 that CIG did not launch stays refused, confirm or not."""
+    idle(120)
+    try:
+        for name, allowed in (("uia", False), ("cdp", False), ("host:mo2-agent-control", True)):
+            e = _mo2_fixture_engine(name)
+            r = server.cig_do(APP, act(e, "set_checked", "Word wrap"), {"checked": True}, confirm="yes")
+            assert bool(r["ok"]) is allowed, (name, r.get("reason"))
+            if not allowed:
+                assert "did not open" in r["reason"]
+    finally:
+        server.set_engine(None)
