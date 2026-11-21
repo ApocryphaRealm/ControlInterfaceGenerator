@@ -4,7 +4,8 @@
  "versions": "any",
  "source": [
   "doc: plan 2.2 and learn.microsoft.com UIA overview (2026-10-24)",
-  "probe:2026-11-20 detection of installed apps (tools/prove_m1.py)"
+  "probe:2026-11-20 detection of installed apps (tools/prove_m1.py)",
+  "probe:2026-11-20 equalizer-apo-editor (tools/probe.py)"
  ],
  "adapter_in_v1": true,
  "detect": {
@@ -68,11 +69,214 @@
    "richness": 0.93
   }
  ],
+ "probed": [
+  {
+   "probe": "equalizer-apo-editor",
+   "date": "2026-11-20",
+   "app": {
+    "exe": "Editor.exe",
+    "title": "Equalizer APO 1.4.2 Configuration Editor",
+    "adapter": "uia"
+   },
+   "control_types": {
+    "Button": {
+     "count": 18,
+     "patterns": [
+      "Invoke",
+      "LegacyIAccessible",
+      "Toggle",
+      "Value"
+     ],
+     "named_pct": 89,
+     "automation_id_pct": 33
+    },
+    "CheckBox": {
+     "count": 5,
+     "patterns": [
+      "Invoke",
+      "LegacyIAccessible",
+      "Toggle",
+      "Value"
+     ],
+     "named_pct": 100,
+     "automation_id_pct": 0
+    },
+    "ComboBox": {
+     "count": 4,
+     "patterns": [
+      "ExpandCollapse",
+      "Invoke",
+      "LegacyIAccessible",
+      "Value"
+     ],
+     "named_pct": 50,
+     "automation_id_pct": 50
+    },
+    "Custom": {
+     "count": 3,
+     "patterns": [
+      "Invoke",
+      "LegacyIAccessible",
+      "Value"
+     ],
+     "named_pct": 0,
+     "automation_id_pct": 100
+    },
+    "Edit": {
+     "count": 1,
+     "patterns": [
+      "Invoke",
+      "LegacyIAccessible",
+      "Text",
+      "Value"
+     ],
+     "named_pct": 0,
+     "automation_id_pct": 100
+    },
+    "Group": {
+     "count": 22,
+     "patterns": [
+      "Invoke",
+      "LegacyIAccessible",
+      "Value"
+     ],
+     "named_pct": 9,
+     "automation_id_pct": 68
+    },
+    "Image": {
+     "count": 2,
+     "patterns": [
+      "Invoke",
+      "LegacyIAccessible",
+      "Value"
+     ],
+     "named_pct": 0,
+     "automation_id_pct": 100
+    },
+    "MenuBar": {
+     "count": 4,
+     "patterns": [
+      "Invoke",
+      "LegacyIAccessible",
+      "Value"
+     ],
+     "named_pct": 75,
+     "automation_id_pct": 100
+    },
+    "MenuItem": {
+     "count": 7,
+     "patterns": [
+      "ExpandCollapse",
+      "Invoke",
+      "LegacyIAccessible",
+      "Value"
+     ],
+     "named_pct": 100,
+     "automation_id_pct": 0
+    },
+    "ScrollBar": {
+     "count": 2,
+     "patterns": [
+      "Invoke",
+      "LegacyIAccessible",
+      "RangeValue",
+      "Value"
+     ],
+     "named_pct": 0,
+     "automation_id_pct": 0
+    },
+    "Spinner": {
+     "count": 1,
+     "patterns": [
+      "Invoke",
+      "LegacyIAccessible",
+      "RangeValue",
+      "Text",
+      "Value"
+     ],
+     "named_pct": 100,
+     "automation_id_pct": 100
+    },
+    "Tab": {
+     "count": 1,
+     "patterns": [
+      "Invoke",
+      "LegacyIAccessible",
+      "Selection",
+      "Value"
+     ],
+     "named_pct": 100,
+     "automation_id_pct": 0
+    },
+    "TabItem": {
+     "count": 1,
+     "patterns": [
+      "Invoke",
+      "LegacyIAccessible",
+      "SelectionItem",
+      "Value"
+     ],
+     "named_pct": 100,
+     "automation_id_pct": 0
+    },
+    "Text": {
+     "count": 19,
+     "patterns": [
+      "Invoke",
+      "LegacyIAccessible"
+     ],
+     "named_pct": 95,
+     "automation_id_pct": 84
+    },
+    "TitleBar": {
+     "count": 3,
+     "patterns": [
+      "LegacyIAccessible",
+      "Value"
+     ],
+     "named_pct": 0,
+     "automation_id_pct": 0
+    },
+    "ToolBar": {
+     "count": 5,
+     "patterns": [
+      "Invoke",
+      "LegacyIAccessible",
+      "Value"
+     ],
+     "named_pct": 20,
+     "automation_id_pct": 80
+    },
+    "Window": {
+     "count": 4,
+     "patterns": [
+      "Invoke",
+      "LegacyIAccessible",
+      "Transform",
+      "Value",
+      "Window"
+     ],
+     "named_pct": 100,
+     "automation_id_pct": 50
+    }
+   }
+  }
+ ],
  "quirks": [
   {
    "id": "qt6-window-class",
    "source": "probe:2026-11-20 MO2 2.5 (Qt 6.7.1), Equalizer APO Editor (Qt 6.7.2)",
    "text": "Top-level window class is Qt<major><minor><patch>QWindowIcon, e.g. Qt671QWindowIcon; UIA FrameworkId is 'Qt'."
+  },
+  {
+   "id": "qt6-image-has-invoke",
+   "source": "probe:2026-11-20 equalizer-apo-editor",
+   "text": "Image exposes Invoke, which the UIA spec says it must not."
+  },
+  {
+   "id": "qt6-tabitem-has-invoke",
+   "source": "probe:2026-11-20 equalizer-apo-editor",
+   "text": "TabItem exposes Invoke, which the UIA spec says it must not."
   }
  ]
 }

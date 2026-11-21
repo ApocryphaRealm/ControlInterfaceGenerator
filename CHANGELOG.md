@@ -33,4 +33,10 @@
   - `tools/folder_snapshot.py` backs up and byte-diffs a real data folder.
   - `tools/prove_isolation.py` accepts isolation only when the program reached its main UI and the real folder is unchanged byte for byte.
   - Proof: Vortex settings toggled and read back over CDP, 14 of 14, with the owner's Vortex folder byte-identical and the nxm:// handler unchanged.
+- M6: the probe harness (`tools/probe.py`).
+  - It surveys a running program through the engine: patterns present per control type, Name and AutomationId rates, and deviations from the spec table.
+  - With `--actions`, on CIG's own galleries only, it tries each generated action, reads it back and restores the element.
+  - It records into `library/probes/` and the framework entries (`probed`, plus quirks with a probe source).
+  - Galleries for Win32, WinForms and WPF are built from what Windows ships. Qt 6, WinUI 3 and Electron were probed read-only.
+  - Launcher: console programs get a hidden console instead of none, and a window that ignores WM_CLOSE is closed through UIA's WindowPattern.Close.
 

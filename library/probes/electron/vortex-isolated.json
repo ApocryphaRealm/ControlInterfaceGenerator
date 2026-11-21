@@ -1,0 +1,135 @@
+{
+ "framework": "electron",
+ "name": "vortex-isolated",
+ "date": "2026-11-20",
+ "app": {
+  "exe": "Vortex.exe",
+  "title": "Vortex",
+  "adapter": "cdp"
+ },
+ "elements": 1146,
+ "survey": {
+  "Button": {
+   "count": 31,
+   "named_pct": 100,
+   "automation_id_pct": 0,
+   "patterns": {
+    "Invoke": 31,
+    "ExpandCollapse": 2
+   },
+   "framework_ids": {
+    "Chrome": 31
+   },
+   "spec_required_missing": [],
+   "spec_forbidden_present": []
+  },
+  "Custom": {
+   "count": 60,
+   "named_pct": 0,
+   "automation_id_pct": 0,
+   "patterns": {},
+   "framework_ids": {
+    "Chrome": 60
+   },
+   "spec_required_missing": [],
+   "spec_forbidden_present": []
+  },
+  "Document": {
+   "count": 1,
+   "named_pct": 100,
+   "automation_id_pct": 0,
+   "patterns": {},
+   "framework_ids": {
+    "Chrome": 1
+   },
+   "spec_required_missing": [
+    "Text"
+   ],
+   "spec_forbidden_present": []
+  },
+  "Group": {
+   "count": 98,
+   "named_pct": 0,
+   "automation_id_pct": 0,
+   "patterns": {},
+   "framework_ids": {
+    "Chrome": 98
+   },
+   "spec_required_missing": [],
+   "spec_forbidden_present": []
+  },
+  "Hyperlink": {
+   "count": 127,
+   "named_pct": 100,
+   "automation_id_pct": 0,
+   "patterns": {
+    "Invoke": 127
+   },
+   "framework_ids": {
+    "Chrome": 127
+   },
+   "spec_required_missing": [],
+   "spec_forbidden_present": []
+  },
+  "Image": {
+   "count": 28,
+   "named_pct": 0,
+   "automation_id_pct": 0,
+   "patterns": {},
+   "framework_ids": {
+    "Chrome": 28
+   },
+   "spec_required_missing": [],
+   "spec_forbidden_present": []
+  },
+  "List": {
+   "count": 16,
+   "named_pct": 0,
+   "automation_id_pct": 0,
+   "patterns": {},
+   "framework_ids": {
+    "Chrome": 16
+   },
+   "spec_required_missing": [],
+   "spec_forbidden_present": []
+  },
+  "ListItem": {
+   "count": 111,
+   "named_pct": 0,
+   "automation_id_pct": 0,
+   "patterns": {},
+   "framework_ids": {
+    "Chrome": 111
+   },
+   "spec_required_missing": [
+    "SelectionItem"
+   ],
+   "spec_forbidden_present": []
+  },
+  "Text": {
+   "count": 673,
+   "named_pct": 95,
+   "automation_id_pct": 0,
+   "patterns": {},
+   "framework_ids": {
+    "Chrome": 673
+   },
+   "spec_required_missing": [],
+   "spec_forbidden_present": []
+  },
+  "Window": {
+   "count": 1,
+   "named_pct": 100,
+   "automation_id_pct": 0,
+   "patterns": {
+    "Window": 1
+   },
+   "framework_ids": {
+    "Chrome": 1
+   },
+   "spec_required_missing": [],
+   "spec_forbidden_present": []
+  }
+ },
+ "actions": false
+}

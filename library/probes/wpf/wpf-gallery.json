@@ -1,0 +1,495 @@
+{
+ "framework": "wpf",
+ "name": "wpf-gallery",
+ "date": "2026-11-20",
+ "app": {
+  "exe": "powershell.exe",
+  "title": "CIG WPF Gallery",
+  "adapter": "uia"
+ },
+ "elements": 49,
+ "survey": {
+  "Button": {
+   "count": 9,
+   "named_pct": 67,
+   "automation_id_pct": 67,
+   "patterns": {
+    "LegacyIAccessible": 9,
+    "Invoke": 6,
+    "Toggle": 3
+   },
+   "framework_ids": {
+    "WPF": 6
+   },
+   "spec_required_missing": [],
+   "spec_forbidden_present": []
+  },
+  "CheckBox": {
+   "count": 1,
+   "named_pct": 100,
+   "automation_id_pct": 100,
+   "patterns": {
+    "Toggle": 1,
+    "LegacyIAccessible": 1
+   },
+   "framework_ids": {
+    "WPF": 1
+   },
+   "spec_required_missing": [],
+   "spec_forbidden_present": []
+  },
+  "ComboBox": {
+   "count": 1,
+   "named_pct": 100,
+   "automation_id_pct": 0,
+   "patterns": {
+    "Selection": 1,
+    "ExpandCollapse": 1,
+    "LegacyIAccessible": 1
+   },
+   "framework_ids": {
+    "WPF": 1
+   },
+   "spec_required_missing": [],
+   "spec_forbidden_present": []
+  },
+  "Edit": {
+   "count": 2,
+   "named_pct": 100,
+   "automation_id_pct": 50,
+   "patterns": {
+    "Value": 2,
+    "Text": 2,
+    "Scroll": 2,
+    "LegacyIAccessible": 2
+   },
+   "framework_ids": {
+    "WPF": 2
+   },
+   "spec_required_missing": [],
+   "spec_forbidden_present": []
+  },
+  "Group": {
+   "count": 1,
+   "named_pct": 100,
+   "automation_id_pct": 0,
+   "patterns": {
+    "ExpandCollapse": 1,
+    "LegacyIAccessible": 1
+   },
+   "framework_ids": {
+    "WPF": 1
+   },
+   "spec_required_missing": [],
+   "spec_forbidden_present": []
+  },
+  "List": {
+   "count": 1,
+   "named_pct": 100,
+   "automation_id_pct": 0,
+   "patterns": {
+    "Selection": 1,
+    "Scroll": 1,
+    "LegacyIAccessible": 1
+   },
+   "framework_ids": {
+    "WPF": 1
+   },
+   "spec_required_missing": [],
+   "spec_forbidden_present": []
+  },
+  "ListItem": {
+   "count": 3,
+   "named_pct": 100,
+   "automation_id_pct": 0,
+   "patterns": {
+    "SelectionItem": 3,
+    "ScrollItem": 3,
+    "LegacyIAccessible": 3
+   },
+   "framework_ids": {
+    "WPF": 3
+   },
+   "spec_required_missing": [],
+   "spec_forbidden_present": []
+  },
+  "MenuBar": {
+   "count": 1,
+   "named_pct": 100,
+   "automation_id_pct": 100,
+   "patterns": {
+    "LegacyIAccessible": 1
+   },
+   "framework_ids": {},
+   "spec_required_missing": [],
+   "spec_forbidden_present": []
+  },
+  "MenuItem": {
+   "count": 1,
+   "named_pct": 100,
+   "automation_id_pct": 0,
+   "patterns": {
+    "Invoke": 1,
+    "ExpandCollapse": 1,
+    "LegacyIAccessible": 1
+   },
+   "framework_ids": {},
+   "spec_required_missing": [],
+   "spec_forbidden_present": []
+  },
+  "Pane": {
+   "count": 2,
+   "named_pct": 0,
+   "automation_id_pct": 100,
+   "patterns": {
+    "Scroll": 2,
+    "LegacyIAccessible": 2
+   },
+   "framework_ids": {
+    "WPF": 2
+   },
+   "spec_required_missing": [],
+   "spec_forbidden_present": []
+  },
+  "RadioButton": {
+   "count": 2,
+   "named_pct": 100,
+   "automation_id_pct": 0,
+   "patterns": {
+    "SelectionItem": 2,
+    "LegacyIAccessible": 2
+   },
+   "framework_ids": {
+    "WPF": 2
+   },
+   "spec_required_missing": [],
+   "spec_forbidden_present": []
+  },
+  "ScrollBar": {
+   "count": 4,
+   "named_pct": 0,
+   "automation_id_pct": 100,
+   "patterns": {
+    "RangeValue": 4,
+    "LegacyIAccessible": 4
+   },
+   "framework_ids": {
+    "WPF": 4
+   },
+   "spec_required_missing": [],
+   "spec_forbidden_present": []
+  },
+  "Slider": {
+   "count": 1,
+   "named_pct": 100,
+   "automation_id_pct": 0,
+   "patterns": {
+    "RangeValue": 1,
+    "LegacyIAccessible": 1
+   },
+   "framework_ids": {
+    "WPF": 1
+   },
+   "spec_required_missing": [],
+   "spec_forbidden_present": []
+  },
+  "Tab": {
+   "count": 1,
+   "named_pct": 0,
+   "automation_id_pct": 0,
+   "patterns": {
+    "Selection": 1,
+    "LegacyIAccessible": 1
+   },
+   "framework_ids": {
+    "WPF": 1
+   },
+   "spec_required_missing": [],
+   "spec_forbidden_present": []
+  },
+  "TabItem": {
+   "count": 2,
+   "named_pct": 100,
+   "automation_id_pct": 0,
+   "patterns": {
+    "SelectionItem": 2,
+    "LegacyIAccessible": 2
+   },
+   "framework_ids": {
+    "WPF": 2
+   },
+   "spec_required_missing": [],
+   "spec_forbidden_present": []
+  },
+  "Text": {
+   "count": 12,
+   "named_pct": 100,
+   "automation_id_pct": 0,
+   "patterns": {
+    "LegacyIAccessible": 12
+   },
+   "framework_ids": {
+    "WPF": 12
+   },
+   "spec_required_missing": [],
+   "spec_forbidden_present": []
+  },
+  "Thumb": {
+   "count": 1,
+   "named_pct": 0,
+   "automation_id_pct": 100,
+   "patterns": {
+    "LegacyIAccessible": 1
+   },
+   "framework_ids": {
+    "WPF": 1
+   },
+   "spec_required_missing": [],
+   "spec_forbidden_present": []
+  },
+  "TitleBar": {
+   "count": 1,
+   "named_pct": 0,
+   "automation_id_pct": 0,
+   "patterns": {
+    "Value": 1,
+    "LegacyIAccessible": 1
+   },
+   "framework_ids": {},
+   "spec_required_missing": [],
+   "spec_forbidden_present": []
+  },
+  "Tree": {
+   "count": 1,
+   "named_pct": 100,
+   "automation_id_pct": 0,
+   "patterns": {
+    "Selection": 1,
+    "Scroll": 1,
+    "LegacyIAccessible": 1
+   },
+   "framework_ids": {
+    "WPF": 1
+   },
+   "spec_required_missing": [],
+   "spec_forbidden_present": []
+  },
+  "TreeItem": {
+   "count": 1,
+   "named_pct": 100,
+   "automation_id_pct": 0,
+   "patterns": {
+    "SelectionItem": 1,
+    "ExpandCollapse": 1,
+    "ScrollItem": 1,
+    "LegacyIAccessible": 1
+   },
+   "framework_ids": {
+    "WPF": 1
+   },
+   "spec_required_missing": [],
+   "spec_forbidden_present": []
+  },
+  "Window": {
+   "count": 1,
+   "named_pct": 100,
+   "automation_id_pct": 0,
+   "patterns": {
+    "Window": 1,
+    "Transform": 1,
+    "LegacyIAccessible": 1
+   },
+   "framework_ids": {
+    "WPF": 1
+   },
+   "spec_required_missing": [],
+   "spec_forbidden_present": []
+  }
+ },
+ "actions": true,
+ "action_results": [
+  {
+   "rule": "checkable",
+   "action": "set_checked",
+   "label": "set_checked CheckBox 'A checkbox'",
+   "args": {
+    "checked": true
+   },
+   "ok": true,
+   "verified": true,
+   "refused": false,
+   "reason": "",
+   "restored": true
+  },
+  {
+   "rule": "checkable",
+   "action": "set_checked",
+   "label": "set_checked Button 'A toggle button'",
+   "args": {
+    "checked": true
+   },
+   "ok": true,
+   "verified": true,
+   "refused": false,
+   "reason": "",
+   "restored": true
+  },
+  {
+   "rule": "selectable",
+   "action": "select",
+   "label": "select RadioButton 'Radio two'",
+   "args": {},
+   "ok": true,
+   "verified": true,
+   "refused": false,
+   "reason": ""
+  },
+  {
+   "rule": "edit-value",
+   "action": "set_text",
+   "label": "set_text Edit 'Text field'",
+   "args": {
+    "text": "CIG probe"
+   },
+   "ok": true,
+   "verified": true,
+   "refused": false,
+   "reason": "",
+   "restored": true
+  },
+  {
+   "rule": "selectable",
+   "action": "select",
+   "label": "select ListItem 'One'",
+   "args": {},
+   "ok": true,
+   "verified": true,
+   "refused": false,
+   "reason": ""
+  },
+  {
+   "rule": "selectable",
+   "action": "select",
+   "label": "select ListItem 'Two'",
+   "args": {},
+   "ok": true,
+   "verified": true,
+   "refused": false,
+   "reason": ""
+  },
+  {
+   "rule": "selectable",
+   "action": "select",
+   "label": "select ListItem 'Three'",
+   "args": {},
+   "ok": true,
+   "verified": true,
+   "refused": false,
+   "reason": ""
+  },
+  {
+   "rule": "range",
+   "action": "set_number",
+   "label": "set_number Slider 'Slider'",
+   "args": {
+    "value": 10
+   },
+   "ok": true,
+   "verified": true,
+   "refused": false,
+   "reason": "",
+   "restored": true
+  },
+  {
+   "rule": "checkable",
+   "action": "set_checked",
+   "label": "set_checked Button 'An expander'",
+   "args": {
+    "checked": true
+   },
+   "ok": true,
+   "verified": true,
+   "refused": false,
+   "reason": "",
+   "restored": true
+  },
+  {
+   "rule": "selectable",
+   "action": "select",
+   "label": "select TreeItem 'Root'",
+   "args": {},
+   "ok": true,
+   "verified": true,
+   "refused": false,
+   "reason": ""
+  },
+  {
+   "rule": "tree-expand",
+   "action": "expand",
+   "label": "expand TreeItem 'Root'",
+   "args": {
+    "expanded": true
+   },
+   "ok": true,
+   "verified": true,
+   "refused": false,
+   "reason": "",
+   "restored": true
+  },
+  {
+   "rule": "checkable",
+   "action": "set_checked",
+   "label": "set_checked Button 'Expander'",
+   "args": {
+    "checked": true
+   },
+   "ok": true,
+   "verified": true,
+   "refused": false,
+   "reason": "",
+   "restored": true
+  },
+  {
+   "rule": "selectable",
+   "action": "select",
+   "label": "select TabItem 'Second tab'",
+   "args": {},
+   "ok": true,
+   "verified": true,
+   "refused": false,
+   "reason": ""
+  }
+ ],
+ "action_summary": {
+  "checkable:set_checked": {
+   "tried": 4,
+   "ok": 4,
+   "verified": 4,
+   "refused": 0
+  },
+  "selectable:select": {
+   "tried": 6,
+   "ok": 6,
+   "verified": 6,
+   "refused": 0
+  },
+  "edit-value:set_text": {
+   "tried": 1,
+   "ok": 1,
+   "verified": 1,
+   "refused": 0
+  },
+  "range:set_number": {
+   "tried": 1,
+   "ok": 1,
+   "verified": 1,
+   "refused": 0
+  },
+  "tree-expand:expand": {
+   "tried": 1,
+   "ok": 1,
+   "verified": 1,
+   "refused": 0
+  }
+ }
+}

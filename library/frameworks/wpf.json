@@ -3,7 +3,8 @@
  "label": "WPF (.NET)",
  "versions": "any",
  "source": [
-  "doc: plan 2.2 and learn.microsoft.com UIA overview (2026-10-24)"
+  "doc: plan 2.2 and learn.microsoft.com UIA overview (2026-10-24)",
+  "probe:2026-11-20 wpf-gallery (tools/probe.py --actions)"
  ],
  "adapter_in_v1": true,
  "detect": {
@@ -41,5 +42,247 @@
  },
  "specializes": [
   "win32"
+ ],
+ "probed": [
+  {
+   "probe": "wpf-gallery",
+   "date": "2026-11-20",
+   "app": {
+    "exe": "powershell.exe",
+    "title": "CIG WPF Gallery",
+    "adapter": "uia"
+   },
+   "control_types": {
+    "Button": {
+     "count": 9,
+     "patterns": [
+      "Invoke",
+      "LegacyIAccessible",
+      "Toggle"
+     ],
+     "named_pct": 67,
+     "automation_id_pct": 67
+    },
+    "CheckBox": {
+     "count": 1,
+     "patterns": [
+      "LegacyIAccessible",
+      "Toggle"
+     ],
+     "named_pct": 100,
+     "automation_id_pct": 100
+    },
+    "ComboBox": {
+     "count": 1,
+     "patterns": [
+      "ExpandCollapse",
+      "LegacyIAccessible",
+      "Selection"
+     ],
+     "named_pct": 100,
+     "automation_id_pct": 0
+    },
+    "Edit": {
+     "count": 2,
+     "patterns": [
+      "LegacyIAccessible",
+      "Scroll",
+      "Text",
+      "Value"
+     ],
+     "named_pct": 100,
+     "automation_id_pct": 50
+    },
+    "Group": {
+     "count": 1,
+     "patterns": [
+      "ExpandCollapse",
+      "LegacyIAccessible"
+     ],
+     "named_pct": 100,
+     "automation_id_pct": 0
+    },
+    "List": {
+     "count": 1,
+     "patterns": [
+      "LegacyIAccessible",
+      "Scroll",
+      "Selection"
+     ],
+     "named_pct": 100,
+     "automation_id_pct": 0
+    },
+    "ListItem": {
+     "count": 3,
+     "patterns": [
+      "LegacyIAccessible",
+      "ScrollItem",
+      "SelectionItem"
+     ],
+     "named_pct": 100,
+     "automation_id_pct": 0
+    },
+    "MenuBar": {
+     "count": 1,
+     "patterns": [
+      "LegacyIAccessible"
+     ],
+     "named_pct": 100,
+     "automation_id_pct": 100
+    },
+    "MenuItem": {
+     "count": 1,
+     "patterns": [
+      "ExpandCollapse",
+      "Invoke",
+      "LegacyIAccessible"
+     ],
+     "named_pct": 100,
+     "automation_id_pct": 0
+    },
+    "Pane": {
+     "count": 2,
+     "patterns": [
+      "LegacyIAccessible",
+      "Scroll"
+     ],
+     "named_pct": 0,
+     "automation_id_pct": 100
+    },
+    "RadioButton": {
+     "count": 2,
+     "patterns": [
+      "LegacyIAccessible",
+      "SelectionItem"
+     ],
+     "named_pct": 100,
+     "automation_id_pct": 0
+    },
+    "ScrollBar": {
+     "count": 4,
+     "patterns": [
+      "LegacyIAccessible",
+      "RangeValue"
+     ],
+     "named_pct": 0,
+     "automation_id_pct": 100
+    },
+    "Slider": {
+     "count": 1,
+     "patterns": [
+      "LegacyIAccessible",
+      "RangeValue"
+     ],
+     "named_pct": 100,
+     "automation_id_pct": 0
+    },
+    "Tab": {
+     "count": 1,
+     "patterns": [
+      "LegacyIAccessible",
+      "Selection"
+     ],
+     "named_pct": 0,
+     "automation_id_pct": 0
+    },
+    "TabItem": {
+     "count": 2,
+     "patterns": [
+      "LegacyIAccessible",
+      "SelectionItem"
+     ],
+     "named_pct": 100,
+     "automation_id_pct": 0
+    },
+    "Text": {
+     "count": 12,
+     "patterns": [
+      "LegacyIAccessible"
+     ],
+     "named_pct": 100,
+     "automation_id_pct": 0
+    },
+    "Thumb": {
+     "count": 1,
+     "patterns": [
+      "LegacyIAccessible"
+     ],
+     "named_pct": 0,
+     "automation_id_pct": 100
+    },
+    "TitleBar": {
+     "count": 1,
+     "patterns": [
+      "LegacyIAccessible",
+      "Value"
+     ],
+     "named_pct": 0,
+     "automation_id_pct": 0
+    },
+    "Tree": {
+     "count": 1,
+     "patterns": [
+      "LegacyIAccessible",
+      "Scroll",
+      "Selection"
+     ],
+     "named_pct": 100,
+     "automation_id_pct": 0
+    },
+    "TreeItem": {
+     "count": 1,
+     "patterns": [
+      "ExpandCollapse",
+      "LegacyIAccessible",
+      "ScrollItem",
+      "SelectionItem"
+     ],
+     "named_pct": 100,
+     "automation_id_pct": 0
+    },
+    "Window": {
+     "count": 1,
+     "patterns": [
+      "LegacyIAccessible",
+      "Transform",
+      "Window"
+     ],
+     "named_pct": 100,
+     "automation_id_pct": 0
+    }
+   },
+   "actions": {
+    "checkable:set_checked": {
+     "tried": 4,
+     "ok": 4,
+     "verified": 4,
+     "refused": 0
+    },
+    "selectable:select": {
+     "tried": 6,
+     "ok": 6,
+     "verified": 6,
+     "refused": 0
+    },
+    "edit-value:set_text": {
+     "tried": 1,
+     "ok": 1,
+     "verified": 1,
+     "refused": 0
+    },
+    "range:set_number": {
+     "tried": 1,
+     "ok": 1,
+     "verified": 1,
+     "refused": 0
+    },
+    "tree-expand:expand": {
+     "tried": 1,
+     "ok": 1,
+     "verified": 1,
+     "refused": 0
+    }
+   }
+  }
  ]
 }

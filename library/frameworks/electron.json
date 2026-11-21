@@ -4,7 +4,8 @@
  "versions": "any",
  "source": [
   "doc: plan 2.2 and learn.microsoft.com UIA overview (2026-10-24)",
-  "probe:2026-11-20 detection of installed apps (tools/prove_m1.py)"
+  "probe:2026-11-20 detection of installed apps (tools/prove_m1.py)",
+  "probe:2026-11-20 vortex-isolated (tools/probe.py)"
  ],
  "adapter_in_v1": true,
  "detect": {
@@ -80,6 +81,98 @@
     "Intermediate D3D Window"
    ],
    "richness": 0.79
+  }
+ ],
+ "probed": [
+  {
+   "probe": "vortex-isolated",
+   "date": "2026-11-20",
+   "app": {
+    "exe": "Vortex.exe",
+    "title": "Vortex",
+    "adapter": "cdp"
+   },
+   "control_types": {
+    "Button": {
+     "count": 31,
+     "patterns": [
+      "ExpandCollapse",
+      "Invoke"
+     ],
+     "named_pct": 100,
+     "automation_id_pct": 0
+    },
+    "Custom": {
+     "count": 60,
+     "patterns": [],
+     "named_pct": 0,
+     "automation_id_pct": 0
+    },
+    "Document": {
+     "count": 1,
+     "patterns": [],
+     "named_pct": 100,
+     "automation_id_pct": 0
+    },
+    "Group": {
+     "count": 98,
+     "patterns": [],
+     "named_pct": 0,
+     "automation_id_pct": 0
+    },
+    "Hyperlink": {
+     "count": 127,
+     "patterns": [
+      "Invoke"
+     ],
+     "named_pct": 100,
+     "automation_id_pct": 0
+    },
+    "Image": {
+     "count": 28,
+     "patterns": [],
+     "named_pct": 0,
+     "automation_id_pct": 0
+    },
+    "List": {
+     "count": 16,
+     "patterns": [],
+     "named_pct": 0,
+     "automation_id_pct": 0
+    },
+    "ListItem": {
+     "count": 111,
+     "patterns": [],
+     "named_pct": 0,
+     "automation_id_pct": 0
+    },
+    "Text": {
+     "count": 673,
+     "patterns": [],
+     "named_pct": 95,
+     "automation_id_pct": 0
+    },
+    "Window": {
+     "count": 1,
+     "patterns": [
+      "Window"
+     ],
+     "named_pct": 100,
+     "automation_id_pct": 0
+    }
+   }
+  }
+ ],
+ "quirks": [
+  {
+   "id": "electron-document-no-text",
+   "source": "probe:2026-11-20 vortex-isolated",
+   "text": "Document does not expose the Text pattern the UIA spec requires (seen on 1 of them; patterns present: [])."
+  },
+  {
+   "id": "electron-listitem-no-selectionitem",
+   "source": "probe:2026-11-20 vortex-isolated",
+   "text": "ListItem does not expose the SelectionItem pattern the UIA spec requires (seen on 111 of them; patterns present: [])."
   }
  ]
 }

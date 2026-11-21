@@ -4,7 +4,8 @@
  "versions": "any",
  "source": [
   "doc: plan 2.2 and learn.microsoft.com UIA overview (2026-10-24)",
-  "probe:2026-11-20 detection of installed apps (tools/prove_m1.py)"
+  "probe:2026-11-20 detection of installed apps (tools/prove_m1.py)",
+  "probe:2026-11-20 paint (tools/probe.py)"
  ],
  "adapter_in_v1": true,
  "detect": {
@@ -82,11 +83,214 @@
    "richness": 0.92
   }
  ],
+ "probed": [
+  {
+   "probe": "paint",
+   "date": "2026-11-20",
+   "app": {
+    "exe": "mspaint.exe",
+    "title": "Untitled - Paint",
+    "adapter": "uia"
+   },
+   "control_types": {
+    "Button": {
+     "count": 64,
+     "patterns": [
+      "ExpandCollapse",
+      "Invoke",
+      "LegacyIAccessible",
+      "ScrollItem",
+      "Toggle"
+     ],
+     "named_pct": 95,
+     "automation_id_pct": 30
+    },
+    "ComboBox": {
+     "count": 1,
+     "patterns": [
+      "ExpandCollapse",
+      "LegacyIAccessible",
+      "ScrollItem",
+      "Selection",
+      "Value"
+     ],
+     "named_pct": 100,
+     "automation_id_pct": 100
+    },
+    "Custom": {
+     "count": 1,
+     "patterns": [
+      "LegacyIAccessible",
+      "ScrollItem"
+     ],
+     "named_pct": 0,
+     "automation_id_pct": 0
+    },
+    "Edit": {
+     "count": 2,
+     "patterns": [
+      "LegacyIAccessible",
+      "ScrollItem",
+      "Text",
+      "Value"
+     ],
+     "named_pct": 100,
+     "automation_id_pct": 50
+    },
+    "Group": {
+     "count": 10,
+     "patterns": [
+      "LegacyIAccessible",
+      "ScrollItem"
+     ],
+     "named_pct": 90,
+     "automation_id_pct": 10
+    },
+    "Image": {
+     "count": 46,
+     "patterns": [
+      "LegacyIAccessible",
+      "ScrollItem"
+     ],
+     "named_pct": 0,
+     "automation_id_pct": 0
+    },
+    "List": {
+     "count": 2,
+     "patterns": [
+      "LegacyIAccessible",
+      "Scroll",
+      "ScrollItem"
+     ],
+     "named_pct": 0,
+     "automation_id_pct": 0
+    },
+    "ListItem": {
+     "count": 53,
+     "patterns": [
+      "Invoke",
+      "LegacyIAccessible",
+      "ScrollItem",
+      "VirtualizedItem"
+     ],
+     "named_pct": 100,
+     "automation_id_pct": 0
+    },
+    "MenuBar": {
+     "count": 2,
+     "patterns": [
+      "LegacyIAccessible",
+      "ScrollItem"
+     ],
+     "named_pct": 50,
+     "automation_id_pct": 50
+    },
+    "MenuItem": {
+     "count": 4,
+     "patterns": [
+      "ExpandCollapse",
+      "Invoke",
+      "LegacyIAccessible",
+      "ScrollItem"
+     ],
+     "named_pct": 100,
+     "automation_id_pct": 0
+    },
+    "Pane": {
+     "count": 5,
+     "patterns": [
+      "LegacyIAccessible",
+      "Scroll",
+      "ScrollItem"
+     ],
+     "named_pct": 0,
+     "automation_id_pct": 60
+    },
+    "RadioButton": {
+     "count": 4,
+     "patterns": [
+      "ExpandCollapse",
+      "Invoke",
+      "LegacyIAccessible",
+      "ScrollItem",
+      "SelectionItem",
+      "Value"
+     ],
+     "named_pct": 100,
+     "automation_id_pct": 25
+    },
+    "ScrollBar": {
+     "count": 1,
+     "patterns": [
+      "LegacyIAccessible",
+      "RangeValue",
+      "ScrollItem"
+     ],
+     "named_pct": 100,
+     "automation_id_pct": 100
+    },
+    "Slider": {
+     "count": 3,
+     "patterns": [
+      "LegacyIAccessible",
+      "RangeValue",
+      "ScrollItem",
+      "Value"
+     ],
+     "named_pct": 100,
+     "automation_id_pct": 33
+    },
+    "Text": {
+     "count": 47,
+     "patterns": [
+      "LegacyIAccessible",
+      "ScrollItem",
+      "Text"
+     ],
+     "named_pct": 100,
+     "automation_id_pct": 11
+    },
+    "Thumb": {
+     "count": 4,
+     "patterns": [
+      "LegacyIAccessible",
+      "ScrollItem"
+     ],
+     "named_pct": 25,
+     "automation_id_pct": 100
+    },
+    "TitleBar": {
+     "count": 1,
+     "patterns": [
+      "LegacyIAccessible",
+      "Value"
+     ],
+     "named_pct": 0,
+     "automation_id_pct": 0
+    },
+    "Window": {
+     "count": 1,
+     "patterns": [
+      "LegacyIAccessible",
+      "Transform",
+      "Window"
+     ],
+     "named_pct": 100,
+     "automation_id_pct": 0
+    }
+   }
+  }
+ ],
  "quirks": [
   {
    "id": "winui-version",
    "source": "probe:2026-11-20 Notepad, Paint",
    "text": "Microsoft.UI.Xaml.dll 3.x = WinUI 3; Settings and Explorer load 2.9.x = WinUI 2 (UWP library / XAML islands), so the module's version decides, not its name."
+  },
+  {
+   "id": "winui3-listitem-no-selectionitem",
+   "source": "probe:2026-11-20 paint",
+   "text": "ListItem does not expose the SelectionItem pattern the UIA spec requires (seen on 53 of them; patterns present: ['Invoke', 'LegacyIAccessible', 'ScrollItem', 'VirtualizedItem'])."
   }
  ]
 }

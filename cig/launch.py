@@ -19,7 +19,9 @@ import win32con
 import win32gui
 
 from . import actionlog, config, guards, presence
-from .detect import windows_of
+import shutil
+
+from .detect import pe_subsystem, windows_of
 from .policy import Policy, Request, WRITE, decide
 
 
@@ -123,8 +125,13 @@ def launch(exe: str, args: list[str], policy: Optional[Policy] = None, confirm: 
             subprocess.Popen(["explorer.exe", exe], close_fds=True)        # Explorer starts it unelevated
             entry["via"] = "explorer (CIG is elevated)"
         else:
-            subprocess.Popen([exe, *args], close_fds=True, creationflags=subprocess.DETACHED_PROCESS
-                             | subprocess.CREATE_NEW_PROCESS_GROUP, stdin=subprocess.DEVNULL,
+            # a console program started DETACHED has no console at all and some (PowerShell) exit at once
+            # (found in M6, 2026-11-20): give console programs a hidden console instead
+            path = exe if os.path.isfile(exe) else (shutil.which(exe) or exe)
+            console = pe_subsystem(path) == "console"
+            flags = (subprocess.CREATE_NO_WINDOW if console else subprocess.DETACHED_PROCESS) \
+                | subprocess.CREATE_NEW_PROCESS_GROUP
+            subprocess.Popen([exe, *args], close_fds=True, creationflags=flags, stdin=subprocess.DEVNULL,
                              stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, env=env)
             entry["via"] = "direct (CIG is not elevated)"
     except OSError as e:
@@ -176,6 +183,26 @@ def close(pid: int, wait_s: float = 10.0) -> dict:
     while time.time() - t0 < wait_s and psutil.pid_exists(pid):
         time.sleep(0.3)
     gone = not psutil.pid_exists(pid)
+    if not gone:
+        # some programs ignore a posted WM_CLOSE (Equalizer APO's Qt Editor, 2026-11-20); UIA's WindowPattern.Close
+        # is the same graceful request, made the way the program's own close button makes it
+        try:
+            from . import uiawalk
+            import uiautomation as auto
+
+            def _close_all():
+                for h in windows_of(pid):
+                    try:
+                        uiawalk.pattern(auto.ControlFromHandle(h), "Window").Close()
+                    except Exception:                      # noqa: BLE001
+                        pass
+            uiawalk.run(_close_all, timeout=15)
+        except Exception:                                  # noqa: BLE001
+            pass
+        t1 = time.time()
+        while time.time() - t1 < wait_s and psutil.pid_exists(pid):
+            time.sleep(0.3)
+        gone = not psutil.pid_exists(pid)
     res = {"ok": gone, "pid": pid, "closed": gone}
     if not gone:
         res["still_open"] = [win32gui.GetWindowText(h) for h in windows_of(pid)]

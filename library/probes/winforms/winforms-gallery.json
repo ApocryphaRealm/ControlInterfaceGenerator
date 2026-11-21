@@ -1,0 +1,414 @@
+{
+ "framework": "winforms",
+ "name": "winforms-gallery",
+ "date": "2026-11-20",
+ "app": {
+  "exe": "powershell.exe",
+  "title": "CIG WinForms Gallery",
+  "adapter": "uia"
+ },
+ "elements": 34,
+ "survey": {
+  "Button": {
+   "count": 8,
+   "named_pct": 100,
+   "automation_id_pct": 12,
+   "patterns": {
+    "Invoke": 8,
+    "LegacyIAccessible": 8
+   },
+   "framework_ids": {
+    "WinForm": 1
+   },
+   "spec_required_missing": [],
+   "spec_forbidden_present": []
+  },
+  "CheckBox": {
+   "count": 1,
+   "named_pct": 100,
+   "automation_id_pct": 100,
+   "patterns": {
+    "Invoke": 1,
+    "Toggle": 1,
+    "LegacyIAccessible": 1
+   },
+   "framework_ids": {
+    "WinForm": 1
+   },
+   "spec_required_missing": [],
+   "spec_forbidden_present": []
+  },
+  "ComboBox": {
+   "count": 2,
+   "named_pct": 100,
+   "automation_id_pct": 100,
+   "patterns": {
+    "Value": 2,
+    "LegacyIAccessible": 2
+   },
+   "framework_ids": {
+    "WinForm": 2
+   },
+   "spec_required_missing": [
+    "ExpandCollapse"
+   ],
+   "spec_forbidden_present": []
+  },
+  "Edit": {
+   "count": 3,
+   "named_pct": 100,
+   "automation_id_pct": 100,
+   "patterns": {
+    "Value": 3,
+    "LegacyIAccessible": 3
+   },
+   "framework_ids": {
+    "WinForm": 3
+   },
+   "spec_required_missing": [],
+   "spec_forbidden_present": []
+  },
+  "List": {
+   "count": 1,
+   "named_pct": 100,
+   "automation_id_pct": 100,
+   "patterns": {
+    "Selection": 1,
+    "LegacyIAccessible": 1
+   },
+   "framework_ids": {
+    "WinForm": 1
+   },
+   "spec_required_missing": [],
+   "spec_forbidden_present": []
+  },
+  "ListItem": {
+   "count": 3,
+   "named_pct": 100,
+   "automation_id_pct": 0,
+   "patterns": {
+    "Invoke": 3,
+    "SelectionItem": 3,
+    "LegacyIAccessible": 3
+   },
+   "framework_ids": {},
+   "spec_required_missing": [],
+   "spec_forbidden_present": []
+  },
+  "MenuBar": {
+   "count": 1,
+   "named_pct": 100,
+   "automation_id_pct": 100,
+   "patterns": {
+    "LegacyIAccessible": 1
+   },
+   "framework_ids": {},
+   "spec_required_missing": [],
+   "spec_forbidden_present": []
+  },
+  "MenuItem": {
+   "count": 1,
+   "named_pct": 100,
+   "automation_id_pct": 0,
+   "patterns": {
+    "Invoke": 1,
+    "ExpandCollapse": 1,
+    "LegacyIAccessible": 1
+   },
+   "framework_ids": {},
+   "spec_required_missing": [],
+   "spec_forbidden_present": []
+  },
+  "Pane": {
+   "count": 1,
+   "named_pct": 100,
+   "automation_id_pct": 100,
+   "patterns": {
+    "LegacyIAccessible": 1
+   },
+   "framework_ids": {
+    "WinForm": 1
+   },
+   "spec_required_missing": [],
+   "spec_forbidden_present": []
+  },
+  "RadioButton": {
+   "count": 2,
+   "named_pct": 100,
+   "automation_id_pct": 100,
+   "patterns": {
+    "Invoke": 2,
+    "SelectionItem": 2,
+    "LegacyIAccessible": 2
+   },
+   "framework_ids": {
+    "WinForm": 2
+   },
+   "spec_required_missing": [],
+   "spec_forbidden_present": []
+  },
+  "Slider": {
+   "count": 1,
+   "named_pct": 100,
+   "automation_id_pct": 100,
+   "patterns": {
+    "Value": 1,
+    "LegacyIAccessible": 1
+   },
+   "framework_ids": {
+    "WinForm": 1
+   },
+   "spec_required_missing": [],
+   "spec_forbidden_present": []
+  },
+  "Spinner": {
+   "count": 1,
+   "named_pct": 100,
+   "automation_id_pct": 100,
+   "patterns": {
+    "LegacyIAccessible": 1
+   },
+   "framework_ids": {
+    "WinForm": 1
+   },
+   "spec_required_missing": [],
+   "spec_forbidden_present": []
+  },
+  "Tab": {
+   "count": 1,
+   "named_pct": 0,
+   "automation_id_pct": 100,
+   "patterns": {
+    "Selection": 1,
+    "LegacyIAccessible": 1
+   },
+   "framework_ids": {
+    "WinForm": 1
+   },
+   "spec_required_missing": [],
+   "spec_forbidden_present": []
+  },
+  "TabItem": {
+   "count": 2,
+   "named_pct": 100,
+   "automation_id_pct": 0,
+   "patterns": {
+    "SelectionItem": 2,
+    "LegacyIAccessible": 2
+   },
+   "framework_ids": {},
+   "spec_required_missing": [],
+   "spec_forbidden_present": []
+  },
+  "Text": {
+   "count": 1,
+   "named_pct": 100,
+   "automation_id_pct": 0,
+   "patterns": {
+    "Value": 1,
+    "LegacyIAccessible": 1
+   },
+   "framework_ids": {},
+   "spec_required_missing": [],
+   "spec_forbidden_present": [
+    "Value"
+   ]
+  },
+  "Thumb": {
+   "count": 1,
+   "named_pct": 100,
+   "automation_id_pct": 0,
+   "patterns": {
+    "LegacyIAccessible": 1
+   },
+   "framework_ids": {},
+   "spec_required_missing": [],
+   "spec_forbidden_present": []
+  },
+  "TitleBar": {
+   "count": 1,
+   "named_pct": 0,
+   "automation_id_pct": 0,
+   "patterns": {
+    "Value": 1,
+    "LegacyIAccessible": 1
+   },
+   "framework_ids": {},
+   "spec_required_missing": [],
+   "spec_forbidden_present": []
+  },
+  "Tree": {
+   "count": 1,
+   "named_pct": 100,
+   "automation_id_pct": 100,
+   "patterns": {
+    "Selection": 1,
+    "LegacyIAccessible": 1
+   },
+   "framework_ids": {
+    "WinForm": 1
+   },
+   "spec_required_missing": [],
+   "spec_forbidden_present": []
+  },
+  "TreeItem": {
+   "count": 1,
+   "named_pct": 100,
+   "automation_id_pct": 0,
+   "patterns": {
+    "SelectionItem": 1,
+    "ExpandCollapse": 1,
+    "ScrollItem": 1,
+    "LegacyIAccessible": 1
+   },
+   "framework_ids": {
+    "WinForm": 1
+   },
+   "spec_required_missing": [],
+   "spec_forbidden_present": []
+  },
+  "Window": {
+   "count": 1,
+   "named_pct": 100,
+   "automation_id_pct": 0,
+   "patterns": {
+    "Window": 1,
+    "Transform": 1,
+    "LegacyIAccessible": 1
+   },
+   "framework_ids": {
+    "WinForm": 1
+   },
+   "spec_required_missing": [],
+   "spec_forbidden_present": []
+  }
+ },
+ "actions": true,
+ "action_results": [
+  {
+   "rule": "checkable",
+   "action": "set_checked",
+   "label": "set_checked CheckBox 'A checkbox'",
+   "args": {
+    "checked": true
+   },
+   "ok": true,
+   "verified": true,
+   "refused": false,
+   "reason": "",
+   "restored": true
+  },
+  {
+   "rule": "selectable",
+   "action": "select",
+   "label": "select RadioButton 'Radio two'",
+   "args": {},
+   "ok": true,
+   "verified": true,
+   "refused": false,
+   "reason": ""
+  },
+  {
+   "rule": "edit-value",
+   "action": "set_text",
+   "label": "set_text Edit 'Text field'",
+   "args": {
+    "text": "CIG probe"
+   },
+   "ok": true,
+   "verified": true,
+   "refused": false,
+   "reason": "",
+   "restored": true
+  },
+  {
+   "rule": "selectable",
+   "action": "select",
+   "label": "select ListItem 'One'",
+   "args": {},
+   "ok": true,
+   "verified": true,
+   "refused": false,
+   "reason": ""
+  },
+  {
+   "rule": "selectable",
+   "action": "select",
+   "label": "select ListItem 'Two'",
+   "args": {},
+   "ok": true,
+   "verified": true,
+   "refused": false,
+   "reason": ""
+  },
+  {
+   "rule": "selectable",
+   "action": "select",
+   "label": "select ListItem 'Three'",
+   "args": {},
+   "ok": true,
+   "verified": true,
+   "refused": false,
+   "reason": ""
+  },
+  {
+   "rule": "selectable",
+   "action": "select",
+   "label": "select TreeItem 'Root'",
+   "args": {},
+   "ok": true,
+   "verified": true,
+   "refused": false,
+   "reason": ""
+  },
+  {
+   "rule": "tree-expand",
+   "action": "expand",
+   "label": "expand TreeItem 'Root'",
+   "args": {
+    "expanded": true
+   },
+   "ok": true,
+   "verified": true,
+   "refused": false,
+   "reason": "",
+   "restored": true
+  },
+  {
+   "rule": "selectable",
+   "action": "select",
+   "label": "select TabItem 'Second tab'",
+   "args": {},
+   "ok": true,
+   "verified": true,
+   "refused": false,
+   "reason": ""
+  }
+ ],
+ "action_summary": {
+  "checkable:set_checked": {
+   "tried": 1,
+   "ok": 1,
+   "verified": 1,
+   "refused": 0
+  },
+  "selectable:select": {
+   "tried": 6,
+   "ok": 6,
+   "verified": 6,
+   "refused": 0
+  },
+  "edit-value:set_text": {
+   "tried": 1,
+   "ok": 1,
+   "verified": 1,
+   "refused": 0
+  },
+  "tree-expand:expand": {
+   "tried": 1,
+   "ok": 1,
+   "verified": 1,
+   "refused": 0
+  }
+ }
+}

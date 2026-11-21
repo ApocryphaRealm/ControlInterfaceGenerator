@@ -1,0 +1,281 @@
+{
+ "framework": "qt6",
+ "name": "equalizer-apo-editor",
+ "date": "2026-11-20",
+ "app": {
+  "exe": "Editor.exe",
+  "title": "Equalizer APO 1.4.2 Configuration Editor",
+  "adapter": "uia"
+ },
+ "elements": 96,
+ "survey": {
+  "Button": {
+   "count": 18,
+   "named_pct": 89,
+   "automation_id_pct": 33,
+   "patterns": {
+    "Invoke": 18,
+    "LegacyIAccessible": 18,
+    "Value": 13,
+    "Toggle": 2
+   },
+   "framework_ids": {
+    "Qt": 13
+   },
+   "spec_required_missing": [],
+   "spec_forbidden_present": []
+  },
+  "CheckBox": {
+   "count": 5,
+   "named_pct": 100,
+   "automation_id_pct": 0,
+   "patterns": {
+    "Invoke": 5,
+    "Value": 5,
+    "Toggle": 5,
+    "LegacyIAccessible": 5
+   },
+   "framework_ids": {
+    "Qt": 5
+   },
+   "spec_required_missing": [],
+   "spec_forbidden_present": []
+  },
+  "ComboBox": {
+   "count": 4,
+   "named_pct": 50,
+   "automation_id_pct": 50,
+   "patterns": {
+    "Invoke": 4,
+    "Value": 4,
+    "ExpandCollapse": 4,
+    "LegacyIAccessible": 4
+   },
+   "framework_ids": {
+    "Qt": 4
+   },
+   "spec_required_missing": [],
+   "spec_forbidden_present": []
+  },
+  "Custom": {
+   "count": 3,
+   "named_pct": 0,
+   "automation_id_pct": 100,
+   "patterns": {
+    "Invoke": 3,
+    "Value": 3,
+    "LegacyIAccessible": 3
+   },
+   "framework_ids": {
+    "Qt": 3
+   },
+   "spec_required_missing": [],
+   "spec_forbidden_present": []
+  },
+  "Edit": {
+   "count": 1,
+   "named_pct": 0,
+   "automation_id_pct": 100,
+   "patterns": {
+    "Invoke": 1,
+    "Value": 1,
+    "Text": 1,
+    "LegacyIAccessible": 1
+   },
+   "framework_ids": {
+    "Qt": 1
+   },
+   "spec_required_missing": [],
+   "spec_forbidden_present": []
+  },
+  "Group": {
+   "count": 22,
+   "named_pct": 9,
+   "automation_id_pct": 68,
+   "patterns": {
+    "Invoke": 22,
+    "Value": 22,
+    "LegacyIAccessible": 22
+   },
+   "framework_ids": {
+    "Qt": 22
+   },
+   "spec_required_missing": [],
+   "spec_forbidden_present": []
+  },
+  "Image": {
+   "count": 2,
+   "named_pct": 0,
+   "automation_id_pct": 100,
+   "patterns": {
+    "Invoke": 2,
+    "Value": 2,
+    "LegacyIAccessible": 2
+   },
+   "framework_ids": {
+    "Qt": 2
+   },
+   "spec_required_missing": [],
+   "spec_forbidden_present": [
+    "Invoke"
+   ]
+  },
+  "MenuBar": {
+   "count": 4,
+   "named_pct": 75,
+   "automation_id_pct": 100,
+   "patterns": {
+    "LegacyIAccessible": 4,
+    "Invoke": 1,
+    "Value": 1
+   },
+   "framework_ids": {
+    "Qt": 1
+   },
+   "spec_required_missing": [],
+   "spec_forbidden_present": []
+  },
+  "MenuItem": {
+   "count": 7,
+   "named_pct": 100,
+   "automation_id_pct": 0,
+   "patterns": {
+    "ExpandCollapse": 7,
+    "LegacyIAccessible": 7,
+    "Invoke": 6,
+    "Value": 4
+   },
+   "framework_ids": {
+    "Qt": 4
+   },
+   "spec_required_missing": [],
+   "spec_forbidden_present": []
+  },
+  "ScrollBar": {
+   "count": 2,
+   "named_pct": 0,
+   "automation_id_pct": 0,
+   "patterns": {
+    "Invoke": 2,
+    "Value": 2,
+    "RangeValue": 2,
+    "LegacyIAccessible": 2
+   },
+   "framework_ids": {
+    "Qt": 2
+   },
+   "spec_required_missing": [],
+   "spec_forbidden_present": []
+  },
+  "Spinner": {
+   "count": 1,
+   "named_pct": 100,
+   "automation_id_pct": 100,
+   "patterns": {
+    "Invoke": 1,
+    "Value": 1,
+    "RangeValue": 1,
+    "Text": 1,
+    "LegacyIAccessible": 1
+   },
+   "framework_ids": {
+    "Qt": 1
+   },
+   "spec_required_missing": [],
+   "spec_forbidden_present": []
+  },
+  "Tab": {
+   "count": 1,
+   "named_pct": 100,
+   "automation_id_pct": 0,
+   "patterns": {
+    "Invoke": 1,
+    "Value": 1,
+    "Selection": 1,
+    "LegacyIAccessible": 1
+   },
+   "framework_ids": {
+    "Qt": 1
+   },
+   "spec_required_missing": [],
+   "spec_forbidden_present": []
+  },
+  "TabItem": {
+   "count": 1,
+   "named_pct": 100,
+   "automation_id_pct": 0,
+   "patterns": {
+    "Invoke": 1,
+    "Value": 1,
+    "SelectionItem": 1,
+    "LegacyIAccessible": 1
+   },
+   "framework_ids": {
+    "Qt": 1
+   },
+   "spec_required_missing": [],
+   "spec_forbidden_present": [
+    "Invoke"
+   ]
+  },
+  "Text": {
+   "count": 19,
+   "named_pct": 95,
+   "automation_id_pct": 84,
+   "patterns": {
+    "Invoke": 19,
+    "LegacyIAccessible": 19
+   },
+   "framework_ids": {
+    "Qt": 19
+   },
+   "spec_required_missing": [],
+   "spec_forbidden_present": []
+  },
+  "TitleBar": {
+   "count": 3,
+   "named_pct": 0,
+   "automation_id_pct": 0,
+   "patterns": {
+    "Value": 3,
+    "LegacyIAccessible": 3
+   },
+   "framework_ids": {},
+   "spec_required_missing": [],
+   "spec_forbidden_present": []
+  },
+  "ToolBar": {
+   "count": 5,
+   "named_pct": 20,
+   "automation_id_pct": 80,
+   "patterns": {
+    "Invoke": 5,
+    "Value": 5,
+    "LegacyIAccessible": 5
+   },
+   "framework_ids": {
+    "Qt": 5
+   },
+   "spec_required_missing": [],
+   "spec_forbidden_present": []
+  },
+  "Window": {
+   "count": 4,
+   "named_pct": 100,
+   "automation_id_pct": 50,
+   "patterns": {
+    "Invoke": 4,
+    "Value": 4,
+    "LegacyIAccessible": 4,
+    "Window": 3,
+    "Transform": 3
+   },
+   "framework_ids": {
+    "Qt": 4
+   },
+   "spec_required_missing": [],
+   "spec_forbidden_present": []
+  }
+ },
+ "actions": false
+}

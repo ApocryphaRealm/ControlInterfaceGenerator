@@ -118,6 +118,8 @@ for e in entries:
         e["source"] += [s for s in old.get("source", []) if not s.startswith("doc") and s not in e["source"]]
         if old.get("observed"):
             e["observed"] = old["observed"]
+        if old.get("probed"):
+            e["probed"] = old["probed"]              # tools/probe.py results (M6) survive a rebuild
         if old.get("quirks"):
             e["quirks"] = old["quirks"]
     have = {q["id"] for q in e.get("quirks", [])}

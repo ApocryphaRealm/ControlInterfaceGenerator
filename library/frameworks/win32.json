@@ -4,7 +4,8 @@
  "versions": "any",
  "source": [
   "doc: plan 2.2 and learn.microsoft.com UIA overview (2026-10-24)",
-  "probe:2026-11-20 detection of installed apps (tools/prove_m1.py)"
+  "probe:2026-11-20 detection of installed apps (tools/prove_m1.py)",
+  "probe:2026-11-20 win32-gallery (tools/probe.py --actions)"
  ],
  "adapter_in_v1": true,
  "detect": {
@@ -57,6 +58,183 @@
     "ReBarWindow32"
    ],
    "richness": 0.77
+  }
+ ],
+ "probed": [
+  {
+   "probe": "win32-gallery",
+   "date": "2026-11-20",
+   "app": {
+    "exe": "python.exe",
+    "title": "CIG Win32 Gallery",
+    "adapter": "uia"
+   },
+   "control_types": {
+    "Button": {
+     "count": 6,
+     "patterns": [
+      "Invoke",
+      "LegacyIAccessible"
+     ],
+     "named_pct": 100,
+     "automation_id_pct": 33
+    },
+    "CheckBox": {
+     "count": 1,
+     "patterns": [
+      "Invoke",
+      "LegacyIAccessible",
+      "Toggle"
+     ],
+     "named_pct": 100,
+     "automation_id_pct": 100
+    },
+    "ComboBox": {
+     "count": 1,
+     "patterns": [
+      "ExpandCollapse",
+      "LegacyIAccessible",
+      "Value"
+     ],
+     "named_pct": 0,
+     "automation_id_pct": 100
+    },
+    "Edit": {
+     "count": 2,
+     "patterns": [
+      "LegacyIAccessible",
+      "Value"
+     ],
+     "named_pct": 100,
+     "automation_id_pct": 100
+    },
+    "List": {
+     "count": 1,
+     "patterns": [
+      "LegacyIAccessible",
+      "Selection"
+     ],
+     "named_pct": 0,
+     "automation_id_pct": 100
+    },
+    "ListItem": {
+     "count": 3,
+     "patterns": [
+      "Invoke",
+      "LegacyIAccessible",
+      "ScrollItem",
+      "SelectionItem"
+     ],
+     "named_pct": 100,
+     "automation_id_pct": 0
+    },
+    "MenuBar": {
+     "count": 1,
+     "patterns": [
+      "LegacyIAccessible"
+     ],
+     "named_pct": 100,
+     "automation_id_pct": 100
+    },
+    "MenuItem": {
+     "count": 1,
+     "patterns": [
+      "ExpandCollapse",
+      "Invoke",
+      "LegacyIAccessible"
+     ],
+     "named_pct": 100,
+     "automation_id_pct": 0
+    },
+    "RadioButton": {
+     "count": 2,
+     "patterns": [
+      "Invoke",
+      "LegacyIAccessible",
+      "SelectionItem"
+     ],
+     "named_pct": 100,
+     "automation_id_pct": 100
+    },
+    "Slider": {
+     "count": 1,
+     "patterns": [
+      "LegacyIAccessible",
+      "RangeValue"
+     ],
+     "named_pct": 0,
+     "automation_id_pct": 100
+    },
+    "Text": {
+     "count": 3,
+     "patterns": [
+      "LegacyIAccessible",
+      "Value"
+     ],
+     "named_pct": 67,
+     "automation_id_pct": 67
+    },
+    "Thumb": {
+     "count": 1,
+     "patterns": [
+      "LegacyIAccessible"
+     ],
+     "named_pct": 100,
+     "automation_id_pct": 0
+    },
+    "TitleBar": {
+     "count": 1,
+     "patterns": [
+      "LegacyIAccessible",
+      "Value"
+     ],
+     "named_pct": 0,
+     "automation_id_pct": 0
+    },
+    "Window": {
+     "count": 1,
+     "patterns": [
+      "LegacyIAccessible",
+      "Transform",
+      "Window"
+     ],
+     "named_pct": 100,
+     "automation_id_pct": 0
+    }
+   },
+   "actions": {
+    "checkable:set_checked": {
+     "tried": 1,
+     "ok": 1,
+     "verified": 1,
+     "refused": 0
+    },
+    "selectable:select": {
+     "tried": 5,
+     "ok": 5,
+     "verified": 5,
+     "refused": 0
+    },
+    "edit-value:set_text": {
+     "tried": 1,
+     "ok": 1,
+     "verified": 1,
+     "refused": 0
+    },
+    "range:set_number": {
+     "tried": 1,
+     "ok": 1,
+     "verified": 1,
+     "refused": 0
+    }
+   }
+  }
+ ],
+ "quirks": [
+  {
+   "id": "win32-text-has-value",
+   "source": "probe:2026-11-20 win32-gallery",
+   "text": "Text exposes Value, which the UIA spec says it must not."
   }
  ]
 }

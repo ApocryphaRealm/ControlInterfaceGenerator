@@ -4,7 +4,8 @@
  "versions": "any",
  "source": [
   "doc: plan 2.2 and learn.microsoft.com UIA overview (2026-10-24)",
-  "probe:2026-11-20 detection of installed apps (tools/prove_m1.py)"
+  "probe:2026-11-20 detection of installed apps (tools/prove_m1.py)",
+  "probe:2026-11-20 winforms-gallery (tools/probe.py --actions)"
  ],
  "adapter_in_v1": true,
  "detect": {
@@ -53,6 +54,240 @@
     "WindowsForms10.SCROLLBAR.app.0.141b42a_r6_ad1"
    ],
    "richness": 0.57
+  }
+ ],
+ "probed": [
+  {
+   "probe": "winforms-gallery",
+   "date": "2026-11-20",
+   "app": {
+    "exe": "powershell.exe",
+    "title": "CIG WinForms Gallery",
+    "adapter": "uia"
+   },
+   "control_types": {
+    "Button": {
+     "count": 8,
+     "patterns": [
+      "Invoke",
+      "LegacyIAccessible"
+     ],
+     "named_pct": 100,
+     "automation_id_pct": 12
+    },
+    "CheckBox": {
+     "count": 1,
+     "patterns": [
+      "Invoke",
+      "LegacyIAccessible",
+      "Toggle"
+     ],
+     "named_pct": 100,
+     "automation_id_pct": 100
+    },
+    "ComboBox": {
+     "count": 2,
+     "patterns": [
+      "LegacyIAccessible",
+      "Value"
+     ],
+     "named_pct": 100,
+     "automation_id_pct": 100
+    },
+    "Edit": {
+     "count": 3,
+     "patterns": [
+      "LegacyIAccessible",
+      "Value"
+     ],
+     "named_pct": 100,
+     "automation_id_pct": 100
+    },
+    "List": {
+     "count": 1,
+     "patterns": [
+      "LegacyIAccessible",
+      "Selection"
+     ],
+     "named_pct": 100,
+     "automation_id_pct": 100
+    },
+    "ListItem": {
+     "count": 3,
+     "patterns": [
+      "Invoke",
+      "LegacyIAccessible",
+      "SelectionItem"
+     ],
+     "named_pct": 100,
+     "automation_id_pct": 0
+    },
+    "MenuBar": {
+     "count": 1,
+     "patterns": [
+      "LegacyIAccessible"
+     ],
+     "named_pct": 100,
+     "automation_id_pct": 100
+    },
+    "MenuItem": {
+     "count": 1,
+     "patterns": [
+      "ExpandCollapse",
+      "Invoke",
+      "LegacyIAccessible"
+     ],
+     "named_pct": 100,
+     "automation_id_pct": 0
+    },
+    "Pane": {
+     "count": 1,
+     "patterns": [
+      "LegacyIAccessible"
+     ],
+     "named_pct": 100,
+     "automation_id_pct": 100
+    },
+    "RadioButton": {
+     "count": 2,
+     "patterns": [
+      "Invoke",
+      "LegacyIAccessible",
+      "SelectionItem"
+     ],
+     "named_pct": 100,
+     "automation_id_pct": 100
+    },
+    "Slider": {
+     "count": 1,
+     "patterns": [
+      "LegacyIAccessible",
+      "Value"
+     ],
+     "named_pct": 100,
+     "automation_id_pct": 100
+    },
+    "Spinner": {
+     "count": 1,
+     "patterns": [
+      "LegacyIAccessible"
+     ],
+     "named_pct": 100,
+     "automation_id_pct": 100
+    },
+    "Tab": {
+     "count": 1,
+     "patterns": [
+      "LegacyIAccessible",
+      "Selection"
+     ],
+     "named_pct": 0,
+     "automation_id_pct": 100
+    },
+    "TabItem": {
+     "count": 2,
+     "patterns": [
+      "LegacyIAccessible",
+      "SelectionItem"
+     ],
+     "named_pct": 100,
+     "automation_id_pct": 0
+    },
+    "Text": {
+     "count": 1,
+     "patterns": [
+      "LegacyIAccessible",
+      "Value"
+     ],
+     "named_pct": 100,
+     "automation_id_pct": 0
+    },
+    "Thumb": {
+     "count": 1,
+     "patterns": [
+      "LegacyIAccessible"
+     ],
+     "named_pct": 100,
+     "automation_id_pct": 0
+    },
+    "TitleBar": {
+     "count": 1,
+     "patterns": [
+      "LegacyIAccessible",
+      "Value"
+     ],
+     "named_pct": 0,
+     "automation_id_pct": 0
+    },
+    "Tree": {
+     "count": 1,
+     "patterns": [
+      "LegacyIAccessible",
+      "Selection"
+     ],
+     "named_pct": 100,
+     "automation_id_pct": 100
+    },
+    "TreeItem": {
+     "count": 1,
+     "patterns": [
+      "ExpandCollapse",
+      "LegacyIAccessible",
+      "ScrollItem",
+      "SelectionItem"
+     ],
+     "named_pct": 100,
+     "automation_id_pct": 0
+    },
+    "Window": {
+     "count": 1,
+     "patterns": [
+      "LegacyIAccessible",
+      "Transform",
+      "Window"
+     ],
+     "named_pct": 100,
+     "automation_id_pct": 0
+    }
+   },
+   "actions": {
+    "checkable:set_checked": {
+     "tried": 1,
+     "ok": 1,
+     "verified": 1,
+     "refused": 0
+    },
+    "selectable:select": {
+     "tried": 6,
+     "ok": 6,
+     "verified": 6,
+     "refused": 0
+    },
+    "edit-value:set_text": {
+     "tried": 1,
+     "ok": 1,
+     "verified": 1,
+     "refused": 0
+    },
+    "tree-expand:expand": {
+     "tried": 1,
+     "ok": 1,
+     "verified": 1,
+     "refused": 0
+    }
+   }
+  }
+ ],
+ "quirks": [
+  {
+   "id": "winforms-combobox-no-expandcollapse",
+   "source": "probe:2026-11-20 winforms-gallery",
+   "text": "ComboBox does not expose the ExpandCollapse pattern the UIA spec requires (seen on 2 of them; patterns present: ['LegacyIAccessible', 'Value'])."
+  },
+  {
+   "id": "winforms-text-has-value",
+   "source": "probe:2026-11-20 winforms-gallery",
+   "text": "Text exposes Value, which the UIA spec says it must not."
   }
  ]
 }

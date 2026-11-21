@@ -1,0 +1,290 @@
+{
+ "framework": "winui3",
+ "name": "paint",
+ "date": "2026-11-20",
+ "app": {
+  "exe": "mspaint.exe",
+  "title": "Untitled - Paint",
+  "adapter": "uia"
+ },
+ "elements": 251,
+ "survey": {
+  "Button": {
+   "count": 64,
+   "named_pct": 95,
+   "automation_id_pct": 30,
+   "patterns": {
+    "LegacyIAccessible": 64,
+    "ScrollItem": 61,
+    "Invoke": 34,
+    "Toggle": 30,
+    "ExpandCollapse": 6
+   },
+   "framework_ids": {
+    "XAML": 61
+   },
+   "spec_required_missing": [],
+   "spec_forbidden_present": []
+  },
+  "ComboBox": {
+   "count": 1,
+   "named_pct": 100,
+   "automation_id_pct": 100,
+   "patterns": {
+    "Value": 1,
+    "Selection": 1,
+    "ExpandCollapse": 1,
+    "ScrollItem": 1,
+    "LegacyIAccessible": 1
+   },
+   "framework_ids": {
+    "XAML": 1
+   },
+   "spec_required_missing": [],
+   "spec_forbidden_present": []
+  },
+  "Custom": {
+   "count": 1,
+   "named_pct": 0,
+   "automation_id_pct": 0,
+   "patterns": {
+    "ScrollItem": 1,
+    "LegacyIAccessible": 1
+   },
+   "framework_ids": {
+    "XAML": 1
+   },
+   "spec_required_missing": [],
+   "spec_forbidden_present": []
+  },
+  "Edit": {
+   "count": 2,
+   "named_pct": 100,
+   "automation_id_pct": 50,
+   "patterns": {
+    "Value": 2,
+    "Text": 2,
+    "LegacyIAccessible": 2,
+    "ScrollItem": 1
+   },
+   "framework_ids": {
+    "XAML": 1
+   },
+   "spec_required_missing": [],
+   "spec_forbidden_present": []
+  },
+  "Group": {
+   "count": 10,
+   "named_pct": 90,
+   "automation_id_pct": 10,
+   "patterns": {
+    "ScrollItem": 10,
+    "LegacyIAccessible": 10
+   },
+   "framework_ids": {
+    "XAML": 10
+   },
+   "spec_required_missing": [],
+   "spec_forbidden_present": []
+  },
+  "Image": {
+   "count": 46,
+   "named_pct": 0,
+   "automation_id_pct": 0,
+   "patterns": {
+    "ScrollItem": 46,
+    "LegacyIAccessible": 46
+   },
+   "framework_ids": {
+    "XAML": 46
+   },
+   "spec_required_missing": [],
+   "spec_forbidden_present": []
+  },
+  "List": {
+   "count": 2,
+   "named_pct": 0,
+   "automation_id_pct": 0,
+   "patterns": {
+    "Scroll": 2,
+    "ScrollItem": 2,
+    "LegacyIAccessible": 2
+   },
+   "framework_ids": {
+    "XAML": 2
+   },
+   "spec_required_missing": [],
+   "spec_forbidden_present": []
+  },
+  "ListItem": {
+   "count": 53,
+   "named_pct": 100,
+   "automation_id_pct": 0,
+   "patterns": {
+    "ScrollItem": 53,
+    "VirtualizedItem": 53,
+    "LegacyIAccessible": 53,
+    "Invoke": 30
+   },
+   "framework_ids": {
+    "XAML": 53
+   },
+   "spec_required_missing": [
+    "SelectionItem"
+   ],
+   "spec_forbidden_present": []
+  },
+  "MenuBar": {
+   "count": 2,
+   "named_pct": 50,
+   "automation_id_pct": 50,
+   "patterns": {
+    "LegacyIAccessible": 2,
+    "ScrollItem": 1
+   },
+   "framework_ids": {
+    "XAML": 1
+   },
+   "spec_required_missing": [],
+   "spec_forbidden_present": []
+  },
+  "MenuItem": {
+   "count": 4,
+   "named_pct": 100,
+   "automation_id_pct": 0,
+   "patterns": {
+    "Invoke": 4,
+    "ExpandCollapse": 4,
+    "LegacyIAccessible": 4,
+    "ScrollItem": 3
+   },
+   "framework_ids": {
+    "XAML": 3
+   },
+   "spec_required_missing": [],
+   "spec_forbidden_present": []
+  },
+  "Pane": {
+   "count": 5,
+   "named_pct": 0,
+   "automation_id_pct": 60,
+   "patterns": {
+    "LegacyIAccessible": 5,
+    "Scroll": 3,
+    "ScrollItem": 3
+   },
+   "framework_ids": {
+    "Win32": 1,
+    "XAML": 4
+   },
+   "spec_required_missing": [],
+   "spec_forbidden_present": []
+  },
+  "RadioButton": {
+   "count": 4,
+   "named_pct": 100,
+   "automation_id_pct": 25,
+   "patterns": {
+    "SelectionItem": 4,
+    "ScrollItem": 4,
+    "LegacyIAccessible": 4,
+    "Invoke": 2,
+    "Value": 2,
+    "ExpandCollapse": 2
+   },
+   "framework_ids": {
+    "XAML": 4
+   },
+   "spec_required_missing": [],
+   "spec_forbidden_present": []
+  },
+  "ScrollBar": {
+   "count": 1,
+   "named_pct": 100,
+   "automation_id_pct": 100,
+   "patterns": {
+    "RangeValue": 1,
+    "ScrollItem": 1,
+    "LegacyIAccessible": 1
+   },
+   "framework_ids": {
+    "XAML": 1
+   },
+   "spec_required_missing": [],
+   "spec_forbidden_present": []
+  },
+  "Slider": {
+   "count": 3,
+   "named_pct": 100,
+   "automation_id_pct": 33,
+   "patterns": {
+    "Value": 3,
+    "RangeValue": 3,
+    "ScrollItem": 3,
+    "LegacyIAccessible": 3
+   },
+   "framework_ids": {
+    "XAML": 3
+   },
+   "spec_required_missing": [],
+   "spec_forbidden_present": []
+  },
+  "Text": {
+   "count": 47,
+   "named_pct": 100,
+   "automation_id_pct": 11,
+   "patterns": {
+    "Text": 47,
+    "ScrollItem": 47,
+    "LegacyIAccessible": 47
+   },
+   "framework_ids": {
+    "XAML": 47
+   },
+   "spec_required_missing": [],
+   "spec_forbidden_present": []
+  },
+  "Thumb": {
+   "count": 4,
+   "named_pct": 25,
+   "automation_id_pct": 100,
+   "patterns": {
+    "ScrollItem": 4,
+    "LegacyIAccessible": 4
+   },
+   "framework_ids": {
+    "XAML": 4
+   },
+   "spec_required_missing": [],
+   "spec_forbidden_present": []
+  },
+  "TitleBar": {
+   "count": 1,
+   "named_pct": 0,
+   "automation_id_pct": 0,
+   "patterns": {
+    "Value": 1,
+    "LegacyIAccessible": 1
+   },
+   "framework_ids": {},
+   "spec_required_missing": [],
+   "spec_forbidden_present": []
+  },
+  "Window": {
+   "count": 1,
+   "named_pct": 100,
+   "automation_id_pct": 0,
+   "patterns": {
+    "Window": 1,
+    "Transform": 1,
+    "LegacyIAccessible": 1
+   },
+   "framework_ids": {
+    "Win32": 1
+   },
+   "spec_required_missing": [],
+   "spec_forbidden_present": []
+  }
+ },
+ "actions": false
+}
