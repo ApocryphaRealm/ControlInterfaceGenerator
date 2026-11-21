@@ -126,6 +126,16 @@ entries = [
       [{"name": "none", "base": 0.0, "needs": "an in-process bridge"}], in_v1=False),
 ]
 QUIRKS = {
+    "avalonia": [{"id": "avalonia-combo-options-hidden", "source": "probe:2026-11-20 avalonia-gallery (Avalonia 11.2.3)",
+                  "text": "An open ComboBox exposes no option items to UIA (only unnamed layout Groups, no popup "
+                          "window): the current value is readable (Value, read-only) but choose cannot pick another "
+                          "option."},
+                 {"id": "avalonia-listbox-items-as-groups", "source": "probe:2026-11-20 avalonia-gallery",
+                  "text": "ListBox items appear as unnamed Group elements, not ListItem with SelectionItem, so they "
+                          "cannot be selected by name."},
+                 {"id": "avalonia-password-not-flagged", "source": "probe:2026-11-20 avalonia-gallery",
+                  "text": "A TextBox with PasswordChar does not set UIA IsPassword; CIG treats an Edit named like a "
+                          "password (library/lexicon/secret-fields.json) as one, so set_secret's deny still applies."}],
     "qt5": [{"id": "qt5-objectname-automationid", "source": "probe:2026-11-20 IDA Freeware 8.4 (Qt 5.15.3)",
              "text": "Qt 5.15 exports the objectName chain as AutomationId (e.g. 'MsgBoxCritical.qt_msgbox_label'), "
                      "so locators get stable AutomationIds where the program names its widgets."},

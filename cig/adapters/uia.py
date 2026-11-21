@@ -31,6 +31,28 @@ def _norm(s: str) -> str:
     return s.strip().lower()
 
 
+def combo_items(combo) -> list:
+    """The option items of an OPEN combo box: under the combo itself (Win32, WPF), or in a popup window of the same
+    process (Avalonia, 2026-11-20 - the same place menus open their submenus)."""
+    items = [x for x, _d in auto.WalkControl(combo, maxDepth=4) if x.ControlTypeName == "ListItemControl" and x.Name]
+    if items:
+        return items
+    try:
+        pid = combo.ProcessId
+        own = combo.GetTopLevelControl()
+        own_h = own.NativeWindowHandle if own is not None else None
+        for top in auto.GetRootControl().GetChildren():
+            # a popup is its own top-level window of the same process - never the window that holds the combo
+            # (its other lists, e.g. a ListBox with items of its own, must not be mistaken for the options)
+            if top.ProcessId != pid or top.NativeWindowHandle == own_h:
+                continue
+            items += [x for x, _d in auto.WalkControl(top, maxDepth=8)
+                      if x.ControlTypeName == "ListItemControl" and x.Name]
+    except Exception:                                          # noqa: BLE001
+        pass
+    return items
+
+
 class UiaAdapter(Adapter):
     name = "uia"
 
@@ -218,10 +240,10 @@ class UiaAdapter(Adapter):
             pass
         ec = pattern(combo, "ExpandCollapse")
         ec.Expand()
-        time.sleep(0.2)
+        time.sleep(0.3)
         try:
-            for item, _d in auto.WalkControl(combo, maxDepth=4):
-                if item.ControlTypeName == "ListItemControl" and _norm(item.Name) == _norm(option):
+            for item in combo_items(combo):
+                if _norm(item.Name) == _norm(option):
                     pattern(item, "SelectionItem").Select()
                     return {"detail": "SelectionItem.Select in the expanded combo"}
         finally:

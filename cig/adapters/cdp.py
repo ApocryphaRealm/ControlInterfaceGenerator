@@ -22,6 +22,7 @@ from websockets.sync.client import connect
 
 from .. import config, locator as loc_mod
 from .base import Adapter, AdapterError, Target
+from ..uiawalk import secret_name
 
 PORTS: dict[int, int] = {}            # pid -> debugging port, for programs CIG launched with cdp=true
 _LOCK = threading.Lock()
@@ -159,7 +160,8 @@ def password_backends(s: "CdpSession") -> set:
 
 def mark_passwords(nodes: list, backends: set) -> None:
     for n in nodes:
-        if backends and (n.get("cdp") or {}).get("backend") in backends:
+        named_secret = n.get("control_type") == "Edit" and secret_name(n.get("name", ""))
+        if (backends and (n.get("cdp") or {}).get("backend") in backends) or named_secret:
             n["is_password"] = True
             n.pop("value", None)                    # never read or log a secret
         mark_passwords(n.get("children") or [], backends)

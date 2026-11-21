@@ -73,9 +73,9 @@ def combo_options(e, app, element_id):
         except LookupError:
             return []
         ec.Expand()
-        time.sleep(0.3)
-        names = [x.Name for x, _d in auto.WalkControl(c, maxDepth=4)
-                 if x.ControlTypeName == "ListItemControl" and x.Name]
+        time.sleep(0.4)
+        from cig.adapters.uia import combo_items           # under the combo, or in its popup window (Avalonia)
+        names = list(dict.fromkeys(x.Name for x in combo_items(c)))
         ec.Collapse()
         return names
     return uiawalk.run(work, timeout=20)

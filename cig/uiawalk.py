@@ -40,6 +40,28 @@ class UiaTimeout(Exception):
     pass
 
 
+def _secret_words() -> list:
+    import json
+    from . import config
+    try:
+        return [w.lower() for w in json.loads((config.LIBRARY_DIR / "lexicon" / "secret-fields.json")
+                                              .read_text(encoding="utf-8"))["words"]]
+    except (OSError, ValueError, KeyError):
+        return ["password"]
+
+
+_SECRET = None
+
+
+def secret_name(name: str) -> bool:
+    """True when an input's name marks it as secret (library/lexicon/secret-fields.json)."""
+    global _SECRET
+    if _SECRET is None:
+        _SECRET = _secret_words()
+    n = (name or "").lower()
+    return any(w in n for w in _SECRET)
+
+
 def pattern(c, name: str):
     """A control's pattern by name ("Value", "Toggle", ...) through the generic GetPattern: uiautomation only puts the
     named getters on some control classes, and a real program puts patterns where the spec calls them conditional."""
@@ -95,7 +117,9 @@ def node_of(c, with_state: bool = True) -> dict:
             n["offscreen"] = True
     except Exception:                                      # noqa: BLE001
         pass
-    if _prop(c, auto.PropertyId.IsPasswordProperty, False):
+    if _prop(c, auto.PropertyId.IsPasswordProperty, False) or (ct == "Edit" and secret_name(n.get("name", ""))):
+        # a second, independent signal: Avalonia does not set IsPassword on a PasswordChar TextBox (probe
+        # 2026-11-20), so a field NAMED like a password is treated as one - the deny rule must not depend on one flag
         n["is_password"] = True
     pats = [p for p, pid in _PIDS.items() if _prop(c, pid, False)]
     if pats:

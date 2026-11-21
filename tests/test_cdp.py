@@ -82,3 +82,14 @@ def test_radio_state_comes_from_checked():
     nodes = cdp.ax_to_nodes([ax(1, "RootWebArea", "p", kids=[2]), ax(2, "radio", "Radio one", parent=1,
                                                                       props=[("checked", "true")])], "P")
     assert nodes[0]["children"][0]["selected"] is True
+
+
+def test_a_field_named_like_a_password_is_a_password_field_even_unflagged():
+    """Avalonia (UIA) and some pages (AX) do not flag a password box: its name is a second, independent signal."""
+    from cig.uiawalk import secret_name
+    assert secret_name("Password field") and secret_name("Kennwort") and secret_name("API token")
+    assert not secret_name("Text field") and not secret_name("Search")
+    nodes = cdp.ax_to_nodes([ax(1, "RootWebArea", "p", kids=[2]), ax(2, "textbox", "Your password", parent=1,
+                                                                      value="x", backend=9)], "P")
+    cdp.mark_passwords(nodes, set())                       # no DOM signal at all
+    assert nodes[0]["children"][0]["is_password"] is True
