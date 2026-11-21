@@ -3,7 +3,8 @@
  "label": "Win32 (USER32 / common controls)",
  "versions": "any",
  "source": [
-  "doc: plan 2.2 and learn.microsoft.com UIA overview (2026-10-24)"
+  "doc: plan 2.2 and learn.microsoft.com UIA overview (2026-10-24)",
+  "probe:2026-11-20 detection of installed apps (tools/prove_m1.py)"
  ],
  "adapter_in_v1": true,
  "detect": {
@@ -37,5 +38,25 @@
  "version_from": {
   "exe_file_version": true
  },
- "notes": "The fallback for any native window. Low weights on purpose: every richer framework also shows Win32 evidence."
+ "notes": "The fallback for any native window. Low weights on purpose: every richer framework also shows Win32 evidence.",
+ "observed": [
+  {
+   "app": "7zFM.exe",
+   "version": "26.02",
+   "framework_version": "26.02",
+   "date": "2026-11-20",
+   "uia_framework_ids": [
+    "Win32"
+   ],
+   "window_classes": [
+    "7-Zip::FM",
+    "ToolbarWindow32",
+    "7-Zip::Panel",
+    "SysListView32",
+    "SysHeader32",
+    "ReBarWindow32"
+   ],
+   "richness": 0.77
+  }
+ ]
 }

@@ -53,6 +53,26 @@
     "Qt671QWindowIcon"
    ],
    "richness": 0.82
+  },
+  {
+   "app": "Editor.exe",
+   "version": "1.4.2.0",
+   "framework_version": "6.7.2.0",
+   "date": "2026-11-20",
+   "uia_framework_ids": [
+    "Qt"
+   ],
+   "window_classes": [
+    "Qt672QWindowIcon"
+   ],
+   "richness": 0.93
+  }
+ ],
+ "quirks": [
+  {
+   "id": "qt6-window-class",
+   "source": "probe:2026-11-20 MO2 2.5 (Qt 6.7.1), Equalizer APO Editor (Qt 6.7.2)",
+   "text": "Top-level window class is Qt<major><minor><patch>QWindowIcon, e.g. Qt671QWindowIcon; UIA FrameworkId is 'Qt'."
   }
  ]
 }

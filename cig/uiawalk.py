@@ -40,6 +40,15 @@ class UiaTimeout(Exception):
     pass
 
 
+def pattern(c, name: str):
+    """A control's pattern by name ("Value", "Toggle", ...) through the generic GetPattern: uiautomation only puts the
+    named getters on some control classes, and a real program puts patterns where the spec calls them conditional."""
+    p = c.GetPattern(getattr(auto.PatternId, name + "Pattern"))
+    if p is None:
+        raise LookupError(f"{name} pattern not available")
+    return p
+
+
 def run(fn, *a, timeout: float = 20.0, **kw):
     """Run fn in a UIA worker thread (COM initialised there) with a timeout."""
     def wrapped():
@@ -99,21 +108,21 @@ def node_of(c, with_state: bool = True) -> dict:
 def _state(c, n: dict, pats: set) -> None:
     try:
         if "Value" in pats and not n.get("is_password"):
-            vp = c.GetValuePattern()
+            vp = pattern(c, "Value")
             n["value"] = str(vp.Value or "")[:4000]
             n["is_read_only"] = bool(vp.IsReadOnly)
         if "Toggle" in pats:
-            n["toggle_state"] = TOGGLE.get(int(c.GetTogglePattern().ToggleState), "Indeterminate")
+            n["toggle_state"] = TOGGLE.get(int(pattern(c, "Toggle").ToggleState), "Indeterminate")
         if "SelectionItem" in pats:
-            n["selected"] = bool(c.GetSelectionItemPattern().IsSelected)
+            n["selected"] = bool(pattern(c, "SelectionItem").IsSelected)
         if "ExpandCollapse" in pats:
-            n["expand_state"] = EXPAND.get(int(c.GetExpandCollapsePattern().ExpandCollapseState), "LeafNode")
+            n["expand_state"] = EXPAND.get(int(pattern(c, "ExpandCollapse").ExpandCollapseState), "LeafNode")
         if "RangeValue" in pats:
-            rp = c.GetRangeValuePattern()
+            rp = pattern(c, "RangeValue")
             n["range"] = {"min": rp.Minimum, "max": rp.Maximum, "value": rp.Value,
                           **({"step": rp.SmallChange} if rp.SmallChange else {})}
         if "Window" in pats:
-            if bool(c.GetWindowPattern().IsModal):
+            if bool(pattern(c, "Window").IsModal):
                 n["is_modal"] = True
     except Exception:                                      # noqa: BLE001 - state is best effort; the node stays
         pass

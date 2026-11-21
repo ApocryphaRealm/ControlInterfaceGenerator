@@ -3,7 +3,8 @@
  "label": "Qt 5",
  "versions": "any",
  "source": [
-  "doc: plan 2.2 and learn.microsoft.com UIA overview (2026-10-24)"
+  "doc: plan 2.2 and learn.microsoft.com UIA overview (2026-10-24)",
+  "probe:2026-11-20 detection of installed apps (tools/prove_m1.py)"
  ],
  "adapter_in_v1": true,
  "detect": {
@@ -38,5 +39,32 @@
  "specializes": [
   "win32"
  ],
- "notes": "Qt 5 exposes UIA through its MSAA bridge: names yes, AutomationIds rarely (to verify by probe)."
+ "notes": "Qt 5 exposes UIA through its MSAA bridge: names yes, AutomationIds rarely (to verify by probe).",
+ "observed": [
+  {
+   "app": "ida64.exe",
+   "version": "8.4.24.0527",
+   "framework_version": "5.15.3.0",
+   "date": "2026-11-20",
+   "uia_framework_ids": [
+    "Qt"
+   ],
+   "window_classes": [
+    "Qt5153QTQWindowIcon"
+   ],
+   "richness": 0.93
+  }
+ ],
+ "quirks": [
+  {
+   "id": "qt5-objectname-automationid",
+   "source": "probe:2026-11-20 IDA Freeware 8.4 (Qt 5.15.3)",
+   "text": "Qt 5.15 exports the objectName chain as AutomationId (e.g. 'MsgBoxCritical.qt_msgbox_label'), so locators get stable AutomationIds where the program names its widgets."
+  },
+  {
+   "id": "qt-messagebox",
+   "source": "probe:2026-11-20 IDA Freeware 8.4",
+   "text": "QMessageBox is a Window (AutomationId 'MsgBox<Icon>') whose buttons sit in a Group '<id>.qt_msgbox_buttonbox'; Button + Invoke answers it."
+  }
+ ]
 }

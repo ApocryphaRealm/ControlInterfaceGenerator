@@ -3,7 +3,8 @@
  "label": "WinUI 3 (Windows App SDK)",
  "versions": "any",
  "source": [
-  "doc: plan 2.2 and learn.microsoft.com UIA overview (2026-10-24)"
+  "doc: plan 2.2 and learn.microsoft.com UIA overview (2026-10-24)",
+  "probe:2026-11-20 detection of installed apps (tools/prove_m1.py)"
  ],
  "adapter_in_v1": true,
  "detect": {
@@ -40,5 +41,52 @@
   "win32",
   "uwp"
  ],
- "notes": "Microsoft.UI.Xaml.dll at 3.x is WinUI 3; at 2.x it is WinUI 2 (a UWP control library, also in XAML islands)."
+ "notes": "Microsoft.UI.Xaml.dll at 3.x is WinUI 3; at 2.x it is WinUI 2 (a UWP control library, also in XAML islands).",
+ "observed": [
+  {
+   "app": "Notepad.exe",
+   "version": "11.2609.11.0",
+   "framework_version": "3.3.0.0",
+   "date": "2026-11-20",
+   "uia_framework_ids": [
+    "Win32",
+    "XAML"
+   ],
+   "window_classes": [
+    "Notepad",
+    "Microsoft.UI.Content.DesktopChildSiteBridge",
+    "InputSiteWindowClass",
+    "InputNonClientPointerSource",
+    "NotepadTextBox",
+    "RichEditD2DPT"
+   ],
+   "richness": 0.93
+  },
+  {
+   "app": "mspaint.exe",
+   "version": "11.2609.441.0",
+   "framework_version": "3.3.0.0",
+   "date": "2026-11-20",
+   "uia_framework_ids": [
+    "Win32",
+    "XAML"
+   ],
+   "window_classes": [
+    "MSPaintApp",
+    "MSPaintView",
+    "Microsoft.UI.Content.DesktopChildSiteBridge",
+    "InputSiteWindowClass",
+    "InputNonClientPointerSource",
+    "AfxWnd140u"
+   ],
+   "richness": 0.92
+  }
+ ],
+ "quirks": [
+  {
+   "id": "winui-version",
+   "source": "probe:2026-11-20 Notepad, Paint",
+   "text": "Microsoft.UI.Xaml.dll 3.x = WinUI 3; Settings and Explorer load 2.9.x = WinUI 2 (UWP library / XAML islands), so the module's version decides, not its name."
+  }
+ ]
 }

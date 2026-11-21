@@ -97,6 +97,32 @@ entries = [
                                         "modules": [m(r"^unityplayer\.dll$", 0.6)]},
       [{"name": "none", "base": 0.0, "needs": "an in-process bridge"}], in_v1=False),
 ]
+QUIRKS = {
+    "qt5": [{"id": "qt5-objectname-automationid", "source": "probe:2026-11-20 IDA Freeware 8.4 (Qt 5.15.3)",
+             "text": "Qt 5.15 exports the objectName chain as AutomationId (e.g. 'MsgBoxCritical.qt_msgbox_label'), "
+                     "so locators get stable AutomationIds where the program names its widgets."},
+            {"id": "qt-messagebox", "source": "probe:2026-11-20 IDA Freeware 8.4",
+             "text": "QMessageBox is a Window (AutomationId 'MsgBox<Icon>') whose buttons sit in a Group "
+                     "'<id>.qt_msgbox_buttonbox'; Button + Invoke answers it."}],
+    "qt6": [{"id": "qt6-window-class", "source": "probe:2026-11-20 MO2 2.5 (Qt 6.7.1), Equalizer APO Editor (Qt 6.7.2)",
+             "text": "Top-level window class is Qt<major><minor><patch>QWindowIcon, e.g. Qt671QWindowIcon; UIA "
+                     "FrameworkId is 'Qt'."}],
+    "winui3": [{"id": "winui-version", "source": "probe:2026-11-20 Notepad, Paint",
+                "text": "Microsoft.UI.Xaml.dll 3.x = WinUI 3; Settings and Explorer load 2.9.x = WinUI 2 (UWP library / "
+                        "XAML islands), so the module's version decides, not its name."}],
+}
 for e in entries:
-    (D / f"{e['framework']}.json").write_text(json.dumps(e, indent=1), encoding="utf-8")
+    p = D / f"{e['framework']}.json"
+    if p.exists():                                   # keep what probes and the field have added since
+        old = json.loads(p.read_text(encoding="utf-8"))
+        e["source"] += [s for s in old.get("source", []) if not s.startswith("doc") and s not in e["source"]]
+        if old.get("observed"):
+            e["observed"] = old["observed"]
+        if old.get("quirks"):
+            e["quirks"] = old["quirks"]
+    have = {q["id"] for q in e.get("quirks", [])}
+    e.setdefault("quirks", []).extend(q for q in QUIRKS.get(e["framework"], []) if q["id"] not in have)
+    if not e["quirks"]:
+        del e["quirks"]
+    p.write_text(json.dumps(e, indent=1), encoding="utf-8")
 print(len(entries), "entries")
