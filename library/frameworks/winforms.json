@@ -269,6 +269,12 @@
      "verified": 1,
      "refused": 0
     },
+    "combo:choose": {
+     "tried": 2,
+     "ok": 0,
+     "verified": 0,
+     "refused": 0
+    },
     "tree-expand:expand": {
      "tried": 1,
      "ok": 1,

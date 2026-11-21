@@ -110,6 +110,14 @@ class UiaAdapter(Adapter):
             if c is None:
                 return {"exists": False}
             n = uiawalk.node_of(c, True)
+            if "value" not in n and "Selection" in (n.get("patterns") or []) and n.get("control_type") == "ComboBox":
+                # a drop-down list with no Value pattern names its choice through Selection (WPF, M6 probe 2026-11-20)
+                try:
+                    sel = pattern(c, "Selection").GetSelection()
+                    if sel:
+                        n["value"] = sel[0].Name
+                except Exception:                              # noqa: BLE001
+                    pass
             if "value" not in n and "Text" in (n.get("patterns") or []) and not n.get("is_password"):
                 try:
                     n["value"] = pattern(c, "Text").DocumentRange.GetText(20000)

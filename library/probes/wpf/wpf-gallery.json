@@ -358,6 +358,19 @@
    "restored": true
   },
   {
+   "rule": "combo",
+   "action": "choose",
+   "label": "choose ComboBox 'Choice'",
+   "args": {
+    "option": "Beta"
+   },
+   "ok": true,
+   "verified": true,
+   "refused": false,
+   "reason": "",
+   "restored": true
+  },
+  {
    "rule": "selectable",
    "action": "select",
    "label": "select ListItem 'One'",
@@ -474,6 +487,12 @@
    "refused": 0
   },
   "edit-value:set_text": {
+   "tried": 1,
+   "ok": 1,
+   "verified": 1,
+   "refused": 0
+  },
+  "combo:choose": {
    "tried": 1,
    "ok": 1,
    "verified": 1,

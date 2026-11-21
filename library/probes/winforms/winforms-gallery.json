@@ -322,6 +322,15 @@
    "restored": true
   },
   {
+   "rule": "combo",
+   "action": "choose",
+   "label": "choose ComboBox 'Choice'",
+   "ok": false,
+   "verified": null,
+   "refused": false,
+   "reason": "no options readable (the combo has no ExpandCollapse to open it)"
+  },
+  {
    "rule": "selectable",
    "action": "select",
    "label": "select ListItem 'One'",
@@ -350,6 +359,15 @@
    "verified": true,
    "refused": false,
    "reason": ""
+  },
+  {
+   "rule": "combo",
+   "action": "choose",
+   "label": "choose ComboBox 'Number'",
+   "ok": false,
+   "verified": null,
+   "refused": false,
+   "reason": "no options readable (the combo has no ExpandCollapse to open it)"
   },
   {
    "rule": "selectable",
@@ -402,6 +420,12 @@
    "tried": 1,
    "ok": 1,
    "verified": 1,
+   "refused": 0
+  },
+  "combo:choose": {
+   "tried": 2,
+   "ok": 0,
+   "verified": 0,
    "refused": 0
   },
   "tree-expand:expand": {

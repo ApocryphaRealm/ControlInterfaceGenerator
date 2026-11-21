@@ -270,6 +270,12 @@
      "verified": 1,
      "refused": 0
     },
+    "combo:choose": {
+     "tried": 1,
+     "ok": 1,
+     "verified": 1,
+     "refused": 0
+    },
     "range:set_number": {
      "tried": 1,
      "ok": 1,

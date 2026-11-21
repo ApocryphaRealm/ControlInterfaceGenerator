@@ -55,6 +55,32 @@ def survey(windows):
     return out
 
 
+def combo_options(e, app, element_id):
+    """A collapsed combo box lists no options in the tree: open it, read its items, close it (UIA, own galleries)."""
+    from cig import uiawalk
+    import uiautomation as auto
+    adapter, target = e.resolve(app)
+    info = e._snapshot(adapter, target)["elements"].get(element_id)
+    if not info or not hasattr(adapter, "_find_live"):
+        return []
+
+    def work():
+        c = adapter._find_live(target, info["locator"])
+        if c is None:
+            return []
+        try:
+            ec = uiawalk.pattern(c, "ExpandCollapse")
+        except LookupError:
+            return []
+        ec.Expand()
+        time.sleep(0.3)
+        names = [x.Name for x, _d in auto.WalkControl(c, maxDepth=4)
+                 if x.ControlTypeName == "ListItemControl" and x.Name]
+        ec.Collapse()
+        return names
+    return uiawalk.run(work, timeout=20)
+
+
 def try_actions(e, app):
     results = []
     acts = e.actions(app)["actions"]
@@ -62,6 +88,14 @@ def try_actions(e, app):
         if a["action"] not in SAFE:
             continue
         before = e.read(app, a["element"]).get("state", {})
+        if a["action"] == "choose" and not a["input_schema"]["properties"]["option"].get("enum"):
+            opts = combo_options(e, app, a["element"])
+            a["input_schema"]["properties"]["option"]["enum"] = opts
+            if not opts:
+                results.append({"rule": a["rule"], "action": "choose", "label": a["label"], "ok": False,
+                                "verified": None, "refused": False,
+                                "reason": "no options readable (the combo has no ExpandCollapse to open it)"})
+                continue
         args = probe_args(a, before)
         if args is None:
             continue

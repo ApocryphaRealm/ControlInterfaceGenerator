@@ -40,7 +40,7 @@
     "paragraph": {"control_type": "Text", "patterns": []},
     "img": {"control_type": "Image", "patterns": []},
     "image": {"control_type": "Image", "patterns": []},
-    "RootWebArea": {"control_type": "Document", "patterns": []},
+    "RootWebArea": {"control_type": "Document", "patterns": ["Text"]},
     "WebArea": {"control_type": "Document", "patterns": []},
     "generic": {"control_type": "Group", "patterns": []},
     "group": {"control_type": "Group", "patterns": []},

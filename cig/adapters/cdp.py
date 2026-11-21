@@ -304,7 +304,18 @@ class CdpAdapter(Adapter):
         if live is None:
             return {"exists": False}
         keep = ("name", "value", "toggle_state", "selected", "expand_state", "range", "enabled", "is_read_only")
-        return {"exists": True, **{k: live[k] for k in keep if k in live}}
+        out = {"exists": True, **{k: live[k] for k in keep if k in live}}
+        if live.get("control_type") == "Document" and "Text" in (live.get("patterns") or []):
+            # the page's text, so the Text pattern the role map gives a Document is real (M6 probe to-do)
+            try:
+                s, txt = self._with_node(target, live, "function(){ const b = this.body || this.documentElement "
+                                         "|| (this.ownerDocument && this.ownerDocument.body); "
+                                         "return b ? b.innerText.slice(0, 20000) : ''; }")
+                s.close()
+                out["value"] = txt or ""
+            except AdapterError:
+                pass
+        return out
 
     def execute(self, target: Target, locator: str, node: dict, action: str, args: dict) -> dict:
         live = self._live(target, locator)
