@@ -55,10 +55,21 @@ def main(argv):
         step("the menus are one 'menu' action with paths", bool(bar) and len(bar["input_schema"]["properties"]["path"].get("examples", [])) >= 3,
              bar and bar["input_schema"]["properties"]["path"].get("examples", [])[:10])
 
-        tree = {t["id"]: t for t in e.tree(app, max_nodes=2000)["elements"]}
-        on = next((x for x in rows if tree.get(x["element"], {}).get("toggle_state") == "On"
+        # only rows of the MOD list (the plugin list is a tree too): walk the tree in order, noting which list a row is in
+        tree, in_list, cur = {}, {}, None
+        for t in e.tree(app, max_nodes=4000)["elements"]:
+            tree[t["id"]] = t
+            if t["type"] in ("Tree", "List"):
+                cur = t.get("automation_id") or t.get("name")
+            elif t["type"] in ("TreeItem", "ListItem"):
+                in_list[t["id"]] = cur
+        on = next((x for x in rows if in_list.get(x["element"]) == "modList"
+                   and tree.get(x["element"], {}).get("toggle_state") == "On"
                    and not tree[x["element"]]["name"].endswith("_separator")), None)
         step("an enabled mod row was found", bool(on), on and on["label"])
+        fixed = [t["name"] for i, t in tree.items() if in_list.get(i) == "espList" and t.get("toggle_state") == "On"
+                 and not any(x["element"] == i for x in rows)]
+        step("the game's own masters are readable but not offered for a tick", any(n.lower() == "skyrim.esm" for n in fixed), fixed[:5])
         r = e.do(app, on["id"], {"checked": False})
         step("untick it through cig do: done and verified by read-back", r.get("ok") and r.get("verified") is True
              and r["changed"]["after"].get("toggle_state") == "Off", {k: r.get(k) for k in ("ok", "verified", "reason", "backup")})

@@ -552,9 +552,12 @@ def view_node(c: dict, controls: list[dict], window: Optional[str], unique_names
         how = {"match": cells[0]} if complete and cells[0] and firsts.count(cells[0]) == 1 else {"row": r["row"]}
         kid["host"] = dict(loc, item=True, expect=cells[0], **how)
         if "checked" in r:
-            kid["patterns"].append("Toggle")
             kid["toggle_state"] = "On" if r["checked"] is True else "Off" if r["checked"] is False else "Indeterminate"
+        if "checked" in r and r.get("checkable", True) and r.get("enabled", True) is not False:
+            kid["patterns"].append("Toggle")
         else:
+            # no box, or a box that is shown but not the person's to tick (a game's own master): the row can be
+            # selected and its state read, never set
             kid["patterns"].append("SelectionItem")
         kid["selected"] = bool(r.get("selected"))
         if r.get("children") and is_tree:

@@ -35,10 +35,11 @@ class FakeMo2:
         self.info["reads"] = self.info["reads"] + ["ui_items", "ui_menus"]
         self.info["writes"] = self.info["writes"] + ["ui_item", "ui_menu"]
         self.trees["main"]["controls"].append({"kind": "view", "class": "QTreeView", "name": "modList", "enabled": True,
-                                               "visible": True, "rows": 4, "columns": 2, "tree": True, "where": ""})
+                                               "visible": True, "rows": 5, "columns": 2, "tree": True, "where": ""})
         self.rows = [{"row": 0, "cells": ["Alpha", "0"], "checked": True}, {"row": 1, "cells": ["Bravo", "1"], "checked": False},
                      {"row": 2, "cells": ["Armour_separator", "2"], "children": True, "expanded": False},
-                     {"row": 3, "cells": ["Charlie", "3"], "checked": False}]
+                     {"row": 3, "cells": ["Charlie", "3"], "checked": False},
+                     {"row": 4, "cells": ["Skyrim.esm", "4"], "checked": True, "checkable": False}]
         self.entries = [{"path": "File", "enabled": True, "menu": True}, {"path": "File > Install Mod...", "enabled": True},
                         {"path": "Tools", "enabled": True, "menu": True},
                         {"path": "Tools > Tool Plugins", "enabled": True, "menu": True},
@@ -345,6 +346,8 @@ def test_mod_list_rows_are_typed_actions(eng, mo2):
     labels = {a["label"]: a for a in acts}
     assert "set_checked TreeItem 'Alpha'" in labels and "set_checked TreeItem 'Bravo'" in labels
     assert "expand TreeItem 'Armour_separator'" in labels            # a row with rows under it and no box
+    # a box that is shown but cannot be ticked (the live run's Skyrim.esm): readable and selectable, never settable
+    assert "set_checked TreeItem 'Skyrim.esm'" not in labels and "select TreeItem 'Skyrim.esm'" in labels
     assert "list_items Tree 'modList'" in labels and "menu MenuBar 'Menus'" in labels
     tree = {e["name"]: e for e in server.cig_tree(APP)["elements"] if e["type"] == "TreeItem"}
     assert tree["Alpha"]["toggle_state"] == "On" and tree["Bravo"]["toggle_state"] == "Off"
@@ -367,7 +370,7 @@ def test_opening_a_tree_row_and_reading_the_rows(eng, mo2, idle):
     r = server.cig_do(APP, act(eng, "expand", "Armour_separator")["id"], {"expanded": True})
     assert r["ok"] and r["verified"] is True and mo2.rows[2]["expanded"] is True
     r = server.cig_do(APP, act(eng, "list_items", "modList")["id"])
-    assert r["ok"] and r["detail"]["columns"] == ["Mod Name", "Priority"] and len(r["detail"]["rows"]) == 4
+    assert r["ok"] and r["detail"]["columns"] == ["Mod Name", "Priority"] and len(r["detail"]["rows"]) == 5
     assert not any(c[0] == "ui_item" for c in mo2.calls[-2:])        # a read sends no write
 
 
