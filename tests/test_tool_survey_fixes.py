@@ -21,6 +21,7 @@ def test_a_program_starts_in_its_own_folder(idle, tmp_path, monkeypatch):
         def __init__(self, argv, **kw):
             seen.update(kw)
     monkeypatch.setattr(subprocess, "Popen", FakePopen)
+    monkeypatch.setattr(launch, "_elevated", lambda: False)   # CI runners are elevated: that path goes via Explorer
     r = launch.launch(str(exe), [], wait_s=0.2)
     assert seen["cwd"] == str(exe.parent)          # never CIG's own folder
     assert r["cwd"] == str(exe.parent)
