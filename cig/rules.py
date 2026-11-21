@@ -31,6 +31,9 @@ def matches(rule: dict, node: dict) -> bool:
     for p in PROPS:
         if p in w and bool(node.get(p, False if p != "enabled" else True)) != bool(w[p]):
             return False
+    for key, want in (w.get("props") or {}).items():         # any other node property, compared exactly
+        if node.get(key) != want:
+            return False
     return True
 
 
@@ -61,6 +64,9 @@ def menu_paths(node: dict, prefix: str = "") -> list[str]:
 
 
 def _schema(rule: dict, node: dict) -> dict:
+    if rule.get("schema_from_node"):
+        # the element describes its own inputs (a CLI command's parameters, read from the program's own metadata)
+        return node.get("input_schema") or {"type": "object", "additionalProperties": False}
     props, req = {}, []
     for arg, spec in (rule.get("args") or {}).items():
         s = {"type": spec["type"]}

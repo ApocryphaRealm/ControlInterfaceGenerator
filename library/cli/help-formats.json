@@ -1,0 +1,18 @@
+{
+  "about": "How to read a native command-line tool's own help (plan 2.3 source 1, M5). A format is tried when its 'detect' pattern is found in the help text; it names the section headers and the line patterns for commands, switches and the usage line. Data, not per-tool code: any tool that prints its help in the same shape gets the same treatment.",
+  "formats": [
+    {
+      "id": "angle-sections",
+      "source": "field:2026-11-20 7-Zip 26.02 (7z.exe with no arguments)",
+      "help_args": [],
+      "detect": "<Commands>",
+      "usage_re": "^Usage:\\s*\\S+\\s+<command>\\s+\\[<switches>\\.\\.\\.\\]\\s+(.*)$",
+      "commands_section": "<Commands>",
+      "switches_section": "<Switches>",
+      "command_re": "^\\s{2}(\\S+)\\s+:\\s+(.+)$",
+      "switch_re": "^\\s{2,4}(-[A-Za-z]+)(\\S*)\\s*:\\s*(.+)$"
+    }
+  ],
+  "read_words": ["list", "show", "test", "calculate", "benchmark", "information", "info", "print", "display", "verify", "check", "get", "query", "hash"],
+  "secret_words": ["password", "passphrase", "token", "secret", "key file"]
+}

@@ -1,0 +1,12 @@
+{
+  "about": "Adapter rules for command-line programs (plan 4.1, M5): each command the CLI adapter found (a PowerShell cmdlet or a native tool's sub-command) is a 'Command' node carrying its own input schema and kind; these rules turn it into one typed 'run' action. The kind comes from the program's own metadata (PowerShell verb and ConfirmImpact; a native command's description) and the destructive lexicon still applies on top.",
+  "source": ["doc: Get-Command (PowerShell 5.1) parameter metadata; native help texts parsed by library/cli/help-formats.json"],
+  "rules": [
+    {"id": "cli-read", "when": {"control_type": ["Command"], "props": {"cli_kind": "read"}},
+     "action": "run", "kind": "read", "schema_from_node": true},
+    {"id": "cli-write", "when": {"control_type": ["Command"], "props": {"cli_kind": "write"}},
+     "action": "run", "kind": "write", "schema_from_node": true},
+    {"id": "cli-destructive", "when": {"control_type": ["Command"], "props": {"cli_kind": "destructive"}},
+     "action": "run", "kind": "destructive", "schema_from_node": true}
+  ]
+}

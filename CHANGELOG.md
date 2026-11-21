@@ -18,4 +18,14 @@
   - Containers are located by position, because a Win32 Pane takes its edit's text as its name.
   - A read-back that loses the element re-resolves it by fingerprint.
   - An action that closes its own element is judged by the read-back.
+- M4 (not done): the CDP adapter for Chromium and Electron. It translates the AX tree into the same nodes, so the UIA rules apply unchanged.
+  - Added a widget-kit library for custom-drawn controls that are missing from the accessibility tree.
+  - `cig_launch(cdp=true, profile_flag=...)` uses a loopback port and a separate data folder.
+  - System side-effect guards (registry keys exported before a launch, restored and verified on close) and `cig_close`.
+  - The Vortex proof was halted: Vortex reads its default state before it applies `--user-data`.
+- M5: the CLI adapter.
+  - PowerShell modules become typed commands from `Get-Command` metadata. The kind comes from the verb and ConfirmImpact, and dry runs use the command's own `-WhatIf`.
+  - Native tools become typed commands from their own help text, read through a format in `library/cli/help-formats.json`.
+  - Runs are argument lists, never shell strings, and secret parameters are never offered.
+  - Proof: 7z.exe and Microsoft.PowerShell.Archive, 14 of 14 steps.
 

@@ -34,6 +34,11 @@ def default_adapters() -> list:
     except ImportError:
         pass
     try:
+        from .adapters.cli import CliAdapter          # M5: claims only 'ps:<Module>' and 'cli:<exe>' references
+        out.append(CliAdapter())
+    except ImportError:
+        pass
+    try:
         from .adapters.cdp import CdpAdapter         # M4: before UIA - only programs CIG launched with cdp=true
         out.append(CdpAdapter())
     except ImportError:
