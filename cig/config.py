@@ -2,9 +2,13 @@
 import functools
 import os
 import subprocess
+import sys
 from pathlib import Path
 
-REPO = Path(__file__).resolve().parent.parent
+# Frozen into cig.exe (PyInstaller), the bundled library and config sit in the unpack folder (sys._MEIPASS), and the
+# runtime data (logs, cache, backups) goes to %LOCALAPPDATA%/CIG - never into a temporary unpack folder.
+FROZEN = bool(getattr(sys, "frozen", False))
+REPO = Path(getattr(sys, "_MEIPASS", "")) if FROZEN else Path(__file__).resolve().parent.parent
 LIBRARY_DIR = REPO / "library"
 RESOLVER = Path(r"D:\Claude output\.MD\resolvers\resolve.py")
 
@@ -31,7 +35,8 @@ def resolve_role(role: str) -> str:
 
 def home() -> Path:
     """Runtime data (logs, cache, backups). Not in git."""
-    p = Path(os.environ.get("CIG_HOME") or (REPO / "var"))
+    default = (Path(os.environ.get("LOCALAPPDATA") or Path.home()) / "CIG") if FROZEN else (REPO / "var")
+    p = Path(os.environ.get("CIG_HOME") or default)
     p.mkdir(parents=True, exist_ok=True)
     return p
 

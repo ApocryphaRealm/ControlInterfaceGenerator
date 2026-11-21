@@ -5,7 +5,9 @@ description = "Generates a typed, safety-checked control interface (an MCP serve
 requires-python = ">=3.11"
 license = {text = "GPL-3.0-or-later"}
 dependencies = [
-  "mcp>=1.30",
+  "mcp>=1.30,<2",
+  "websockets>=13",
+  "pillow>=10",
   "psutil>=7",
   "pywinauto==0.6.9",
   "uiautomation>=2.0.29",
@@ -14,8 +16,12 @@ dependencies = [
   "pywin32",
 ]
 
+[project.scripts]
+cig = "cig.cli:main"
+
 [project.optional-dependencies]
 test = ["pytest>=8"]
+build = ["pyinstaller>=6"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]

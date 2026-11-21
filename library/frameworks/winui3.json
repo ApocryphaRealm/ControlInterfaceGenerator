@@ -5,7 +5,12 @@
  "source": [
   "doc: plan 2.2 and learn.microsoft.com UIA overview (2026-10-24)",
   "probe:2026-11-20 detection of installed apps (tools/prove_m1.py)",
-  "probe:2026-11-20 paint (tools/probe.py)"
+  "probe:2026-11-20 paint (tools/probe.py)",
+  "probe:2026-11-20 winui3-gallery-CheckBox (tools/probe.py --actions)",
+  "probe:2026-11-20 winui3-gallery-ToggleSwitch (tools/probe.py --actions)",
+  "probe:2026-11-20 winui3-gallery-Slider (tools/probe.py --actions)",
+  "probe:2026-11-20 winui3-gallery-ComboBox (tools/probe.py --actions)",
+  "probe:2026-11-20 winui3-gallery-RadioButton (tools/probe.py --actions)"
  ],
  "adapter_in_v1": true,
  "detect": {
@@ -277,6 +282,1007 @@
      ],
      "named_pct": 100,
      "automation_id_pct": 0
+    }
+   }
+  },
+  {
+   "probe": "winui3-gallery-CheckBox",
+   "date": "2026-11-20",
+   "app": {
+    "exe": "WinUIGallery.exe",
+    "title": "WinUI Gallery",
+    "adapter": "uia"
+   },
+   "control_types": {
+    "Button": {
+     "count": 22,
+     "patterns": [
+      "ExpandCollapse",
+      "Invoke",
+      "LegacyIAccessible",
+      "ScrollItem",
+      "Toggle"
+     ],
+     "named_pct": 82,
+     "automation_id_pct": 64
+    },
+    "CheckBox": {
+     "count": 10,
+     "patterns": [
+      "LegacyIAccessible",
+      "ScrollItem",
+      "Toggle"
+     ],
+     "named_pct": 70,
+     "automation_id_pct": 80
+    },
+    "Custom": {
+     "count": 1,
+     "patterns": [
+      "LegacyIAccessible",
+      "ScrollItem",
+      "Selection"
+     ],
+     "named_pct": 0,
+     "automation_id_pct": 100
+    },
+    "Edit": {
+     "count": 8,
+     "patterns": [
+      "LegacyIAccessible",
+      "ScrollItem",
+      "Text",
+      "Value"
+     ],
+     "named_pct": 25,
+     "automation_id_pct": 50
+    },
+    "Group": {
+     "count": 4,
+     "patterns": [
+      "Invoke",
+      "LegacyIAccessible",
+      "ScrollItem"
+     ],
+     "named_pct": 0,
+     "automation_id_pct": 100
+    },
+    "Image": {
+     "count": 1,
+     "patterns": [
+      "LegacyIAccessible",
+      "ScrollItem"
+     ],
+     "named_pct": 0,
+     "automation_id_pct": 0
+    },
+    "ListItem": {
+     "count": 36,
+     "patterns": [
+      "ExpandCollapse",
+      "LegacyIAccessible",
+      "ScrollItem",
+      "SelectionItem"
+     ],
+     "named_pct": 100,
+     "automation_id_pct": 100
+    },
+    "MenuBar": {
+     "count": 1,
+     "patterns": [
+      "LegacyIAccessible"
+     ],
+     "named_pct": 100,
+     "automation_id_pct": 100
+    },
+    "MenuItem": {
+     "count": 1,
+     "patterns": [
+      "ExpandCollapse",
+      "Invoke",
+      "LegacyIAccessible"
+     ],
+     "named_pct": 100,
+     "automation_id_pct": 0
+    },
+    "Pane": {
+     "count": 15,
+     "patterns": [
+      "LegacyIAccessible",
+      "Scroll",
+      "ScrollItem"
+     ],
+     "named_pct": 27,
+     "automation_id_pct": 47
+    },
+    "ScrollBar": {
+     "count": 2,
+     "patterns": [
+      "LegacyIAccessible",
+      "RangeValue",
+      "ScrollItem"
+     ],
+     "named_pct": 100,
+     "automation_id_pct": 100
+    },
+    "Text": {
+     "count": 95,
+     "patterns": [
+      "LegacyIAccessible",
+      "ScrollItem",
+      "Text"
+     ],
+     "named_pct": 97,
+     "automation_id_pct": 11
+    },
+    "TitleBar": {
+     "count": 2,
+     "patterns": [
+      "LegacyIAccessible",
+      "ScrollItem",
+      "Value"
+     ],
+     "named_pct": 50,
+     "automation_id_pct": 50
+    },
+    "ToolTip": {
+     "count": 2,
+     "patterns": [
+      "LegacyIAccessible",
+      "ScrollItem"
+     ],
+     "named_pct": 100,
+     "automation_id_pct": 0
+    },
+    "Window": {
+     "count": 4,
+     "patterns": [
+      "LegacyIAccessible",
+      "ScrollItem",
+      "Transform",
+      "Window"
+     ],
+     "named_pct": 75,
+     "automation_id_pct": 25
+    }
+   },
+   "actions": {
+    "edit-value:set_text": {
+     "tried": 8,
+     "ok": 8,
+     "verified": 8,
+     "refused": 0
+    },
+    "checkable:set_checked": {
+     "tried": 11,
+     "ok": 11,
+     "verified": 11,
+     "refused": 0
+    },
+    "range:set_number": {
+     "tried": 1,
+     "ok": 1,
+     "verified": 1,
+     "refused": 0
+    }
+   }
+  },
+  {
+   "probe": "winui3-gallery-ToggleSwitch",
+   "date": "2026-11-20",
+   "app": {
+    "exe": "WinUIGallery.exe",
+    "title": "WinUI Gallery",
+    "adapter": "uia"
+   },
+   "control_types": {
+    "Button": {
+     "count": 23,
+     "patterns": [
+      "ExpandCollapse",
+      "Invoke",
+      "LegacyIAccessible",
+      "ScrollItem",
+      "Toggle"
+     ],
+     "named_pct": 83,
+     "automation_id_pct": 65
+    },
+    "CheckBox": {
+     "count": 4,
+     "patterns": [
+      "LegacyIAccessible",
+      "ScrollItem",
+      "Toggle"
+     ],
+     "named_pct": 25,
+     "automation_id_pct": 100
+    },
+    "Custom": {
+     "count": 1,
+     "patterns": [
+      "LegacyIAccessible",
+      "ScrollItem",
+      "Selection"
+     ],
+     "named_pct": 0,
+     "automation_id_pct": 100
+    },
+    "Edit": {
+     "count": 8,
+     "patterns": [
+      "LegacyIAccessible",
+      "ScrollItem",
+      "Text",
+      "Value"
+     ],
+     "named_pct": 25,
+     "automation_id_pct": 50
+    },
+    "Group": {
+     "count": 4,
+     "patterns": [
+      "Invoke",
+      "LegacyIAccessible",
+      "ScrollItem"
+     ],
+     "named_pct": 0,
+     "automation_id_pct": 100
+    },
+    "Image": {
+     "count": 2,
+     "patterns": [
+      "LegacyIAccessible",
+      "ScrollItem"
+     ],
+     "named_pct": 0,
+     "automation_id_pct": 50
+    },
+    "ListItem": {
+     "count": 36,
+     "patterns": [
+      "ExpandCollapse",
+      "LegacyIAccessible",
+      "ScrollItem",
+      "SelectionItem"
+     ],
+     "named_pct": 100,
+     "automation_id_pct": 100
+    },
+    "MenuBar": {
+     "count": 1,
+     "patterns": [
+      "LegacyIAccessible"
+     ],
+     "named_pct": 100,
+     "automation_id_pct": 100
+    },
+    "MenuItem": {
+     "count": 1,
+     "patterns": [
+      "ExpandCollapse",
+      "Invoke",
+      "LegacyIAccessible"
+     ],
+     "named_pct": 100,
+     "automation_id_pct": 0
+    },
+    "Pane": {
+     "count": 15,
+     "patterns": [
+      "LegacyIAccessible",
+      "Scroll",
+      "ScrollItem"
+     ],
+     "named_pct": 27,
+     "automation_id_pct": 47
+    },
+    "ProgressBar": {
+     "count": 1,
+     "patterns": [
+      "LegacyIAccessible",
+      "ScrollItem"
+     ],
+     "named_pct": 100,
+     "automation_id_pct": 0
+    },
+    "ScrollBar": {
+     "count": 1,
+     "patterns": [
+      "LegacyIAccessible",
+      "RangeValue",
+      "ScrollItem"
+     ],
+     "named_pct": 100,
+     "automation_id_pct": 100
+    },
+    "Text": {
+     "count": 88,
+     "patterns": [
+      "LegacyIAccessible",
+      "ScrollItem",
+      "Text"
+     ],
+     "named_pct": 99,
+     "automation_id_pct": 8
+    },
+    "Thumb": {
+     "count": 2,
+     "patterns": [
+      "LegacyIAccessible",
+      "ScrollItem"
+     ],
+     "named_pct": 0,
+     "automation_id_pct": 100
+    },
+    "TitleBar": {
+     "count": 2,
+     "patterns": [
+      "LegacyIAccessible",
+      "ScrollItem",
+      "Value"
+     ],
+     "named_pct": 50,
+     "automation_id_pct": 50
+    },
+    "ToolTip": {
+     "count": 2,
+     "patterns": [
+      "LegacyIAccessible",
+      "ScrollItem"
+     ],
+     "named_pct": 100,
+     "automation_id_pct": 0
+    },
+    "Window": {
+     "count": 4,
+     "patterns": [
+      "LegacyIAccessible",
+      "ScrollItem",
+      "Transform",
+      "Window"
+     ],
+     "named_pct": 75,
+     "automation_id_pct": 25
+    }
+   },
+   "actions": {
+    "edit-value:set_text": {
+     "tried": 8,
+     "ok": 8,
+     "verified": 8,
+     "refused": 0
+    },
+    "checkable:set_checked": {
+     "tried": 7,
+     "ok": 7,
+     "verified": 7,
+     "refused": 0
+    }
+   }
+  },
+  {
+   "probe": "winui3-gallery-Slider",
+   "date": "2026-11-20",
+   "app": {
+    "exe": "WinUIGallery.exe",
+    "title": "WinUI Gallery",
+    "adapter": "uia"
+   },
+   "control_types": {
+    "Button": {
+     "count": 23,
+     "patterns": [
+      "ExpandCollapse",
+      "Invoke",
+      "LegacyIAccessible",
+      "ScrollItem",
+      "Toggle"
+     ],
+     "named_pct": 83,
+     "automation_id_pct": 61
+    },
+    "CheckBox": {
+     "count": 4,
+     "patterns": [
+      "LegacyIAccessible",
+      "ScrollItem",
+      "Toggle"
+     ],
+     "named_pct": 25,
+     "automation_id_pct": 100
+    },
+    "Custom": {
+     "count": 1,
+     "patterns": [
+      "LegacyIAccessible",
+      "ScrollItem",
+      "Selection"
+     ],
+     "named_pct": 0,
+     "automation_id_pct": 100
+    },
+    "Edit": {
+     "count": 16,
+     "patterns": [
+      "LegacyIAccessible",
+      "ScrollItem",
+      "Text",
+      "Value"
+     ],
+     "named_pct": 62,
+     "automation_id_pct": 50
+    },
+    "Group": {
+     "count": 6,
+     "patterns": [
+      "Invoke",
+      "LegacyIAccessible",
+      "ScrollItem"
+     ],
+     "named_pct": 17,
+     "automation_id_pct": 100
+    },
+    "Image": {
+     "count": 1,
+     "patterns": [
+      "LegacyIAccessible",
+      "ScrollItem"
+     ],
+     "named_pct": 0,
+     "automation_id_pct": 0
+    },
+    "ListItem": {
+     "count": 36,
+     "patterns": [
+      "ExpandCollapse",
+      "LegacyIAccessible",
+      "ScrollItem",
+      "SelectionItem"
+     ],
+     "named_pct": 100,
+     "automation_id_pct": 100
+    },
+    "MenuBar": {
+     "count": 1,
+     "patterns": [
+      "LegacyIAccessible"
+     ],
+     "named_pct": 100,
+     "automation_id_pct": 100
+    },
+    "MenuItem": {
+     "count": 1,
+     "patterns": [
+      "ExpandCollapse",
+      "Invoke",
+      "LegacyIAccessible"
+     ],
+     "named_pct": 100,
+     "automation_id_pct": 0
+    },
+    "Pane": {
+     "count": 19,
+     "patterns": [
+      "LegacyIAccessible",
+      "Scroll",
+      "ScrollItem"
+     ],
+     "named_pct": 21,
+     "automation_id_pct": 58
+    },
+    "RadioButton": {
+     "count": 2,
+     "patterns": [
+      "LegacyIAccessible",
+      "ScrollItem",
+      "SelectionItem"
+     ],
+     "named_pct": 100,
+     "automation_id_pct": 0
+    },
+    "ScrollBar": {
+     "count": 2,
+     "patterns": [
+      "LegacyIAccessible",
+      "RangeValue",
+      "ScrollItem"
+     ],
+     "named_pct": 100,
+     "automation_id_pct": 100
+    },
+    "Slider": {
+     "count": 4,
+     "patterns": [
+      "LegacyIAccessible",
+      "RangeValue",
+      "ScrollItem"
+     ],
+     "named_pct": 100,
+     "automation_id_pct": 100
+    },
+    "Spinner": {
+     "count": 4,
+     "patterns": [
+      "LegacyIAccessible",
+      "RangeValue",
+      "ScrollItem"
+     ],
+     "named_pct": 100,
+     "automation_id_pct": 100
+    },
+    "Text": {
+     "count": 107,
+     "patterns": [
+      "LegacyIAccessible",
+      "ScrollItem",
+      "Text"
+     ],
+     "named_pct": 99,
+     "automation_id_pct": 16
+    },
+    "Thumb": {
+     "count": 4,
+     "patterns": [
+      "LegacyIAccessible",
+      "ScrollItem"
+     ],
+     "named_pct": 0,
+     "automation_id_pct": 100
+    },
+    "TitleBar": {
+     "count": 2,
+     "patterns": [
+      "LegacyIAccessible",
+      "ScrollItem",
+      "Value"
+     ],
+     "named_pct": 50,
+     "automation_id_pct": 50
+    },
+    "ToolTip": {
+     "count": 2,
+     "patterns": [
+      "LegacyIAccessible",
+      "ScrollItem"
+     ],
+     "named_pct": 100,
+     "automation_id_pct": 0
+    },
+    "Window": {
+     "count": 4,
+     "patterns": [
+      "LegacyIAccessible",
+      "ScrollItem",
+      "Transform",
+      "Window"
+     ],
+     "named_pct": 75,
+     "automation_id_pct": 25
+    }
+   },
+   "actions": {
+    "edit-value:set_text": {
+     "tried": 8,
+     "ok": 8,
+     "verified": 8,
+     "refused": 0
+    },
+    "checkable:set_checked": {
+     "tried": 5,
+     "ok": 5,
+     "verified": 5,
+     "refused": 0
+    },
+    "range:set_number": {
+     "tried": 9,
+     "ok": 7,
+     "verified": 7,
+     "refused": 0
+    },
+    "selectable:select": {
+     "tried": 1,
+     "ok": 1,
+     "verified": 1,
+     "refused": 0
+    }
+   }
+  },
+  {
+   "probe": "winui3-gallery-ComboBox",
+   "date": "2026-11-20",
+   "app": {
+    "exe": "WinUIGallery.exe",
+    "title": "WinUI Gallery",
+    "adapter": "uia"
+   },
+   "control_types": {
+    "Button": {
+     "count": 22,
+     "patterns": [
+      "ExpandCollapse",
+      "Invoke",
+      "LegacyIAccessible",
+      "ScrollItem",
+      "Toggle"
+     ],
+     "named_pct": 82,
+     "automation_id_pct": 64
+    },
+    "CheckBox": {
+     "count": 4,
+     "patterns": [
+      "LegacyIAccessible",
+      "ScrollItem",
+      "Toggle"
+     ],
+     "named_pct": 25,
+     "automation_id_pct": 100
+    },
+    "ComboBox": {
+     "count": 3,
+     "patterns": [
+      "ExpandCollapse",
+      "LegacyIAccessible",
+      "ScrollItem",
+      "Selection",
+      "Value"
+     ],
+     "named_pct": 100,
+     "automation_id_pct": 100
+    },
+    "Custom": {
+     "count": 1,
+     "patterns": [
+      "LegacyIAccessible",
+      "ScrollItem",
+      "Selection"
+     ],
+     "named_pct": 0,
+     "automation_id_pct": 100
+    },
+    "Edit": {
+     "count": 10,
+     "patterns": [
+      "LegacyIAccessible",
+      "ScrollItem",
+      "Text",
+      "Value"
+     ],
+     "named_pct": 40,
+     "automation_id_pct": 50
+    },
+    "Group": {
+     "count": 4,
+     "patterns": [
+      "Invoke",
+      "LegacyIAccessible",
+      "ScrollItem"
+     ],
+     "named_pct": 0,
+     "automation_id_pct": 100
+    },
+    "Image": {
+     "count": 1,
+     "patterns": [
+      "LegacyIAccessible",
+      "ScrollItem"
+     ],
+     "named_pct": 0,
+     "automation_id_pct": 0
+    },
+    "ListItem": {
+     "count": 36,
+     "patterns": [
+      "ExpandCollapse",
+      "LegacyIAccessible",
+      "ScrollItem",
+      "SelectionItem"
+     ],
+     "named_pct": 100,
+     "automation_id_pct": 100
+    },
+    "MenuBar": {
+     "count": 1,
+     "patterns": [
+      "LegacyIAccessible"
+     ],
+     "named_pct": 100,
+     "automation_id_pct": 100
+    },
+    "MenuItem": {
+     "count": 1,
+     "patterns": [
+      "ExpandCollapse",
+      "Invoke",
+      "LegacyIAccessible"
+     ],
+     "named_pct": 100,
+     "automation_id_pct": 0
+    },
+    "Pane": {
+     "count": 16,
+     "patterns": [
+      "LegacyIAccessible",
+      "Scroll",
+      "ScrollItem"
+     ],
+     "named_pct": 25,
+     "automation_id_pct": 50
+    },
+    "ScrollBar": {
+     "count": 2,
+     "patterns": [
+      "LegacyIAccessible",
+      "RangeValue",
+      "ScrollItem"
+     ],
+     "named_pct": 100,
+     "automation_id_pct": 100
+    },
+    "Text": {
+     "count": 87,
+     "patterns": [
+      "LegacyIAccessible",
+      "ScrollItem",
+      "Text"
+     ],
+     "named_pct": 99,
+     "automation_id_pct": 11
+    },
+    "TitleBar": {
+     "count": 2,
+     "patterns": [
+      "LegacyIAccessible",
+      "ScrollItem",
+      "Value"
+     ],
+     "named_pct": 50,
+     "automation_id_pct": 50
+    },
+    "ToolTip": {
+     "count": 2,
+     "patterns": [
+      "LegacyIAccessible",
+      "ScrollItem"
+     ],
+     "named_pct": 100,
+     "automation_id_pct": 0
+    },
+    "Window": {
+     "count": 4,
+     "patterns": [
+      "LegacyIAccessible",
+      "ScrollItem",
+      "Transform",
+      "Window"
+     ],
+     "named_pct": 75,
+     "automation_id_pct": 25
+    }
+   },
+   "actions": {
+    "edit-value:set_text": {
+     "tried": 8,
+     "ok": 8,
+     "verified": 8,
+     "refused": 0
+    },
+    "checkable:set_checked": {
+     "tried": 5,
+     "ok": 5,
+     "verified": 5,
+     "refused": 0
+    },
+    "combo:choose": {
+     "tried": 3,
+     "ok": 1,
+     "verified": 1,
+     "refused": 0
+    },
+    "range:set_number": {
+     "tried": 1,
+     "ok": 1,
+     "verified": 1,
+     "refused": 0
+    }
+   }
+  },
+  {
+   "probe": "winui3-gallery-RadioButton",
+   "date": "2026-11-20",
+   "app": {
+    "exe": "WinUIGallery.exe",
+    "title": "WinUI Gallery",
+    "adapter": "uia"
+   },
+   "control_types": {
+    "Button": {
+     "count": 21,
+     "patterns": [
+      "ExpandCollapse",
+      "Invoke",
+      "LegacyIAccessible",
+      "ScrollItem",
+      "Toggle"
+     ],
+     "named_pct": 81,
+     "automation_id_pct": 67
+    },
+    "CheckBox": {
+     "count": 4,
+     "patterns": [
+      "LegacyIAccessible",
+      "ScrollItem",
+      "Toggle"
+     ],
+     "named_pct": 25,
+     "automation_id_pct": 100
+    },
+    "Custom": {
+     "count": 1,
+     "patterns": [
+      "LegacyIAccessible",
+      "ScrollItem",
+      "Selection"
+     ],
+     "named_pct": 0,
+     "automation_id_pct": 100
+    },
+    "Edit": {
+     "count": 8,
+     "patterns": [
+      "LegacyIAccessible",
+      "ScrollItem",
+      "Text",
+      "Value"
+     ],
+     "named_pct": 25,
+     "automation_id_pct": 50
+    },
+    "Group": {
+     "count": 10,
+     "patterns": [
+      "Invoke",
+      "LegacyIAccessible",
+      "ScrollItem"
+     ],
+     "named_pct": 30,
+     "automation_id_pct": 90
+    },
+    "Image": {
+     "count": 1,
+     "patterns": [
+      "LegacyIAccessible",
+      "ScrollItem"
+     ],
+     "named_pct": 0,
+     "automation_id_pct": 0
+    },
+    "ListItem": {
+     "count": 36,
+     "patterns": [
+      "ExpandCollapse",
+      "LegacyIAccessible",
+      "ScrollItem",
+      "SelectionItem"
+     ],
+     "named_pct": 100,
+     "automation_id_pct": 100
+    },
+    "MenuBar": {
+     "count": 1,
+     "patterns": [
+      "LegacyIAccessible"
+     ],
+     "named_pct": 100,
+     "automation_id_pct": 100
+    },
+    "MenuItem": {
+     "count": 1,
+     "patterns": [
+      "ExpandCollapse",
+      "Invoke",
+      "LegacyIAccessible"
+     ],
+     "named_pct": 100,
+     "automation_id_pct": 0
+    },
+    "Pane": {
+     "count": 15,
+     "patterns": [
+      "LegacyIAccessible",
+      "Scroll",
+      "ScrollItem"
+     ],
+     "named_pct": 27,
+     "automation_id_pct": 47
+    },
+    "RadioButton": {
+     "count": 9,
+     "patterns": [
+      "LegacyIAccessible",
+      "ScrollItem",
+      "SelectionItem"
+     ],
+     "named_pct": 100,
+     "automation_id_pct": 33
+    },
+    "ScrollBar": {
+     "count": 2,
+     "patterns": [
+      "LegacyIAccessible",
+      "RangeValue",
+      "ScrollItem"
+     ],
+     "named_pct": 100,
+     "automation_id_pct": 100
+    },
+    "Text": {
+     "count": 97,
+     "patterns": [
+      "LegacyIAccessible",
+      "ScrollItem",
+      "Text"
+     ],
+     "named_pct": 99,
+     "automation_id_pct": 8
+    },
+    "TitleBar": {
+     "count": 2,
+     "patterns": [
+      "LegacyIAccessible",
+      "ScrollItem",
+      "Value"
+     ],
+     "named_pct": 50,
+     "automation_id_pct": 50
+    },
+    "ToolTip": {
+     "count": 2,
+     "patterns": [
+      "LegacyIAccessible",
+      "ScrollItem"
+     ],
+     "named_pct": 100,
+     "automation_id_pct": 0
+    },
+    "Window": {
+     "count": 4,
+     "patterns": [
+      "LegacyIAccessible",
+      "ScrollItem",
+      "Transform",
+      "Window"
+     ],
+     "named_pct": 75,
+     "automation_id_pct": 25
+    }
+   },
+   "actions": {
+    "edit-value:set_text": {
+     "tried": 8,
+     "ok": 8,
+     "verified": 8,
+     "refused": 0
+    },
+    "checkable:set_checked": {
+     "tried": 5,
+     "ok": 5,
+     "verified": 5,
+     "refused": 0
+    },
+    "selectable:select": {
+     "tried": 8,
+     "ok": 8,
+     "verified": 8,
+     "refused": 0
+    },
+    "range:set_number": {
+     "tried": 1,
+     "ok": 1,
+     "verified": 1,
+     "refused": 0
     }
    }
   }

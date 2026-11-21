@@ -1,0 +1,618 @@
+{
+ "framework": "winui3",
+ "name": "winui3-gallery-Slider",
+ "date": "2026-11-20",
+ "app": {
+  "exe": "WinUIGallery.exe",
+  "title": "WinUI Gallery",
+  "adapter": "uia"
+ },
+ "elements": 236,
+ "survey": {
+  "Button": {
+   "count": 23,
+   "named_pct": 83,
+   "automation_id_pct": 61,
+   "patterns": {
+    "LegacyIAccessible": 23,
+    "Invoke": 18,
+    "ScrollItem": 17,
+    "ExpandCollapse": 6,
+    "Toggle": 1
+   },
+   "framework_ids": {
+    "XAML": 17
+   },
+   "spec_required_missing": [],
+   "spec_forbidden_present": []
+  },
+  "CheckBox": {
+   "count": 4,
+   "named_pct": 25,
+   "automation_id_pct": 100,
+   "patterns": {
+    "Toggle": 4,
+    "ScrollItem": 4,
+    "LegacyIAccessible": 4
+   },
+   "framework_ids": {
+    "XAML": 4
+   },
+   "spec_required_missing": [],
+   "spec_forbidden_present": []
+  },
+  "Custom": {
+   "count": 1,
+   "named_pct": 0,
+   "automation_id_pct": 100,
+   "patterns": {
+    "Selection": 1,
+    "ScrollItem": 1,
+    "LegacyIAccessible": 1
+   },
+   "framework_ids": {
+    "XAML": 1
+   },
+   "spec_required_missing": [],
+   "spec_forbidden_present": []
+  },
+  "Edit": {
+   "count": 16,
+   "named_pct": 62,
+   "automation_id_pct": 50,
+   "patterns": {
+    "Value": 16,
+    "Text": 16,
+    "LegacyIAccessible": 16,
+    "ScrollItem": 8
+   },
+   "framework_ids": {
+    "XAML": 8
+   },
+   "spec_required_missing": [],
+   "spec_forbidden_present": []
+  },
+  "Group": {
+   "count": 6,
+   "named_pct": 17,
+   "automation_id_pct": 100,
+   "patterns": {
+    "ScrollItem": 6,
+    "LegacyIAccessible": 6,
+    "Invoke": 1
+   },
+   "framework_ids": {
+    "XAML": 6
+   },
+   "spec_required_missing": [],
+   "spec_forbidden_present": []
+  },
+  "Image": {
+   "count": 1,
+   "named_pct": 0,
+   "automation_id_pct": 0,
+   "patterns": {
+    "ScrollItem": 1,
+    "LegacyIAccessible": 1
+   },
+   "framework_ids": {
+    "XAML": 1
+   },
+   "spec_required_missing": [],
+   "spec_forbidden_present": []
+  },
+  "ListItem": {
+   "count": 36,
+   "named_pct": 100,
+   "automation_id_pct": 100,
+   "patterns": {
+    "SelectionItem": 36,
+    "ScrollItem": 36,
+    "LegacyIAccessible": 36,
+    "ExpandCollapse": 19
+   },
+   "framework_ids": {
+    "XAML": 36
+   },
+   "spec_required_missing": [],
+   "spec_forbidden_present": []
+  },
+  "MenuBar": {
+   "count": 1,
+   "named_pct": 100,
+   "automation_id_pct": 100,
+   "patterns": {
+    "LegacyIAccessible": 1
+   },
+   "framework_ids": {},
+   "spec_required_missing": [],
+   "spec_forbidden_present": []
+  },
+  "MenuItem": {
+   "count": 1,
+   "named_pct": 100,
+   "automation_id_pct": 0,
+   "patterns": {
+    "Invoke": 1,
+    "ExpandCollapse": 1,
+    "LegacyIAccessible": 1
+   },
+   "framework_ids": {},
+   "spec_required_missing": [],
+   "spec_forbidden_present": []
+  },
+  "Pane": {
+   "count": 19,
+   "named_pct": 21,
+   "automation_id_pct": 58,
+   "patterns": {
+    "LegacyIAccessible": 19,
+    "Scroll": 11,
+    "ScrollItem": 11
+   },
+   "framework_ids": {
+    "Win32": 5,
+    "XAML": 14
+   },
+   "spec_required_missing": [],
+   "spec_forbidden_present": []
+  },
+  "RadioButton": {
+   "count": 2,
+   "named_pct": 100,
+   "automation_id_pct": 0,
+   "patterns": {
+    "SelectionItem": 2,
+    "ScrollItem": 2,
+    "LegacyIAccessible": 2
+   },
+   "framework_ids": {
+    "XAML": 2
+   },
+   "spec_required_missing": [],
+   "spec_forbidden_present": []
+  },
+  "ScrollBar": {
+   "count": 2,
+   "named_pct": 100,
+   "automation_id_pct": 100,
+   "patterns": {
+    "RangeValue": 2,
+    "ScrollItem": 2,
+    "LegacyIAccessible": 2
+   },
+   "framework_ids": {
+    "XAML": 2
+   },
+   "spec_required_missing": [],
+   "spec_forbidden_present": []
+  },
+  "Slider": {
+   "count": 4,
+   "named_pct": 100,
+   "automation_id_pct": 100,
+   "patterns": {
+    "RangeValue": 4,
+    "ScrollItem": 4,
+    "LegacyIAccessible": 4
+   },
+   "framework_ids": {
+    "XAML": 4
+   },
+   "spec_required_missing": [],
+   "spec_forbidden_present": []
+  },
+  "Spinner": {
+   "count": 4,
+   "named_pct": 100,
+   "automation_id_pct": 100,
+   "patterns": {
+    "RangeValue": 4,
+    "ScrollItem": 4,
+    "LegacyIAccessible": 4
+   },
+   "framework_ids": {
+    "XAML": 4
+   },
+   "spec_required_missing": [],
+   "spec_forbidden_present": []
+  },
+  "Text": {
+   "count": 107,
+   "named_pct": 99,
+   "automation_id_pct": 16,
+   "patterns": {
+    "Text": 107,
+    "ScrollItem": 107,
+    "LegacyIAccessible": 107
+   },
+   "framework_ids": {
+    "XAML": 107
+   },
+   "spec_required_missing": [],
+   "spec_forbidden_present": []
+  },
+  "Thumb": {
+   "count": 4,
+   "named_pct": 0,
+   "automation_id_pct": 100,
+   "patterns": {
+    "ScrollItem": 4,
+    "LegacyIAccessible": 4
+   },
+   "framework_ids": {
+    "XAML": 4
+   },
+   "spec_required_missing": [],
+   "spec_forbidden_present": []
+  },
+  "TitleBar": {
+   "count": 2,
+   "named_pct": 50,
+   "automation_id_pct": 50,
+   "patterns": {
+    "LegacyIAccessible": 2,
+    "ScrollItem": 1,
+    "Value": 1
+   },
+   "framework_ids": {
+    "XAML": 1
+   },
+   "spec_required_missing": [],
+   "spec_forbidden_present": []
+  },
+  "ToolTip": {
+   "count": 2,
+   "named_pct": 100,
+   "automation_id_pct": 0,
+   "patterns": {
+    "ScrollItem": 2,
+    "LegacyIAccessible": 2
+   },
+   "framework_ids": {
+    "XAML": 2
+   },
+   "spec_required_missing": [],
+   "spec_forbidden_present": []
+  },
+  "Window": {
+   "count": 4,
+   "named_pct": 75,
+   "automation_id_pct": 25,
+   "patterns": {
+    "LegacyIAccessible": 4,
+    "ScrollItem": 3,
+    "Window": 1,
+    "Transform": 1
+   },
+   "framework_ids": {
+    "Win32": 1,
+    "XAML": 3
+   },
+   "spec_required_missing": [],
+   "spec_forbidden_present": []
+  }
+ },
+ "actions": true,
+ "action_results": [
+  {
+   "rule": "edit-value",
+   "action": "set_text",
+   "label": "set_text Edit 'Search controls and samples...'",
+   "args": {
+    "text": "CIG probe"
+   },
+   "ok": true,
+   "verified": true,
+   "refused": false,
+   "reason": "",
+   "restored": true
+  },
+  {
+   "rule": "edit-value",
+   "action": "set_text",
+   "label": "set_text Edit 'Search controls and samples...'",
+   "args": {
+    "text": "CIG probe"
+   },
+   "ok": true,
+   "verified": true,
+   "refused": false,
+   "reason": "",
+   "restored": true
+  },
+  {
+   "rule": "checkable",
+   "action": "set_checked",
+   "label": "set_checked CheckBox '__IdleStateEnteredCheckBox'",
+   "args": {
+    "checked": true
+   },
+   "ok": true,
+   "verified": true,
+   "refused": false,
+   "reason": "",
+   "restored": true
+  },
+  {
+   "rule": "edit-value",
+   "action": "set_text",
+   "label": "set_text Edit '__ErrorReportingTextBox'",
+   "args": {
+    "text": "CIG probe"
+   },
+   "ok": true,
+   "verified": true,
+   "refused": false,
+   "reason": "",
+   "restored": true
+  },
+  {
+   "rule": "edit-value",
+   "action": "set_text",
+   "label": "set_text Edit 'Edit'",
+   "args": {
+    "text": "CIG probe"
+   },
+   "ok": true,
+   "verified": true,
+   "refused": false,
+   "reason": "",
+   "restored": true
+  },
+  {
+   "rule": "edit-value",
+   "action": "set_text",
+   "label": "set_text Edit '__LogReportingTextBox'",
+   "args": {
+    "text": "CIG probe"
+   },
+   "ok": true,
+   "verified": true,
+   "refused": false,
+   "reason": "",
+   "restored": true
+  },
+  {
+   "rule": "edit-value",
+   "action": "set_text",
+   "label": "set_text Edit 'Edit'",
+   "args": {
+    "text": "CIG probe"
+   },
+   "ok": true,
+   "verified": true,
+   "refused": false,
+   "reason": "",
+   "restored": true
+  },
+  {
+   "rule": "checkable",
+   "action": "set_checked",
+   "label": "set_checked CheckBox '__ViewScalingCheckBox'",
+   "args": {
+    "checked": true
+   },
+   "ok": true,
+   "verified": true,
+   "refused": false,
+   "reason": "",
+   "restored": true
+  },
+  {
+   "rule": "checkable",
+   "action": "set_checked",
+   "label": "set_checked CheckBox '__DebuggerAttachedCheckBox'",
+   "args": {
+    "checked": true
+   },
+   "ok": true,
+   "verified": true,
+   "refused": false,
+   "reason": "",
+   "restored": true
+  },
+  {
+   "rule": "edit-value",
+   "action": "set_text",
+   "label": "set_text Edit '__UnhandledExceptionReportingTextBox'",
+   "args": {
+    "text": "CIG probe"
+   },
+   "ok": true,
+   "verified": true,
+   "refused": false,
+   "reason": "",
+   "restored": true
+  },
+  {
+   "rule": "edit-value",
+   "action": "set_text",
+   "label": "set_text Edit 'Edit'",
+   "args": {
+    "text": "CIG probe"
+   },
+   "ok": true,
+   "verified": true,
+   "refused": false,
+   "reason": "",
+   "restored": true
+  },
+  {
+   "rule": "checkable",
+   "action": "set_checked",
+   "label": "set_checked CheckBox 'TestContentLoadedCheckbox'",
+   "args": {
+    "checked": false
+   },
+   "ok": true,
+   "verified": true,
+   "refused": false,
+   "reason": "",
+   "restored": true
+  },
+  {
+   "rule": "checkable",
+   "action": "set_checked",
+   "label": "set_checked Button 'Favorite sample'",
+   "args": {
+    "checked": true
+   },
+   "ok": true,
+   "verified": true,
+   "refused": false,
+   "reason": "",
+   "restored": false
+  },
+  {
+   "rule": "range",
+   "action": "set_number",
+   "label": "set_number Slider 'Simple example'",
+   "args": {
+    "value": 10
+   },
+   "ok": true,
+   "verified": true,
+   "refused": false,
+   "reason": "",
+   "restored": true
+  },
+  {
+   "rule": "range",
+   "action": "set_number",
+   "label": "set_number Slider 'Control header'",
+   "args": {
+    "value": 10
+   },
+   "ok": false,
+   "verified": null,
+   "refused": false,
+   "reason": "adapter failed: set_number failed: (-2147024809, 'The parameter is incorrect.', (None, None, None, 0, None))"
+  },
+  {
+   "rule": "range",
+   "action": "set_number",
+   "label": "set_number Spinner 'Minimum'",
+   "args": {
+    "value": 10
+   },
+   "ok": true,
+   "verified": true,
+   "refused": false,
+   "reason": ""
+  },
+  {
+   "rule": "range",
+   "action": "set_number",
+   "label": "set_number Spinner 'Maximum'",
+   "args": {
+    "value": 10
+   },
+   "ok": true,
+   "verified": true,
+   "refused": false,
+   "reason": "",
+   "restored": true
+  },
+  {
+   "rule": "range",
+   "action": "set_number",
+   "label": "set_number Spinner 'Step Frequency'",
+   "args": {
+    "value": 0
+   },
+   "ok": false,
+   "verified": false,
+   "refused": false,
+   "reason": "read-back does not match what was set"
+  },
+  {
+   "rule": "range",
+   "action": "set_number",
+   "label": "set_number Spinner 'Small Change'",
+   "args": {
+    "value": 0
+   },
+   "ok": true,
+   "verified": true,
+   "refused": false,
+   "reason": "",
+   "restored": true
+  },
+  {
+   "rule": "range",
+   "action": "set_number",
+   "label": "set_number Slider 'Example with ticks'",
+   "args": {
+    "value": 10
+   },
+   "ok": true,
+   "verified": true,
+   "refused": false,
+   "reason": "",
+   "restored": true
+  },
+  {
+   "rule": "selectable",
+   "action": "select",
+   "label": "select RadioButton 'Ticks'",
+   "args": {},
+   "ok": true,
+   "verified": true,
+   "refused": false,
+   "reason": ""
+  },
+  {
+   "rule": "range",
+   "action": "set_number",
+   "label": "set_number Slider 'Vertical example'",
+   "args": {
+    "value": 10
+   },
+   "ok": true,
+   "verified": true,
+   "refused": false,
+   "reason": "",
+   "restored": true
+  },
+  {
+   "rule": "range",
+   "action": "set_number",
+   "label": "set_number ScrollBar 'Vertical'",
+   "args": {
+    "value": 10
+   },
+   "ok": true,
+   "verified": true,
+   "refused": false,
+   "reason": "",
+   "restored": true
+  }
+ ],
+ "action_summary": {
+  "edit-value:set_text": {
+   "tried": 8,
+   "ok": 8,
+   "verified": 8,
+   "refused": 0
+  },
+  "checkable:set_checked": {
+   "tried": 5,
+   "ok": 5,
+   "verified": 5,
+   "refused": 0
+  },
+  "range:set_number": {
+   "tried": 9,
+   "ok": 7,
+   "verified": 7,
+   "refused": 0
+  },
+  "selectable:select": {
+   "tried": 1,
+   "ok": 1,
+   "verified": 1,
+   "refused": 0
+  }
+ }
+}

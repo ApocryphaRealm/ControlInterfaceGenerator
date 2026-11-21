@@ -1,0 +1,477 @@
+{
+ "framework": "winui3",
+ "name": "winui3-gallery-ToggleSwitch",
+ "date": "2026-11-20",
+ "app": {
+  "exe": "WinUIGallery.exe",
+  "title": "WinUI Gallery",
+  "adapter": "uia"
+ },
+ "elements": 194,
+ "survey": {
+  "Button": {
+   "count": 23,
+   "named_pct": 83,
+   "automation_id_pct": 65,
+   "patterns": {
+    "LegacyIAccessible": 23,
+    "Invoke": 18,
+    "ScrollItem": 17,
+    "ExpandCollapse": 4,
+    "Toggle": 3
+   },
+   "framework_ids": {
+    "XAML": 17
+   },
+   "spec_required_missing": [],
+   "spec_forbidden_present": []
+  },
+  "CheckBox": {
+   "count": 4,
+   "named_pct": 25,
+   "automation_id_pct": 100,
+   "patterns": {
+    "Toggle": 4,
+    "ScrollItem": 4,
+    "LegacyIAccessible": 4
+   },
+   "framework_ids": {
+    "XAML": 4
+   },
+   "spec_required_missing": [],
+   "spec_forbidden_present": []
+  },
+  "Custom": {
+   "count": 1,
+   "named_pct": 0,
+   "automation_id_pct": 100,
+   "patterns": {
+    "Selection": 1,
+    "ScrollItem": 1,
+    "LegacyIAccessible": 1
+   },
+   "framework_ids": {
+    "XAML": 1
+   },
+   "spec_required_missing": [],
+   "spec_forbidden_present": []
+  },
+  "Edit": {
+   "count": 8,
+   "named_pct": 25,
+   "automation_id_pct": 50,
+   "patterns": {
+    "Value": 8,
+    "Text": 8,
+    "LegacyIAccessible": 8,
+    "ScrollItem": 4
+   },
+   "framework_ids": {
+    "XAML": 4
+   },
+   "spec_required_missing": [],
+   "spec_forbidden_present": []
+  },
+  "Group": {
+   "count": 4,
+   "named_pct": 0,
+   "automation_id_pct": 100,
+   "patterns": {
+    "ScrollItem": 4,
+    "LegacyIAccessible": 4,
+    "Invoke": 1
+   },
+   "framework_ids": {
+    "XAML": 4
+   },
+   "spec_required_missing": [],
+   "spec_forbidden_present": []
+  },
+  "Image": {
+   "count": 2,
+   "named_pct": 0,
+   "automation_id_pct": 50,
+   "patterns": {
+    "ScrollItem": 2,
+    "LegacyIAccessible": 2
+   },
+   "framework_ids": {
+    "XAML": 2
+   },
+   "spec_required_missing": [],
+   "spec_forbidden_present": []
+  },
+  "ListItem": {
+   "count": 36,
+   "named_pct": 100,
+   "automation_id_pct": 100,
+   "patterns": {
+    "SelectionItem": 36,
+    "ScrollItem": 36,
+    "LegacyIAccessible": 36,
+    "ExpandCollapse": 19
+   },
+   "framework_ids": {
+    "XAML": 36
+   },
+   "spec_required_missing": [],
+   "spec_forbidden_present": []
+  },
+  "MenuBar": {
+   "count": 1,
+   "named_pct": 100,
+   "automation_id_pct": 100,
+   "patterns": {
+    "LegacyIAccessible": 1
+   },
+   "framework_ids": {},
+   "spec_required_missing": [],
+   "spec_forbidden_present": []
+  },
+  "MenuItem": {
+   "count": 1,
+   "named_pct": 100,
+   "automation_id_pct": 0,
+   "patterns": {
+    "Invoke": 1,
+    "ExpandCollapse": 1,
+    "LegacyIAccessible": 1
+   },
+   "framework_ids": {},
+   "spec_required_missing": [],
+   "spec_forbidden_present": []
+  },
+  "Pane": {
+   "count": 15,
+   "named_pct": 27,
+   "automation_id_pct": 47,
+   "patterns": {
+    "LegacyIAccessible": 15,
+    "Scroll": 7,
+    "ScrollItem": 7
+   },
+   "framework_ids": {
+    "Win32": 5,
+    "XAML": 10
+   },
+   "spec_required_missing": [],
+   "spec_forbidden_present": []
+  },
+  "ProgressBar": {
+   "count": 1,
+   "named_pct": 100,
+   "automation_id_pct": 0,
+   "patterns": {
+    "ScrollItem": 1,
+    "LegacyIAccessible": 1
+   },
+   "framework_ids": {
+    "XAML": 1
+   },
+   "spec_required_missing": [],
+   "spec_forbidden_present": []
+  },
+  "ScrollBar": {
+   "count": 1,
+   "named_pct": 100,
+   "automation_id_pct": 100,
+   "patterns": {
+    "RangeValue": 1,
+    "ScrollItem": 1,
+    "LegacyIAccessible": 1
+   },
+   "framework_ids": {
+    "XAML": 1
+   },
+   "spec_required_missing": [],
+   "spec_forbidden_present": []
+  },
+  "Text": {
+   "count": 88,
+   "named_pct": 99,
+   "automation_id_pct": 8,
+   "patterns": {
+    "Text": 88,
+    "ScrollItem": 88,
+    "LegacyIAccessible": 88
+   },
+   "framework_ids": {
+    "XAML": 88
+   },
+   "spec_required_missing": [],
+   "spec_forbidden_present": []
+  },
+  "Thumb": {
+   "count": 2,
+   "named_pct": 0,
+   "automation_id_pct": 100,
+   "patterns": {
+    "ScrollItem": 2,
+    "LegacyIAccessible": 2
+   },
+   "framework_ids": {
+    "XAML": 2
+   },
+   "spec_required_missing": [],
+   "spec_forbidden_present": []
+  },
+  "TitleBar": {
+   "count": 2,
+   "named_pct": 50,
+   "automation_id_pct": 50,
+   "patterns": {
+    "LegacyIAccessible": 2,
+    "ScrollItem": 1,
+    "Value": 1
+   },
+   "framework_ids": {
+    "XAML": 1
+   },
+   "spec_required_missing": [],
+   "spec_forbidden_present": []
+  },
+  "ToolTip": {
+   "count": 2,
+   "named_pct": 100,
+   "automation_id_pct": 0,
+   "patterns": {
+    "ScrollItem": 2,
+    "LegacyIAccessible": 2
+   },
+   "framework_ids": {
+    "XAML": 2
+   },
+   "spec_required_missing": [],
+   "spec_forbidden_present": []
+  },
+  "Window": {
+   "count": 4,
+   "named_pct": 75,
+   "automation_id_pct": 25,
+   "patterns": {
+    "LegacyIAccessible": 4,
+    "ScrollItem": 3,
+    "Window": 1,
+    "Transform": 1
+   },
+   "framework_ids": {
+    "Win32": 1,
+    "XAML": 3
+   },
+   "spec_required_missing": [],
+   "spec_forbidden_present": []
+  }
+ },
+ "actions": true,
+ "action_results": [
+  {
+   "rule": "edit-value",
+   "action": "set_text",
+   "label": "set_text Edit 'Search controls and samples...'",
+   "args": {
+    "text": "CIG probe"
+   },
+   "ok": true,
+   "verified": true,
+   "refused": false,
+   "reason": "",
+   "restored": true
+  },
+  {
+   "rule": "edit-value",
+   "action": "set_text",
+   "label": "set_text Edit 'Search controls and samples...'",
+   "args": {
+    "text": "CIG probe"
+   },
+   "ok": true,
+   "verified": true,
+   "refused": false,
+   "reason": "",
+   "restored": true
+  },
+  {
+   "rule": "checkable",
+   "action": "set_checked",
+   "label": "set_checked CheckBox '__IdleStateEnteredCheckBox'",
+   "args": {
+    "checked": true
+   },
+   "ok": true,
+   "verified": true,
+   "refused": false,
+   "reason": "",
+   "restored": true
+  },
+  {
+   "rule": "edit-value",
+   "action": "set_text",
+   "label": "set_text Edit '__ErrorReportingTextBox'",
+   "args": {
+    "text": "CIG probe"
+   },
+   "ok": true,
+   "verified": true,
+   "refused": false,
+   "reason": "",
+   "restored": true
+  },
+  {
+   "rule": "edit-value",
+   "action": "set_text",
+   "label": "set_text Edit 'Edit'",
+   "args": {
+    "text": "CIG probe"
+   },
+   "ok": true,
+   "verified": true,
+   "refused": false,
+   "reason": "",
+   "restored": true
+  },
+  {
+   "rule": "edit-value",
+   "action": "set_text",
+   "label": "set_text Edit '__LogReportingTextBox'",
+   "args": {
+    "text": "CIG probe"
+   },
+   "ok": true,
+   "verified": true,
+   "refused": false,
+   "reason": "",
+   "restored": true
+  },
+  {
+   "rule": "edit-value",
+   "action": "set_text",
+   "label": "set_text Edit 'Edit'",
+   "args": {
+    "text": "CIG probe"
+   },
+   "ok": true,
+   "verified": true,
+   "refused": false,
+   "reason": "",
+   "restored": true
+  },
+  {
+   "rule": "checkable",
+   "action": "set_checked",
+   "label": "set_checked CheckBox '__ViewScalingCheckBox'",
+   "args": {
+    "checked": true
+   },
+   "ok": true,
+   "verified": true,
+   "refused": false,
+   "reason": "",
+   "restored": true
+  },
+  {
+   "rule": "checkable",
+   "action": "set_checked",
+   "label": "set_checked CheckBox '__DebuggerAttachedCheckBox'",
+   "args": {
+    "checked": true
+   },
+   "ok": true,
+   "verified": true,
+   "refused": false,
+   "reason": "",
+   "restored": true
+  },
+  {
+   "rule": "edit-value",
+   "action": "set_text",
+   "label": "set_text Edit '__UnhandledExceptionReportingTextBox'",
+   "args": {
+    "text": "CIG probe"
+   },
+   "ok": true,
+   "verified": true,
+   "refused": false,
+   "reason": "",
+   "restored": true
+  },
+  {
+   "rule": "edit-value",
+   "action": "set_text",
+   "label": "set_text Edit 'Edit'",
+   "args": {
+    "text": "CIG probe"
+   },
+   "ok": true,
+   "verified": true,
+   "refused": false,
+   "reason": "",
+   "restored": true
+  },
+  {
+   "rule": "checkable",
+   "action": "set_checked",
+   "label": "set_checked CheckBox 'TestContentLoadedCheckbox'",
+   "args": {
+    "checked": false
+   },
+   "ok": true,
+   "verified": true,
+   "refused": false,
+   "reason": "",
+   "restored": true
+  },
+  {
+   "rule": "checkable",
+   "action": "set_checked",
+   "label": "set_checked Button 'Favorite sample'",
+   "args": {
+    "checked": true
+   },
+   "ok": true,
+   "verified": true,
+   "refused": false,
+   "reason": "",
+   "restored": false
+  },
+  {
+   "rule": "checkable",
+   "action": "set_checked",
+   "label": "set_checked Button 'simple ToggleSwitch'",
+   "args": {
+    "checked": true
+   },
+   "ok": true,
+   "verified": true,
+   "refused": false,
+   "reason": "",
+   "restored": true
+  },
+  {
+   "rule": "checkable",
+   "action": "set_checked",
+   "label": "set_checked Button 'Toggle work Working'",
+   "args": {
+    "checked": false
+   },
+   "ok": true,
+   "verified": true,
+   "refused": false,
+   "reason": "",
+   "restored": true
+  }
+ ],
+ "action_summary": {
+  "edit-value:set_text": {
+   "tried": 8,
+   "ok": 8,
+   "verified": 8,
+   "refused": 0
+  },
+  "checkable:set_checked": {
+   "tried": 7,
+   "ok": 7,
+   "verified": 7,
+   "refused": 0
+  }
+ }
+}

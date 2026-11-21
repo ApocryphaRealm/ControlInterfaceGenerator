@@ -9,6 +9,7 @@ from __future__ import annotations
 
 import ctypes
 import os
+import re
 import socket
 import subprocess
 import time
@@ -49,6 +50,25 @@ def _free_port() -> int:
     port = s.getsockname()[1]
     s.close()
     return port
+
+
+def appx_target(ref: str) -> Optional[dict]:
+    """'appx:<PackageFamilyName>!<AppId>' -> {"aumid", "executable"} read from the installed package's manifest."""
+    if not str(ref).startswith("appx:"):
+        return None
+    aumid = ref[5:]
+    fam, _, app_id = aumid.partition("!")
+    if not re.fullmatch(r"[A-Za-z0-9._-]+_[a-z0-9]{13}", fam) or not re.fullmatch(r"[A-Za-z0-9._-]+", app_id or ""):
+        raise ValueError(f"not a package family!app id: {aumid}")
+    ps = (f"$p = Get-AppxPackage | Where-Object PackageFamilyName -eq '{fam}' | Select-Object -First 1; "
+          f"if ($p) {{ ([xml](Get-Content (Join-Path $p.InstallLocation 'AppxManifest.xml'))).Package.Applications."
+          f"Application | Where-Object Id -eq '{app_id}' | ForEach-Object {{ $_.Executable }} }}")
+    r = subprocess.run(["powershell", "-NoProfile", "-NonInteractive", "-Command", ps], capture_output=True, text=True,
+                       timeout=30, stdin=subprocess.DEVNULL)
+    exe = (r.stdout or "").strip().splitlines()
+    if not exe:
+        raise ValueError(f"package {fam} with app '{app_id}' is not installed")
+    return {"aumid": aumid, "executable": os.path.basename(exe[0])}
 
 
 def isolation_env(exe: str, profile: Optional[str]) -> dict:
@@ -118,10 +138,17 @@ def launch(exe: str, args: list[str], policy: Optional[Policy] = None, confirm: 
         return {**entry, "log_id": actionlog.write(entry)}
     if guard:
         entry["guarded"] = [k["key"] for k in guard["keys"]]
+    appx = appx_target(exe)
+    if appx:
+        name = appx["executable"]                    # the window to wait for belongs to the package's own exe
     before = _windowed_pids(name)
     t0 = time.time()
     try:
-        if _elevated():
+        if appx:
+            # a packaged (MSIX / Store) app is started by activation, never by running its exe from WindowsApps
+            subprocess.Popen(["explorer.exe", f"shell:AppsFolder\\{appx['aumid']}"], close_fds=True)
+            entry["via"] = f"activation of {appx['aumid']}"
+        elif _elevated():
             subprocess.Popen(["explorer.exe", exe], close_fds=True)        # Explorer starts it unelevated
             entry["via"] = "explorer (CIG is elevated)"
         else:

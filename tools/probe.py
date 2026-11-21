@@ -81,12 +81,16 @@ def combo_options(e, app, element_id):
     return uiawalk.run(work, timeout=20)
 
 
-def try_actions(e, app):
+def try_actions(e, app, skip_under=()):
     results = []
     acts = e.actions(app)["actions"]
+    snap = e._snapshot(*e.resolve(app))
     for a in acts:
         if a["action"] not in SAFE:
             continue
+        loc = (snap["elements"].get(a["element"]) or {}).get("locator", "")
+        if any(f'[aid="{s}"]' in loc or f'[name="{s}"]' in loc for s in skip_under):
+            continue                    # the app's own chrome (e.g. a gallery's navigation pane): surveyed, not acted on
         before = e.read(app, a["element"]).get("state", {})
         if a["action"] == "choose" and not a["input_schema"]["properties"]["option"].get("enum"):
             opts = combo_options(e, app, a["element"])
@@ -198,6 +202,8 @@ def main():
     ap.add_argument("--actions", action="store_true")
     ap.add_argument("--cdp")
     ap.add_argument("--wait", type=float, default=3.0)
+    ap.add_argument("--navigate", action="append", help="label to select before probing (repeatable, in order)")
+    ap.add_argument("--skip-under", action="append", help="AutomationId or Name of a container whose elements are surveyed but not acted on (repeatable)")
     a = ap.parse_args()
     e = Engine([CdpAdapter(), UiaAdapter()])
     pid = None
@@ -212,6 +218,15 @@ def main():
         time.sleep(a.wait)
     else:
         app = a.app
+    for label in a.navigate or []:
+        # reach a page first (a gallery's navigation): select / invoke the element with this label, then let it load
+        acts = e.actions(app)["actions"]
+        nav = next((x for x in acts if x["action"] in ("select", "invoke") and x["label"].endswith(f"'{label}'")), None)
+        if not nav:
+            print(f"navigate: no '{label}' to select")
+            break
+        print("navigate:", label, e.do(app, nav["id"], {}).get("ok"))
+        time.sleep(2.5)
     try:
         target = e.resolve(app)[1]
         snap = e._snapshot(*e.resolve(app))
@@ -219,7 +234,7 @@ def main():
                 "app": {"exe": target.exe, "title": target.title, "adapter": target.adapter},
                 "elements": len(snap["elements"]), "survey": survey(snap["windows"]), "actions": a.actions}
         if a.actions:
-            res = try_actions(e, app)
+            res = try_actions(e, app, a.skip_under or [])
             data["action_results"] = res
             data["action_summary"] = summarise(res)
         record(a.framework, a.name, data)
