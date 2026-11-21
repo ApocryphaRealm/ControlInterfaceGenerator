@@ -158,9 +158,13 @@ def launch(exe: str, args: list[str], policy: Optional[Policy] = None, confirm: 
             console = pe_subsystem(path) == "console"
             flags = (subprocess.CREATE_NO_WINDOW if console else subprocess.DETACHED_PROCESS) \
                 | subprocess.CREATE_NEW_PROCESS_GROUP
+            # a program starts in its OWN folder, never CIG's: Wabbajack's launcher unpacked a 336 MB update into
+            # CIG's repo and Outfit Studio could not find its own files (Tooling agent's survey, 2026-11-20)
+            cwd = os.path.dirname(os.path.abspath(path)) if os.path.isfile(path) else None
             subprocess.Popen([exe, *args], close_fds=True, creationflags=flags, stdin=subprocess.DEVNULL,
-                             stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, env=env)
+                             stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, env=env, cwd=cwd)
             entry["via"] = "direct (CIG is not elevated)"
+            entry["cwd"] = cwd
     except OSError as e:
         entry.update(ok=False, refused=False, reason=f"could not start: {e}")
         return {**entry, "log_id": actionlog.write(entry)}
@@ -233,6 +237,8 @@ def close(pid: int, wait_s: float = 10.0) -> dict:
     res = {"ok": gone, "pid": pid, "closed": gone}
     if not gone:
         res["still_open"] = [win32gui.GetWindowText(h) for h in windows_of(pid)]
+        res["hint"] = ("the program is asking something before it closes: call cig_actions and answer the window "
+                       "with its answer_dialog action")
     else:
         time.sleep(1.0)                                    # let its child processes finish their own writes
         g = guards.restore(f"pid-{pid}")

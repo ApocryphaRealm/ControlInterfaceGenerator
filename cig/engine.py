@@ -272,11 +272,29 @@ class Engine:
                     self.opened_windows.update(f"{target.key}|{w}" for w in new)
                     break
                 time.sleep(0.3)
-        after = adapter.read(target, loc, node)
+        try:
+            after = adapter.read(target, loc, node)
+        except AdapterError as e:
+            # the action closed the whole program (DynDOLOD's 'Exit DynDOLOD', TexGen's 'Exit TexGen'): there is no
+            # window left to read back - the action did what it was for (Tooling agent's survey, 2026-11-20)
+            if not _process_alive(target.pid):
+                entry["program_exited"] = True
+                return finish(ok=True, status="ok", detail=detail, verified=None, program_exited=True,
+                              changed={"before": before, "after": {"exists": False}},
+                              reason="", note=f"the program exited after the action ({e})")
+            return finish(reason=f"read-back failed: {e}", changed={"before": before})
         if not after.get("exists", True) and rule.get("verify") != "gone":
             # the write may have changed the element's own path (a container named after the text just typed):
             # find it again the same way an action would - exact locator, else fingerprint, never a guess
-            info2, how2 = self._reresolve(self._snapshot(adapter, target), eid)
+            try:
+                snap2 = self._snapshot(adapter, target)
+            except AdapterError:
+                if not _process_alive(target.pid):
+                    return finish(ok=True, status="ok", detail=detail, verified=None, program_exited=True,
+                                  changed={"before": before, "after": {"exists": False}}, reason="",
+                                  note="the program exited after the action")
+                raise
+            info2, how2 = self._reresolve(snap2, eid)
             if info2:
                 after = adapter.read(target, info2["locator"], info2["node"])
                 entry["read_back_resolved"] = how2
@@ -309,6 +327,16 @@ class Engine:
             if time.time() - t0 > timeout_s:
                 return {"ok": False, "error": "timeout", "waited_s": round(time.time() - t0, 2)}
             time.sleep(0.25)
+
+
+def _process_alive(pid) -> bool:
+    if pid is None:
+        return True                     # fixture / CLI targets: no process to have exited
+    try:
+        import psutil
+        return psutil.pid_exists(int(pid)) and psutil.Process(int(pid)).status() != psutil.STATUS_ZOMBIE
+    except Exception:                   # noqa: BLE001
+        return False
 
 
 def _window_locs(snap: dict) -> set:
