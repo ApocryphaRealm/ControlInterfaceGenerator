@@ -1,0 +1,11 @@
+{
+  "app": "freetube",
+  "label": "FreeTube",
+  "exe": ["FreeTube.exe"],
+  "source": ["field:2026-11-20 FreeTube 0.26.0 (Electron 44.10.0), installed per-user"],
+  "cdp": {"profile_flag": "--user-data-dir="},
+  "system_side_effects": {
+    "registry_keys": ["HKCU\\Software\\Classes\\freetube"],
+    "note": "FreeTube registers itself as the freetube:// handler at start-up (Electron setAsDefaultProtocolClient). Guarded like Vortex's nxm://: exported before a launch, restored and verified on close."
+  }
+}
