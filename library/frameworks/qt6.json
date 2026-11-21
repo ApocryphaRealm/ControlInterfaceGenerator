@@ -5,7 +5,8 @@
  "source": [
   "doc: plan 2.2 and learn.microsoft.com UIA overview (2026-10-24)",
   "probe:2026-11-20 detection of installed apps (tools/prove_m1.py)",
-  "probe:2026-11-20 equalizer-apo-editor (tools/probe.py)"
+  "probe:2026-11-20 equalizer-apo-editor (tools/probe.py)",
+  "probe:2026-11-20 qt6-gallery (tools/probe.py --actions)"
  ],
  "adapter_in_v1": true,
  "detect": {
@@ -260,6 +261,270 @@
      "automation_id_pct": 50
     }
    }
+  },
+  {
+   "probe": "qt6-gallery",
+   "date": "2026-11-20",
+   "app": {
+    "exe": "python.exe",
+    "title": "CIG Qt6 Gallery",
+    "adapter": "uia"
+   },
+   "control_types": {
+    "Button": {
+     "count": 4,
+     "patterns": [
+      "Invoke",
+      "LegacyIAccessible",
+      "Value"
+     ],
+     "named_pct": 100,
+     "automation_id_pct": 25
+    },
+    "CheckBox": {
+     "count": 1,
+     "patterns": [
+      "Invoke",
+      "LegacyIAccessible",
+      "Toggle",
+      "Value"
+     ],
+     "named_pct": 100,
+     "automation_id_pct": 100
+    },
+    "ComboBox": {
+     "count": 1,
+     "patterns": [
+      "ExpandCollapse",
+      "Invoke",
+      "LegacyIAccessible",
+      "Value"
+     ],
+     "named_pct": 100,
+     "automation_id_pct": 100
+    },
+    "Edit": {
+     "count": 2,
+     "patterns": [
+      "Invoke",
+      "LegacyIAccessible",
+      "Text",
+      "Value"
+     ],
+     "named_pct": 100,
+     "automation_id_pct": 100
+    },
+    "Group": {
+     "count": 2,
+     "patterns": [
+      "Invoke",
+      "LegacyIAccessible",
+      "Value"
+     ],
+     "named_pct": 50,
+     "automation_id_pct": 100
+    },
+    "List": {
+     "count": 1,
+     "patterns": [
+      "Invoke",
+      "LegacyIAccessible",
+      "Selection",
+      "Value"
+     ],
+     "named_pct": 100,
+     "automation_id_pct": 100
+    },
+    "ListItem": {
+     "count": 3,
+     "patterns": [
+      "Invoke",
+      "LegacyIAccessible",
+      "SelectionItem",
+      "Value"
+     ],
+     "named_pct": 100,
+     "automation_id_pct": 100
+    },
+    "MenuBar": {
+     "count": 1,
+     "patterns": [
+      "LegacyIAccessible"
+     ],
+     "named_pct": 100,
+     "automation_id_pct": 100
+    },
+    "MenuItem": {
+     "count": 1,
+     "patterns": [
+      "ExpandCollapse",
+      "Invoke",
+      "LegacyIAccessible"
+     ],
+     "named_pct": 100,
+     "automation_id_pct": 0
+    },
+    "Pane": {
+     "count": 1,
+     "patterns": [
+      "Invoke",
+      "LegacyIAccessible",
+      "Value"
+     ],
+     "named_pct": 0,
+     "automation_id_pct": 100
+    },
+    "RadioButton": {
+     "count": 2,
+     "patterns": [
+      "Invoke",
+      "LegacyIAccessible",
+      "SelectionItem",
+      "Toggle",
+      "Value"
+     ],
+     "named_pct": 100,
+     "automation_id_pct": 100
+    },
+    "Slider": {
+     "count": 1,
+     "patterns": [
+      "Invoke",
+      "LegacyIAccessible",
+      "RangeValue",
+      "Value"
+     ],
+     "named_pct": 100,
+     "automation_id_pct": 100
+    },
+    "Spinner": {
+     "count": 1,
+     "patterns": [
+      "Invoke",
+      "LegacyIAccessible",
+      "RangeValue",
+      "Text",
+      "Value"
+     ],
+     "named_pct": 100,
+     "automation_id_pct": 100
+    },
+    "Tab": {
+     "count": 1,
+     "patterns": [
+      "Invoke",
+      "LegacyIAccessible",
+      "Selection",
+      "Value"
+     ],
+     "named_pct": 100,
+     "automation_id_pct": 100
+    },
+    "TabItem": {
+     "count": 2,
+     "patterns": [
+      "Invoke",
+      "LegacyIAccessible",
+      "SelectionItem",
+      "Value"
+     ],
+     "named_pct": 100,
+     "automation_id_pct": 100
+    },
+    "Text": {
+     "count": 1,
+     "patterns": [
+      "Invoke",
+      "LegacyIAccessible"
+     ],
+     "named_pct": 100,
+     "automation_id_pct": 100
+    },
+    "TitleBar": {
+     "count": 1,
+     "patterns": [
+      "LegacyIAccessible",
+      "Value"
+     ],
+     "named_pct": 0,
+     "automation_id_pct": 0
+    },
+    "Tree": {
+     "count": 1,
+     "patterns": [
+      "Grid",
+      "Invoke",
+      "LegacyIAccessible",
+      "Selection",
+      "Table",
+      "Value"
+     ],
+     "named_pct": 100,
+     "automation_id_pct": 100
+    },
+    "TreeItem": {
+     "count": 1,
+     "patterns": [
+      "ExpandCollapse",
+      "Invoke",
+      "LegacyIAccessible",
+      "SelectionItem",
+      "Value"
+     ],
+     "named_pct": 100,
+     "automation_id_pct": 100
+    },
+    "Window": {
+     "count": 1,
+     "patterns": [
+      "Invoke",
+      "LegacyIAccessible",
+      "Transform",
+      "Value",
+      "Window"
+     ],
+     "named_pct": 100,
+     "automation_id_pct": 100
+    }
+   },
+   "actions": {
+    "checkable:set_checked": {
+     "tried": 1,
+     "ok": 1,
+     "verified": 1,
+     "refused": 0
+    },
+    "selectable:select": {
+     "tried": 3,
+     "ok": 3,
+     "verified": 3,
+     "refused": 0
+    },
+    "edit-value:set_text": {
+     "tried": 1,
+     "ok": 1,
+     "verified": 1,
+     "refused": 0
+    },
+    "combo:choose": {
+     "tried": 1,
+     "ok": 0,
+     "verified": 0,
+     "refused": 0
+    },
+    "range:set_number": {
+     "tried": 2,
+     "ok": 2,
+     "verified": 2,
+     "refused": 0
+    },
+    "tree-expand:expand": {
+     "tried": 1,
+     "ok": 0,
+     "verified": 0,
+     "refused": 0
+    }
+   }
   }
  ],
  "quirks": [
@@ -275,8 +540,13 @@
   },
   {
    "id": "qt6-tabitem-has-invoke",
-   "source": "probe:2026-11-20 equalizer-apo-editor",
+   "source": "probe:2026-11-20 qt6-gallery",
    "text": "TabItem exposes Invoke, which the UIA spec says it must not."
+  },
+  {
+   "id": "qt6-radiobutton-has-toggle",
+   "source": "probe:2026-11-20 qt6-gallery",
+   "text": "RadioButton exposes Toggle, which the UIA spec says it must not."
   }
  ]
 }

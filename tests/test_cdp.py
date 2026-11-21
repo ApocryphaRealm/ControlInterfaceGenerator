@@ -65,3 +65,20 @@ def test_cdp_launch_without_a_separate_profile_is_refused(idle):
     idle(60)
     r = launch.launch(r"C:\Program Files\Vortex\Vortex.exe", [], cdp=True)
     assert r["refused"] and "profile_flag" in r["reason"]
+
+
+def test_password_inputs_are_marked_so_set_secret_applies():
+    """The AX tree calls <input type=password> a textbox; the DOM marks it, and the deny rule takes over."""
+    nodes = cdp.ax_to_nodes([ax(1, "RootWebArea", "p", kids=[2]), ax(2, "textbox", "Password field", parent=1,
+                                                                      value="hunter2", backend=77)], "P")
+    cdp.mark_passwords(nodes, {77})
+    pw = nodes[0]["children"][0]
+    assert pw["is_password"] is True and "value" not in pw
+    acts = rules.actions_for([{"control_type": "Window", "name": "p", "children": nodes}])
+    assert {a["action"] for a in acts if "Password" in a["label"]} == {"set_secret"}
+
+
+def test_radio_state_comes_from_checked():
+    nodes = cdp.ax_to_nodes([ax(1, "RootWebArea", "p", kids=[2]), ax(2, "radio", "Radio one", parent=1,
+                                                                      props=[("checked", "true")])], "P")
+    assert nodes[0]["children"][0]["selected"] is True

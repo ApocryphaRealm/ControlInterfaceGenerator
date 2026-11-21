@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<!-- CIG reference gallery - standard HTML controls, loaded by Electron's official quick-start app (copied over its
+     index.html in the _work copy). The script is in electron_gallery.js because the quick-start's CSP forbids inline
+     scripts. -->
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'">
+  <title>CIG Electron Gallery</title>
+</head>
+<body>
+  <h1>CIG Electron Gallery</h1>
+  <button id="press">Press me</button>
+  <p><label><input type="checkbox" id="check"> A checkbox</label></p>
+  <p><label><input type="radio" name="r" checked> Radio one</label> <label><input type="radio" name="r"> Radio two</label></p>
+  <p><label>Text field <input type="text" id="text"></label></p>
+  <p><label>Password field <input type="password" id="pw"></label></p>
+  <p><label>Choice <select id="choice"><option>Alpha</option><option>Beta</option><option>Gamma</option></select></label></p>
+  <p><label>Slider <input type="range" id="slider" min="0" max="10" value="0"></label></p>
+  <p><label>Number <input type="number" id="number" min="0" max="100" value="0"></label></p>
+  <p><button role="switch" aria-checked="false" id="switch">An ARIA switch</button></p>
+  <details><summary>A disclosure</summary><p>Inside the disclosure</p></details>
+  <div role="tablist" aria-label="Tabs">
+    <button role="tab" aria-selected="true" id="tab1">First tab</button>
+    <button role="tab" aria-selected="false" id="tab2">Second tab</button>
+  </div>
+  <script src="./electron_gallery.js"></script>
+</body>
+</html>

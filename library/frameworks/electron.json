@@ -5,7 +5,8 @@
  "source": [
   "doc: plan 2.2 and learn.microsoft.com UIA overview (2026-10-24)",
   "probe:2026-11-20 detection of installed apps (tools/prove_m1.py)",
-  "probe:2026-11-20 vortex-isolated (tools/probe.py)"
+  "probe:2026-11-20 vortex-isolated (tools/probe.py)",
+  "probe:2026-11-20 electron-quick-start-gallery (tools/probe.py --actions)"
  ],
  "adapter_in_v1": true,
  "detect": {
@@ -159,6 +160,173 @@
      ],
      "named_pct": 100,
      "automation_id_pct": 0
+    }
+   }
+  },
+  {
+   "probe": "electron-quick-start-gallery",
+   "date": "2026-11-20",
+   "app": {
+    "exe": "electron.exe",
+    "title": "CIG Electron Gallery",
+    "adapter": "cdp"
+   },
+   "control_types": {
+    "Button": {
+     "count": 1,
+     "patterns": [
+      "Invoke"
+     ],
+     "named_pct": 100,
+     "automation_id_pct": 0
+    },
+    "CheckBox": {
+     "count": 2,
+     "patterns": [
+      "Toggle"
+     ],
+     "named_pct": 100,
+     "automation_id_pct": 0
+    },
+    "ComboBox": {
+     "count": 1,
+     "patterns": [
+      "ExpandCollapse",
+      "Value"
+     ],
+     "named_pct": 100,
+     "automation_id_pct": 0
+    },
+    "Custom": {
+     "count": 6,
+     "patterns": [
+      "ExpandCollapse"
+     ],
+     "named_pct": 17,
+     "automation_id_pct": 0
+    },
+    "Document": {
+     "count": 1,
+     "patterns": [
+      "Text"
+     ],
+     "named_pct": 100,
+     "automation_id_pct": 0
+    },
+    "Edit": {
+     "count": 2,
+     "patterns": [
+      "Value"
+     ],
+     "named_pct": 100,
+     "automation_id_pct": 0
+    },
+    "Group": {
+     "count": 4,
+     "patterns": [],
+     "named_pct": 0,
+     "automation_id_pct": 0
+    },
+    "List": {
+     "count": 1,
+     "patterns": [],
+     "named_pct": 0,
+     "automation_id_pct": 0
+    },
+    "ListItem": {
+     "count": 3,
+     "patterns": [
+      "SelectionItem"
+     ],
+     "named_pct": 100,
+     "automation_id_pct": 0
+    },
+    "RadioButton": {
+     "count": 2,
+     "patterns": [
+      "SelectionItem"
+     ],
+     "named_pct": 100,
+     "automation_id_pct": 0
+    },
+    "Slider": {
+     "count": 1,
+     "patterns": [
+      "RangeValue"
+     ],
+     "named_pct": 100,
+     "automation_id_pct": 0
+    },
+    "Spinner": {
+     "count": 1,
+     "patterns": [
+      "RangeValue",
+      "Value"
+     ],
+     "named_pct": 100,
+     "automation_id_pct": 0
+    },
+    "Tab": {
+     "count": 1,
+     "patterns": [
+      "Selection"
+     ],
+     "named_pct": 100,
+     "automation_id_pct": 0
+    },
+    "TabItem": {
+     "count": 2,
+     "patterns": [
+      "SelectionItem"
+     ],
+     "named_pct": 100,
+     "automation_id_pct": 0
+    },
+    "Text": {
+     "count": 21,
+     "patterns": [],
+     "named_pct": 62,
+     "automation_id_pct": 0
+    },
+    "Window": {
+     "count": 1,
+     "patterns": [
+      "Window"
+     ],
+     "named_pct": 100,
+     "automation_id_pct": 0
+    }
+   },
+   "actions": {
+    "checkable:set_checked": {
+     "tried": 2,
+     "ok": 2,
+     "verified": 2,
+     "refused": 0
+    },
+    "selectable:select": {
+     "tried": 4,
+     "ok": 2,
+     "verified": 2,
+     "refused": 0
+    },
+    "edit-value:set_text": {
+     "tried": 1,
+     "ok": 1,
+     "verified": 1,
+     "refused": 0
+    },
+    "combo:choose": {
+     "tried": 1,
+     "ok": 1,
+     "verified": 1,
+     "refused": 0
+    },
+    "range:set_number": {
+     "tried": 2,
+     "ok": 2,
+     "verified": 2,
+     "refused": 0
     }
    }
   }

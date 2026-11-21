@@ -1,0 +1,728 @@
+{
+ "framework": "wpf",
+ "name": "wpf-gallery-official",
+ "date": "2026-11-20",
+ "app": {
+  "exe": "WPFGallery.exe",
+  "title": "WPF Gallery",
+  "adapter": "uia"
+ },
+ "elements": 258,
+ "survey": {
+  "Button": {
+   "count": 56,
+   "named_pct": 73,
+   "automation_id_pct": 52,
+   "patterns": {
+    "LegacyIAccessible": 56,
+    "Invoke": 43,
+    "Toggle": 13
+   },
+   "framework_ids": {
+    "WPF": 53
+   },
+   "spec_required_missing": [],
+   "spec_forbidden_present": []
+  },
+  "Custom": {
+   "count": 6,
+   "named_pct": 0,
+   "automation_id_pct": 0,
+   "patterns": {
+    "LegacyIAccessible": 6
+   },
+   "framework_ids": {
+    "WPF": 6
+   },
+   "spec_required_missing": [],
+   "spec_forbidden_present": []
+  },
+  "DataItem": {
+   "count": 24,
+   "named_pct": 100,
+   "automation_id_pct": 0,
+   "patterns": {
+    "LegacyIAccessible": 24
+   },
+   "framework_ids": {
+    "WPF": 24
+   },
+   "spec_required_missing": [
+    "SelectionItem"
+   ],
+   "spec_forbidden_present": []
+  },
+  "Image": {
+   "count": 28,
+   "named_pct": 0,
+   "automation_id_pct": 0,
+   "patterns": {
+    "LegacyIAccessible": 28
+   },
+   "framework_ids": {
+    "WPF": 28
+   },
+   "spec_required_missing": [],
+   "spec_forbidden_present": []
+  },
+  "List": {
+   "count": 2,
+   "named_pct": 100,
+   "automation_id_pct": 0,
+   "patterns": {
+    "LegacyIAccessible": 2
+   },
+   "framework_ids": {
+    "WPF": 2
+   },
+   "spec_required_missing": [],
+   "spec_forbidden_present": []
+  },
+  "MenuBar": {
+   "count": 1,
+   "named_pct": 100,
+   "automation_id_pct": 100,
+   "patterns": {
+    "LegacyIAccessible": 1
+   },
+   "framework_ids": {},
+   "spec_required_missing": [],
+   "spec_forbidden_present": []
+  },
+  "MenuItem": {
+   "count": 1,
+   "named_pct": 100,
+   "automation_id_pct": 0,
+   "patterns": {
+    "Invoke": 1,
+    "ExpandCollapse": 1,
+    "LegacyIAccessible": 1
+   },
+   "framework_ids": {},
+   "spec_required_missing": [],
+   "spec_forbidden_present": []
+  },
+  "Pane": {
+   "count": 3,
+   "named_pct": 0,
+   "automation_id_pct": 67,
+   "patterns": {
+    "LegacyIAccessible": 3,
+    "Scroll": 2
+   },
+   "framework_ids": {
+    "WPF": 3
+   },
+   "spec_required_missing": [],
+   "spec_forbidden_present": []
+  },
+  "ScrollBar": {
+   "count": 4,
+   "named_pct": 0,
+   "automation_id_pct": 100,
+   "patterns": {
+    "RangeValue": 4,
+    "LegacyIAccessible": 4
+   },
+   "framework_ids": {
+    "WPF": 4
+   },
+   "spec_required_missing": [],
+   "spec_forbidden_present": []
+  },
+  "Separator": {
+   "count": 1,
+   "named_pct": 0,
+   "automation_id_pct": 0,
+   "patterns": {
+    "LegacyIAccessible": 1
+   },
+   "framework_ids": {
+    "WPF": 1
+   },
+   "spec_required_missing": [],
+   "spec_forbidden_present": []
+  },
+  "Text": {
+   "count": 115,
+   "named_pct": 100,
+   "automation_id_pct": 17,
+   "patterns": {
+    "LegacyIAccessible": 115
+   },
+   "framework_ids": {
+    "WPF": 115
+   },
+   "spec_required_missing": [],
+   "spec_forbidden_present": []
+  },
+  "Thumb": {
+   "count": 1,
+   "named_pct": 0,
+   "automation_id_pct": 0,
+   "patterns": {
+    "LegacyIAccessible": 1
+   },
+   "framework_ids": {
+    "WPF": 1
+   },
+   "spec_required_missing": [],
+   "spec_forbidden_present": []
+  },
+  "TitleBar": {
+   "count": 1,
+   "named_pct": 0,
+   "automation_id_pct": 0,
+   "patterns": {
+    "Value": 1,
+    "LegacyIAccessible": 1
+   },
+   "framework_ids": {},
+   "spec_required_missing": [],
+   "spec_forbidden_present": []
+  },
+  "Tree": {
+   "count": 1,
+   "named_pct": 100,
+   "automation_id_pct": 100,
+   "patterns": {
+    "Selection": 1,
+    "Scroll": 1,
+    "LegacyIAccessible": 1
+   },
+   "framework_ids": {
+    "WPF": 1
+   },
+   "spec_required_missing": [],
+   "spec_forbidden_present": []
+  },
+  "TreeItem": {
+   "count": 13,
+   "named_pct": 100,
+   "automation_id_pct": 0,
+   "patterns": {
+    "SelectionItem": 13,
+    "ExpandCollapse": 13,
+    "ScrollItem": 13,
+    "LegacyIAccessible": 13
+   },
+   "framework_ids": {
+    "WPF": 13
+   },
+   "spec_required_missing": [],
+   "spec_forbidden_present": []
+  },
+  "Window": {
+   "count": 1,
+   "named_pct": 100,
+   "automation_id_pct": 0,
+   "patterns": {
+    "Window": 1,
+    "Transform": 1,
+    "LegacyIAccessible": 1
+   },
+   "framework_ids": {
+    "WPF": 1
+   },
+   "spec_required_missing": [],
+   "spec_forbidden_present": []
+  }
+ },
+ "actions": true,
+ "action_results": [
+  {
+   "rule": "tree-expand",
+   "action": "expand",
+   "label": "expand TreeItem 'Home'",
+   "args": {
+    "expanded": true
+   },
+   "ok": false,
+   "verified": false,
+   "refused": false,
+   "reason": "read-back does not match what was set"
+  },
+  {
+   "rule": "checkable",
+   "action": "set_checked",
+   "label": "set_checked Button 'Expander'",
+   "args": {
+    "checked": true
+   },
+   "ok": true,
+   "verified": true,
+   "refused": false,
+   "reason": "",
+   "restored": true
+  },
+  {
+   "rule": "selectable",
+   "action": "select",
+   "label": "select TreeItem 'What's New'",
+   "args": {},
+   "ok": true,
+   "verified": true,
+   "refused": false,
+   "reason": ""
+  },
+  {
+   "rule": "tree-expand",
+   "action": "expand",
+   "label": "expand TreeItem 'What's New'",
+   "args": {
+    "expanded": true
+   },
+   "ok": false,
+   "verified": false,
+   "refused": false,
+   "reason": "read-back does not match what was set"
+  },
+  {
+   "rule": "checkable",
+   "action": "set_checked",
+   "label": "set_checked Button 'Expander'",
+   "args": {
+    "checked": true
+   },
+   "ok": true,
+   "verified": true,
+   "refused": false,
+   "reason": "",
+   "restored": true
+  },
+  {
+   "rule": "selectable",
+   "action": "select",
+   "label": "select TreeItem 'Design Guidance'",
+   "args": {},
+   "ok": true,
+   "verified": true,
+   "refused": false,
+   "reason": ""
+  },
+  {
+   "rule": "tree-expand",
+   "action": "expand",
+   "label": "expand TreeItem 'Design Guidance'",
+   "args": {
+    "expanded": true
+   },
+   "ok": true,
+   "verified": true,
+   "refused": false,
+   "reason": "",
+   "restored": true
+  },
+  {
+   "rule": "checkable",
+   "action": "set_checked",
+   "label": "set_checked Button 'Expander'",
+   "args": {
+    "checked": true
+   },
+   "ok": true,
+   "verified": true,
+   "refused": false,
+   "reason": "",
+   "restored": true
+  },
+  {
+   "rule": "selectable",
+   "action": "select",
+   "label": "select TreeItem 'Samples'",
+   "args": {},
+   "ok": true,
+   "verified": true,
+   "refused": false,
+   "reason": ""
+  },
+  {
+   "rule": "tree-expand",
+   "action": "expand",
+   "label": "expand TreeItem 'Samples'",
+   "args": {
+    "expanded": true
+   },
+   "ok": true,
+   "verified": true,
+   "refused": false,
+   "reason": "",
+   "restored": true
+  },
+  {
+   "rule": "checkable",
+   "action": "set_checked",
+   "label": "set_checked Button 'Expander'",
+   "args": {
+    "checked": true
+   },
+   "ok": true,
+   "verified": true,
+   "refused": false,
+   "reason": "",
+   "restored": true
+  },
+  {
+   "rule": "selectable",
+   "action": "select",
+   "label": "select TreeItem 'All Controls'",
+   "args": {},
+   "ok": true,
+   "verified": true,
+   "refused": false,
+   "reason": ""
+  },
+  {
+   "rule": "tree-expand",
+   "action": "expand",
+   "label": "expand TreeItem 'All Controls'",
+   "args": {
+    "expanded": true
+   },
+   "ok": false,
+   "verified": false,
+   "refused": false,
+   "reason": "read-back does not match what was set"
+  },
+  {
+   "rule": "checkable",
+   "action": "set_checked",
+   "label": "set_checked Button 'Expander'",
+   "args": {
+    "checked": true
+   },
+   "ok": true,
+   "verified": true,
+   "refused": false,
+   "reason": "",
+   "restored": true
+  },
+  {
+   "rule": "selectable",
+   "action": "select",
+   "label": "select TreeItem 'Basic Input'",
+   "args": {},
+   "ok": true,
+   "verified": true,
+   "refused": false,
+   "reason": ""
+  },
+  {
+   "rule": "tree-expand",
+   "action": "expand",
+   "label": "expand TreeItem 'Basic Input'",
+   "args": {
+    "expanded": true
+   },
+   "ok": true,
+   "verified": true,
+   "refused": false,
+   "reason": "",
+   "restored": true
+  },
+  {
+   "rule": "checkable",
+   "action": "set_checked",
+   "label": "set_checked Button 'Expander'",
+   "args": {
+    "checked": true
+   },
+   "ok": true,
+   "verified": true,
+   "refused": false,
+   "reason": "",
+   "restored": true
+  },
+  {
+   "rule": "selectable",
+   "action": "select",
+   "label": "select TreeItem 'Collections'",
+   "args": {},
+   "ok": true,
+   "verified": true,
+   "refused": false,
+   "reason": ""
+  },
+  {
+   "rule": "tree-expand",
+   "action": "expand",
+   "label": "expand TreeItem 'Collections'",
+   "args": {
+    "expanded": true
+   },
+   "ok": true,
+   "verified": true,
+   "refused": false,
+   "reason": "",
+   "restored": true
+  },
+  {
+   "rule": "checkable",
+   "action": "set_checked",
+   "label": "set_checked Button 'Expander'",
+   "args": {
+    "checked": true
+   },
+   "ok": true,
+   "verified": true,
+   "refused": false,
+   "reason": "",
+   "restored": true
+  },
+  {
+   "rule": "selectable",
+   "action": "select",
+   "label": "select TreeItem 'Date & Calendar'",
+   "args": {},
+   "ok": true,
+   "verified": true,
+   "refused": false,
+   "reason": ""
+  },
+  {
+   "rule": "tree-expand",
+   "action": "expand",
+   "label": "expand TreeItem 'Date & Calendar'",
+   "args": {
+    "expanded": true
+   },
+   "ok": true,
+   "verified": true,
+   "refused": false,
+   "reason": "",
+   "restored": true
+  },
+  {
+   "rule": "checkable",
+   "action": "set_checked",
+   "label": "set_checked Button 'Expander'",
+   "args": {
+    "checked": true
+   },
+   "ok": true,
+   "verified": true,
+   "refused": false,
+   "reason": "",
+   "restored": true
+  },
+  {
+   "rule": "selectable",
+   "action": "select",
+   "label": "select TreeItem 'Layout'",
+   "args": {},
+   "ok": true,
+   "verified": true,
+   "refused": false,
+   "reason": ""
+  },
+  {
+   "rule": "tree-expand",
+   "action": "expand",
+   "label": "expand TreeItem 'Layout'",
+   "args": {
+    "expanded": true
+   },
+   "ok": true,
+   "verified": true,
+   "refused": false,
+   "reason": "",
+   "restored": true
+  },
+  {
+   "rule": "checkable",
+   "action": "set_checked",
+   "label": "set_checked Button 'Expander'",
+   "args": {
+    "checked": true
+   },
+   "ok": true,
+   "verified": true,
+   "refused": false,
+   "reason": "",
+   "restored": true
+  },
+  {
+   "rule": "selectable",
+   "action": "select",
+   "label": "select TreeItem 'Navigation'",
+   "args": {},
+   "ok": true,
+   "verified": true,
+   "refused": false,
+   "reason": ""
+  },
+  {
+   "rule": "tree-expand",
+   "action": "expand",
+   "label": "expand TreeItem 'Navigation'",
+   "args": {
+    "expanded": true
+   },
+   "ok": true,
+   "verified": true,
+   "refused": false,
+   "reason": "",
+   "restored": true
+  },
+  {
+   "rule": "checkable",
+   "action": "set_checked",
+   "label": "set_checked Button 'Expander'",
+   "args": {
+    "checked": true
+   },
+   "ok": true,
+   "verified": true,
+   "refused": false,
+   "reason": "",
+   "restored": true
+  },
+  {
+   "rule": "selectable",
+   "action": "select",
+   "label": "select TreeItem 'Status & Info'",
+   "args": {},
+   "ok": true,
+   "verified": true,
+   "refused": false,
+   "reason": ""
+  },
+  {
+   "rule": "tree-expand",
+   "action": "expand",
+   "label": "expand TreeItem 'Status & Info'",
+   "args": {
+    "expanded": true
+   },
+   "ok": true,
+   "verified": true,
+   "refused": false,
+   "reason": "",
+   "restored": true
+  },
+  {
+   "rule": "checkable",
+   "action": "set_checked",
+   "label": "set_checked Button 'Expander'",
+   "args": {
+    "checked": true
+   },
+   "ok": true,
+   "verified": true,
+   "refused": false,
+   "reason": "",
+   "restored": true
+  },
+  {
+   "rule": "selectable",
+   "action": "select",
+   "label": "select TreeItem 'Text'",
+   "args": {},
+   "ok": true,
+   "verified": true,
+   "refused": false,
+   "reason": ""
+  },
+  {
+   "rule": "tree-expand",
+   "action": "expand",
+   "label": "expand TreeItem 'Text'",
+   "args": {
+    "expanded": true
+   },
+   "ok": true,
+   "verified": true,
+   "refused": false,
+   "reason": "",
+   "restored": true
+  },
+  {
+   "rule": "checkable",
+   "action": "set_checked",
+   "label": "set_checked Button 'Expander'",
+   "args": {
+    "checked": true
+   },
+   "ok": true,
+   "verified": true,
+   "refused": false,
+   "reason": "",
+   "restored": true
+  },
+  {
+   "rule": "selectable",
+   "action": "select",
+   "label": "select TreeItem 'System'",
+   "args": {},
+   "ok": true,
+   "verified": true,
+   "refused": false,
+   "reason": ""
+  },
+  {
+   "rule": "tree-expand",
+   "action": "expand",
+   "label": "expand TreeItem 'System'",
+   "args": {
+    "expanded": true
+   },
+   "ok": true,
+   "verified": true,
+   "refused": false,
+   "reason": "",
+   "restored": true
+  },
+  {
+   "rule": "checkable",
+   "action": "set_checked",
+   "label": "set_checked Button 'Expander'",
+   "args": {
+    "checked": true
+   },
+   "ok": true,
+   "verified": true,
+   "refused": false,
+   "reason": "",
+   "restored": true
+  },
+  {
+   "rule": "range",
+   "action": "set_number",
+   "label": "set_number ScrollBar 'PART_VerticalScrollBar'",
+   "args": {
+    "value": 10
+   },
+   "ok": true,
+   "verified": true,
+   "refused": false,
+   "reason": "",
+   "restored": true
+  }
+ ],
+ "action_summary": {
+  "tree-expand:expand": {
+   "tried": 13,
+   "ok": 10,
+   "verified": 10,
+   "refused": 0
+  },
+  "checkable:set_checked": {
+   "tried": 13,
+   "ok": 13,
+   "verified": 13,
+   "refused": 0
+  },
+  "selectable:select": {
+   "tried": 12,
+   "ok": 12,
+   "verified": 12,
+   "refused": 0
+  },
+  "range:set_number": {
+   "tried": 1,
+   "ok": 1,
+   "verified": 1,
+   "refused": 0
+  }
+ }
+}

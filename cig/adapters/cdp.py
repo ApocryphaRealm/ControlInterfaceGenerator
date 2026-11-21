@@ -116,6 +116,10 @@ def ax_to_nodes(ax_nodes: list[dict], page_id: str, max_nodes: int = 4000) -> li
             node["toggle_state"] = {"true": "On", "false": "Off", "mixed": "Indeterminate"}.get(str(checked).lower(),
                                                                                               "Off")
         sel = _prop(props, "selected")
+        if sel is None and m["control_type"] in ("RadioButton", "MenuItem") and "SelectionItem" in node["patterns"]:
+            sel = _prop(props, "checked")          # a radio's state is 'checked' in the AX tree (M6 probe, 2026-11-20)
+            if isinstance(sel, str):
+                sel = sel.lower() == "true"
         if sel is not None:
             node["selected"] = bool(sel)
         exp = _prop(props, "expanded")
@@ -140,6 +144,25 @@ def ax_to_nodes(ax_nodes: list[dict], page_id: str, max_nodes: int = 4000) -> li
     for r in roots:
         out += convert(r)
     return out
+
+
+def password_backends(s: "CdpSession") -> set:
+    """Backend ids of password inputs. The AX tree reports <input type=password> as a plain textbox, so without
+    this the set_secret deny would never fire over CDP (found by the M6 Electron probe, 2026-11-20)."""
+    try:
+        root = s.call("DOM.getDocument", {"depth": 0})["root"]["nodeId"]
+        ids = s.call("DOM.querySelectorAll", {"nodeId": root, "selector": "input[type=password]"}).get("nodeIds", [])
+        return {s.call("DOM.describeNode", {"nodeId": i})["node"]["backendNodeId"] for i in ids}
+    except (AdapterError, KeyError):
+        return set()
+
+
+def mark_passwords(nodes: list, backends: set) -> None:
+    for n in nodes:
+        if backends and (n.get("cdp") or {}).get("backend") in backends:
+            n["is_password"] = True
+            n.pop("value", None)                    # never read or log a secret
+        mark_passwords(n.get("children") or [], backends)
 
 
 @functools.lru_cache(maxsize=1)
@@ -259,9 +282,11 @@ class CdpAdapter(Adapter):
                 s.call("Accessibility.enable")
                 ax = s.call("Accessibility.getFullAXTree").get("nodes", [])
                 widgets = dom_widgets(s, pg["id"])
+                secret = password_backends(s)
             finally:
                 s.close()
             children = ax_to_nodes(ax, pg["id"])
+            mark_passwords(children, secret)
             if widgets:
                 # controls the page hides from accessibility, found by the widget-kit library: one group, first child
                 # of the window, so their locators do not move when the page's own tree changes

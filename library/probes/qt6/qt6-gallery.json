@@ -1,0 +1,473 @@
+{
+ "framework": "qt6",
+ "name": "qt6-gallery",
+ "date": "2026-11-20",
+ "app": {
+  "exe": "python.exe",
+  "title": "CIG Qt6 Gallery",
+  "adapter": "uia"
+ },
+ "elements": 26,
+ "survey": {
+  "Button": {
+   "count": 4,
+   "named_pct": 100,
+   "automation_id_pct": 25,
+   "patterns": {
+    "Invoke": 4,
+    "LegacyIAccessible": 4,
+    "Value": 1
+   },
+   "framework_ids": {
+    "Qt": 1
+   },
+   "spec_required_missing": [],
+   "spec_forbidden_present": []
+  },
+  "CheckBox": {
+   "count": 1,
+   "named_pct": 100,
+   "automation_id_pct": 100,
+   "patterns": {
+    "Invoke": 1,
+    "Value": 1,
+    "Toggle": 1,
+    "LegacyIAccessible": 1
+   },
+   "framework_ids": {
+    "Qt": 1
+   },
+   "spec_required_missing": [],
+   "spec_forbidden_present": []
+  },
+  "ComboBox": {
+   "count": 1,
+   "named_pct": 100,
+   "automation_id_pct": 100,
+   "patterns": {
+    "Invoke": 1,
+    "Value": 1,
+    "ExpandCollapse": 1,
+    "LegacyIAccessible": 1
+   },
+   "framework_ids": {
+    "Qt": 1
+   },
+   "spec_required_missing": [],
+   "spec_forbidden_present": []
+  },
+  "Edit": {
+   "count": 2,
+   "named_pct": 100,
+   "automation_id_pct": 100,
+   "patterns": {
+    "Invoke": 2,
+    "Value": 2,
+    "Text": 2,
+    "LegacyIAccessible": 2
+   },
+   "framework_ids": {
+    "Qt": 2
+   },
+   "spec_required_missing": [],
+   "spec_forbidden_present": []
+  },
+  "Group": {
+   "count": 2,
+   "named_pct": 50,
+   "automation_id_pct": 100,
+   "patterns": {
+    "Invoke": 2,
+    "Value": 2,
+    "LegacyIAccessible": 2
+   },
+   "framework_ids": {
+    "Qt": 2
+   },
+   "spec_required_missing": [],
+   "spec_forbidden_present": []
+  },
+  "List": {
+   "count": 1,
+   "named_pct": 100,
+   "automation_id_pct": 100,
+   "patterns": {
+    "Invoke": 1,
+    "Value": 1,
+    "Selection": 1,
+    "LegacyIAccessible": 1
+   },
+   "framework_ids": {
+    "Qt": 1
+   },
+   "spec_required_missing": [],
+   "spec_forbidden_present": []
+  },
+  "ListItem": {
+   "count": 3,
+   "named_pct": 100,
+   "automation_id_pct": 100,
+   "patterns": {
+    "Invoke": 3,
+    "Value": 3,
+    "SelectionItem": 3,
+    "LegacyIAccessible": 3
+   },
+   "framework_ids": {
+    "Qt": 3
+   },
+   "spec_required_missing": [],
+   "spec_forbidden_present": []
+  },
+  "MenuBar": {
+   "count": 1,
+   "named_pct": 100,
+   "automation_id_pct": 100,
+   "patterns": {
+    "LegacyIAccessible": 1
+   },
+   "framework_ids": {},
+   "spec_required_missing": [],
+   "spec_forbidden_present": []
+  },
+  "MenuItem": {
+   "count": 1,
+   "named_pct": 100,
+   "automation_id_pct": 0,
+   "patterns": {
+    "Invoke": 1,
+    "ExpandCollapse": 1,
+    "LegacyIAccessible": 1
+   },
+   "framework_ids": {},
+   "spec_required_missing": [],
+   "spec_forbidden_present": []
+  },
+  "Pane": {
+   "count": 1,
+   "named_pct": 0,
+   "automation_id_pct": 100,
+   "patterns": {
+    "Invoke": 1,
+    "Value": 1,
+    "LegacyIAccessible": 1
+   },
+   "framework_ids": {
+    "Qt": 1
+   },
+   "spec_required_missing": [],
+   "spec_forbidden_present": []
+  },
+  "RadioButton": {
+   "count": 2,
+   "named_pct": 100,
+   "automation_id_pct": 100,
+   "patterns": {
+    "Invoke": 2,
+    "Value": 2,
+    "Toggle": 2,
+    "SelectionItem": 2,
+    "LegacyIAccessible": 2
+   },
+   "framework_ids": {
+    "Qt": 2
+   },
+   "spec_required_missing": [],
+   "spec_forbidden_present": [
+    "Toggle"
+   ]
+  },
+  "Slider": {
+   "count": 1,
+   "named_pct": 100,
+   "automation_id_pct": 100,
+   "patterns": {
+    "Invoke": 1,
+    "Value": 1,
+    "RangeValue": 1,
+    "LegacyIAccessible": 1
+   },
+   "framework_ids": {
+    "Qt": 1
+   },
+   "spec_required_missing": [],
+   "spec_forbidden_present": []
+  },
+  "Spinner": {
+   "count": 1,
+   "named_pct": 100,
+   "automation_id_pct": 100,
+   "patterns": {
+    "Invoke": 1,
+    "Value": 1,
+    "RangeValue": 1,
+    "Text": 1,
+    "LegacyIAccessible": 1
+   },
+   "framework_ids": {
+    "Qt": 1
+   },
+   "spec_required_missing": [],
+   "spec_forbidden_present": []
+  },
+  "Tab": {
+   "count": 1,
+   "named_pct": 100,
+   "automation_id_pct": 100,
+   "patterns": {
+    "Invoke": 1,
+    "Value": 1,
+    "Selection": 1,
+    "LegacyIAccessible": 1
+   },
+   "framework_ids": {
+    "Qt": 1
+   },
+   "spec_required_missing": [],
+   "spec_forbidden_present": []
+  },
+  "TabItem": {
+   "count": 2,
+   "named_pct": 100,
+   "automation_id_pct": 100,
+   "patterns": {
+    "Invoke": 2,
+    "Value": 2,
+    "SelectionItem": 2,
+    "LegacyIAccessible": 2
+   },
+   "framework_ids": {
+    "Qt": 2
+   },
+   "spec_required_missing": [],
+   "spec_forbidden_present": [
+    "Invoke"
+   ]
+  },
+  "Text": {
+   "count": 1,
+   "named_pct": 100,
+   "automation_id_pct": 100,
+   "patterns": {
+    "Invoke": 1,
+    "LegacyIAccessible": 1
+   },
+   "framework_ids": {
+    "Qt": 1
+   },
+   "spec_required_missing": [],
+   "spec_forbidden_present": []
+  },
+  "TitleBar": {
+   "count": 1,
+   "named_pct": 0,
+   "automation_id_pct": 0,
+   "patterns": {
+    "Value": 1,
+    "LegacyIAccessible": 1
+   },
+   "framework_ids": {},
+   "spec_required_missing": [],
+   "spec_forbidden_present": []
+  },
+  "Tree": {
+   "count": 1,
+   "named_pct": 100,
+   "automation_id_pct": 100,
+   "patterns": {
+    "Invoke": 1,
+    "Value": 1,
+    "Selection": 1,
+    "Grid": 1,
+    "Table": 1,
+    "LegacyIAccessible": 1
+   },
+   "framework_ids": {
+    "Qt": 1
+   },
+   "spec_required_missing": [],
+   "spec_forbidden_present": []
+  },
+  "TreeItem": {
+   "count": 1,
+   "named_pct": 100,
+   "automation_id_pct": 100,
+   "patterns": {
+    "Invoke": 1,
+    "Value": 1,
+    "SelectionItem": 1,
+    "ExpandCollapse": 1,
+    "LegacyIAccessible": 1
+   },
+   "framework_ids": {
+    "Qt": 1
+   },
+   "spec_required_missing": [],
+   "spec_forbidden_present": []
+  },
+  "Window": {
+   "count": 1,
+   "named_pct": 100,
+   "automation_id_pct": 100,
+   "patterns": {
+    "Invoke": 1,
+    "Value": 1,
+    "Window": 1,
+    "Transform": 1,
+    "LegacyIAccessible": 1
+   },
+   "framework_ids": {
+    "Qt": 1
+   },
+   "spec_required_missing": [],
+   "spec_forbidden_present": []
+  }
+ },
+ "actions": true,
+ "action_results": [
+  {
+   "rule": "checkable",
+   "action": "set_checked",
+   "label": "set_checked CheckBox 'A checkbox'",
+   "args": {
+    "checked": true
+   },
+   "ok": true,
+   "verified": true,
+   "refused": false,
+   "reason": "",
+   "restored": true
+  },
+  {
+   "rule": "selectable",
+   "action": "select",
+   "label": "select RadioButton 'Radio two'",
+   "args": {},
+   "ok": true,
+   "verified": true,
+   "refused": false,
+   "reason": ""
+  },
+  {
+   "rule": "edit-value",
+   "action": "set_text",
+   "label": "set_text Edit 'Text field'",
+   "args": {
+    "text": "CIG probe"
+   },
+   "ok": true,
+   "verified": true,
+   "refused": false,
+   "reason": "",
+   "restored": true
+  },
+  {
+   "rule": "combo",
+   "action": "choose",
+   "label": "choose ComboBox 'Choice'",
+   "args": {
+    "option": "Beta"
+   },
+   "ok": false,
+   "verified": false,
+   "refused": false,
+   "reason": "read-back does not match what was set"
+  },
+  {
+   "rule": "selectable",
+   "action": "select",
+   "label": "select ListItem 'One'",
+   "args": {},
+   "ok": true,
+   "verified": true,
+   "refused": false,
+   "reason": ""
+  },
+  {
+   "rule": "range",
+   "action": "set_number",
+   "label": "set_number Slider 'Slider'",
+   "args": {
+    "value": 10
+   },
+   "ok": true,
+   "verified": true,
+   "refused": false,
+   "reason": "",
+   "restored": true
+  },
+  {
+   "rule": "range",
+   "action": "set_number",
+   "label": "set_number Spinner 'Number'",
+   "args": {
+    "value": 10
+   },
+   "ok": true,
+   "verified": true,
+   "refused": false,
+   "reason": "",
+   "restored": true
+  },
+  {
+   "rule": "selectable",
+   "action": "select",
+   "label": "select TreeItem 'Root'",
+   "args": {},
+   "ok": true,
+   "verified": true,
+   "refused": false,
+   "reason": ""
+  },
+  {
+   "rule": "tree-expand",
+   "action": "expand",
+   "label": "expand TreeItem 'Root'",
+   "args": {
+    "expanded": true
+   },
+   "ok": false,
+   "verified": false,
+   "refused": false,
+   "reason": "read-back does not match what was set"
+  }
+ ],
+ "action_summary": {
+  "checkable:set_checked": {
+   "tried": 1,
+   "ok": 1,
+   "verified": 1,
+   "refused": 0
+  },
+  "selectable:select": {
+   "tried": 3,
+   "ok": 3,
+   "verified": 3,
+   "refused": 0
+  },
+  "edit-value:set_text": {
+   "tried": 1,
+   "ok": 1,
+   "verified": 1,
+   "refused": 0
+  },
+  "combo:choose": {
+   "tried": 1,
+   "ok": 0,
+   "verified": 0,
+   "refused": 0
+  },
+  "range:set_number": {
+   "tried": 2,
+   "ok": 2,
+   "verified": 2,
+   "refused": 0
+  },
+  "tree-expand:expand": {
+   "tried": 1,
+   "ok": 0,
+   "verified": 0,
+   "refused": 0
+  }
+ }
+}

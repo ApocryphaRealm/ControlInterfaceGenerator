@@ -4,7 +4,8 @@
  "versions": "any",
  "source": [
   "doc: plan 2.2 and learn.microsoft.com UIA overview (2026-10-24)",
-  "probe:2026-11-20 wpf-gallery (tools/probe.py --actions)"
+  "probe:2026-11-20 wpf-gallery (tools/probe.py --actions)",
+  "probe:2026-11-20 wpf-gallery-official (tools/probe.py --actions)"
  ],
  "adapter_in_v1": true,
  "detect": {
@@ -289,6 +290,192 @@
      "refused": 0
     }
    }
+  },
+  {
+   "probe": "wpf-gallery-official",
+   "date": "2026-11-20",
+   "app": {
+    "exe": "WPFGallery.exe",
+    "title": "WPF Gallery",
+    "adapter": "uia"
+   },
+   "control_types": {
+    "Button": {
+     "count": 56,
+     "patterns": [
+      "Invoke",
+      "LegacyIAccessible",
+      "Toggle"
+     ],
+     "named_pct": 73,
+     "automation_id_pct": 52
+    },
+    "Custom": {
+     "count": 6,
+     "patterns": [
+      "LegacyIAccessible"
+     ],
+     "named_pct": 0,
+     "automation_id_pct": 0
+    },
+    "DataItem": {
+     "count": 24,
+     "patterns": [
+      "LegacyIAccessible"
+     ],
+     "named_pct": 100,
+     "automation_id_pct": 0
+    },
+    "Image": {
+     "count": 28,
+     "patterns": [
+      "LegacyIAccessible"
+     ],
+     "named_pct": 0,
+     "automation_id_pct": 0
+    },
+    "List": {
+     "count": 2,
+     "patterns": [
+      "LegacyIAccessible"
+     ],
+     "named_pct": 100,
+     "automation_id_pct": 0
+    },
+    "MenuBar": {
+     "count": 1,
+     "patterns": [
+      "LegacyIAccessible"
+     ],
+     "named_pct": 100,
+     "automation_id_pct": 100
+    },
+    "MenuItem": {
+     "count": 1,
+     "patterns": [
+      "ExpandCollapse",
+      "Invoke",
+      "LegacyIAccessible"
+     ],
+     "named_pct": 100,
+     "automation_id_pct": 0
+    },
+    "Pane": {
+     "count": 3,
+     "patterns": [
+      "LegacyIAccessible",
+      "Scroll"
+     ],
+     "named_pct": 0,
+     "automation_id_pct": 67
+    },
+    "ScrollBar": {
+     "count": 4,
+     "patterns": [
+      "LegacyIAccessible",
+      "RangeValue"
+     ],
+     "named_pct": 0,
+     "automation_id_pct": 100
+    },
+    "Separator": {
+     "count": 1,
+     "patterns": [
+      "LegacyIAccessible"
+     ],
+     "named_pct": 0,
+     "automation_id_pct": 0
+    },
+    "Text": {
+     "count": 115,
+     "patterns": [
+      "LegacyIAccessible"
+     ],
+     "named_pct": 100,
+     "automation_id_pct": 17
+    },
+    "Thumb": {
+     "count": 1,
+     "patterns": [
+      "LegacyIAccessible"
+     ],
+     "named_pct": 0,
+     "automation_id_pct": 0
+    },
+    "TitleBar": {
+     "count": 1,
+     "patterns": [
+      "LegacyIAccessible",
+      "Value"
+     ],
+     "named_pct": 0,
+     "automation_id_pct": 0
+    },
+    "Tree": {
+     "count": 1,
+     "patterns": [
+      "LegacyIAccessible",
+      "Scroll",
+      "Selection"
+     ],
+     "named_pct": 100,
+     "automation_id_pct": 100
+    },
+    "TreeItem": {
+     "count": 13,
+     "patterns": [
+      "ExpandCollapse",
+      "LegacyIAccessible",
+      "ScrollItem",
+      "SelectionItem"
+     ],
+     "named_pct": 100,
+     "automation_id_pct": 0
+    },
+    "Window": {
+     "count": 1,
+     "patterns": [
+      "LegacyIAccessible",
+      "Transform",
+      "Window"
+     ],
+     "named_pct": 100,
+     "automation_id_pct": 0
+    }
+   },
+   "actions": {
+    "tree-expand:expand": {
+     "tried": 13,
+     "ok": 10,
+     "verified": 10,
+     "refused": 0
+    },
+    "checkable:set_checked": {
+     "tried": 13,
+     "ok": 13,
+     "verified": 13,
+     "refused": 0
+    },
+    "selectable:select": {
+     "tried": 12,
+     "ok": 12,
+     "verified": 12,
+     "refused": 0
+    },
+    "range:set_number": {
+     "tried": 1,
+     "ok": 1,
+     "verified": 1,
+     "refused": 0
+    }
+   }
+  }
+ ],
+ "quirks": [
+  {
+   "id": "wpf-dataitem-no-selectionitem",
+   "source": "probe:2026-11-20 wpf-gallery-official",
+   "text": "DataItem does not expose the SelectionItem pattern the UIA spec requires (seen on 24 of them; patterns present: ['LegacyIAccessible'])."
   }
  ]
 }
