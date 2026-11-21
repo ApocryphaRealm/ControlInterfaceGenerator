@@ -38,7 +38,8 @@ def body_value(eng):
 
 def test_set_text_when_away_is_done_and_verified(eng, idle):
     idle(10)
-    r = server.cig_do(APP, act(eng, "set_text", "Text editor"), {"text": "written by CIG"})
+    r = server.cig_do(APP, act(eng, "set_text", "Text editor"), {"text": "written by CIG"},
+                      confirm="the owner asked to replace it")
     assert r["ok"] and r["verified"] is True
     assert r["changed"]["before"]["value"] == "hello" and r["changed"]["after"]["value"] == "written by CIG"
     assert body_value(eng) == "written by CIG"
@@ -57,7 +58,7 @@ def test_dry_run_changes_nothing(eng, idle):
     idle(10)
     fx = REPO / "tests" / "fixtures" / "editor.json"
     h0 = hashlib.sha256(fx.read_bytes()).hexdigest()
-    r = server.cig_do(APP, act(eng, "set_text", "Text editor"), {"text": "dry"}, dry_run=True)
+    r = server.cig_do(APP, act(eng, "set_text", "Text editor"), {"text": "dry"}, dry_run=True, confirm="ok")
     assert r["ok"] and r["status"] == "dry_run" and r["preview"]["before"]["value"] == "hello"
     assert body_value(eng) == "hello"
     assert hashlib.sha256(fx.read_bytes()).hexdigest() == h0
@@ -116,7 +117,7 @@ def test_renamed_element_reresolved_by_fingerprint(eng, idle):
     body = next(c for c in eng.adapters[0].state["editor"]["windows"][0]["children"] if c.get("name") == "Text editor")
     body["automation_id"] = ""            # locator now changes ...
     body["name"] = "Texteditor"           # ... and so does the name (a language switch)
-    r = server.cig_do(APP, aid, {"text": "still found"})
+    r = server.cig_do(APP, aid, {"text": "still found"}, confirm="ok")
     assert r["ok"] and str(r.get("verified")) == "True"
     assert actionlog.tail(1)[0]["resolved"].startswith("fingerprint")
 
@@ -157,3 +158,21 @@ def test_stdio_mcp_handshake_lists_the_meta_tools(tmp_path):
     assert tools["cig_tree"].annotations.readOnlyHint is True
     assert tools["cig_do"].annotations.destructiveHint is True
     assert acts["ok"] and any(a["action"] == "set_text" for a in acts["actions"])
+
+
+def test_overwriting_existing_text_needs_confirm_even_when_away(eng, idle):
+    """Notepad 2026-11-20: a restored session tab held the owner's document; replacing it is an overwrite."""
+    idle(120)
+    r = server.cig_do(APP, act(eng, "set_text", "Text editor"), {"text": "something else"})
+    assert r["refused"] and r["status"] == "confirm_required" and r["preview"]["kind"] == "destructive"
+    assert body_value(eng) == "hello"
+
+
+def test_filling_an_empty_field_is_a_plain_write(eng, idle):
+    idle(120)
+    main = eng.adapters[0]
+    main.resolve(APP)
+    body = next(c for c in main.state["editor"]["windows"][0]["children"] if c.get("name") == "Text editor")
+    body["value"] = ""
+    r = server.cig_do(APP, act(eng, "set_text", "Text editor"), {"text": "new"})
+    assert r["ok"] and r["verified"] is True

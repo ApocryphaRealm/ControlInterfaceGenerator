@@ -163,6 +163,14 @@ class Engine:
         texts = [node.get("name", "")]
         texts += [str(args[k]) for k in ("button", "path", "option") if k in args]
         kind, why = classify.classify(action, rule.get("kind"), texts if action != "set_text" else [])
+        before = adapter.read(target, loc, node)
+        # Replacing text that is already there is an overwrite (plan 2.6: destructive), whatever the element is called:
+        # the program may have restored someone's own document into it (Notepad session restore, 2026-11-20).
+        if action == "set_text" and kind != "read":
+            old = str(before.get("value") or "")
+            if old.strip() and old.replace("\r\n", "\n").strip() != str(args.get("text", "")).replace("\r\n", "\n").strip():
+                kind = "destructive"
+                why = why + [f"replaces {len(old)} characters of existing text"]
         entry.update({"kind": kind, "classify": why})
         pres = presence.read()
         entry["presence"] = pres.as_dict()
@@ -170,7 +178,6 @@ class Engine:
                       element=loc, confirm=confirm, dry_run=dry_run, elevated_target=target.elevated)
         dec = decide(req, pres, self.policy)
         entry["policy"] = dec.as_dict()
-        before = adapter.read(target, loc, node)
         preview = {"element": loc, "label": node.get("name") or node.get("control_type"), "action": action,
                    "args": args, "kind": kind, "before": before,
                    "will_back_up": adapter.files_written(target, action, args)}
@@ -185,6 +192,17 @@ class Engine:
         try:
             detail = adapter.execute(target, loc, node, action, args)
         except AdapterError as e:
+            # An action that closes its own element (a dialog button, a window) can raise because the element died
+            # during the call (seen: Qt 5 QMessageBox OK, 2026-11-20). The read-back decides, not the exception.
+            if rule.get("verify") == "gone":
+                try:
+                    after = adapter.read(target, loc, node)
+                except AdapterError:
+                    after = {"exists": False}
+                if not after.get("exists", True):
+                    entry["adapter_error"] = str(e)
+                    return finish(ok=True, status="ok", changed={"before": before, "after": after}, verified=True,
+                                  reason="", note="the adapter raised, but the read-back shows the element gone")
             return finish(reason=f"adapter failed: {e}", changed={"before": before})
         after = adapter.read(target, loc, node)
         verified = verify(rule.get("verify"), action, args, after)

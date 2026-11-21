@@ -20,7 +20,11 @@ from mcp import ClientSession, StdioServerParameters  # noqa: E402
 from mcp.client.stdio import stdio_client  # noqa: E402
 
 PROOF_FILE = REPO / "var" / "proof" / "m2-proof.txt"
-ORIGINAL = "CIG M2 proof - original text, written by the proof script before Notepad opened it."
+ORIGINAL = ""   # empty on purpose: writing into it is a plain write; replacing text would be an overwrite
+
+
+class StopProof(Exception):
+    pass
 NEW_TEXT = "CIG M2 proof - this text was set through UI Automation by CIG at {t}, then saved through the File menu."
 
 steps: list[dict] = []
@@ -29,6 +33,10 @@ steps: list[dict] = []
 def step(name, ok, detail):
     steps.append({"step": name, "ok": bool(ok), "detail": detail})
     print(("PASS " if ok else "FAIL ") + name + " - " + json.dumps(detail, ensure_ascii=False, default=str)[:300])
+    if not ok:
+        # STOP at the first failure (2026-11-20: after a failed open, the script wrote into a restored session tab
+        # that held one of the owner's documents). Nothing after a failed step is safe to do.
+        raise StopProof(name)
     return ok
 
 
@@ -54,6 +62,13 @@ def pick(actions, action, label_has=None, ctype=None):
 
 
 async def run():
+    try:
+        return await _run()
+    except StopProof:
+        return None
+
+
+async def _run():
     PROOF_FILE.parent.mkdir(parents=True, exist_ok=True)
     PROOF_FILE.write_text(ORIGINAL, encoding="utf-8")
     params = StdioServerParameters(command=sys.executable, args=[str(REPO / "cig_server.py")])
@@ -108,9 +123,13 @@ async def run():
             doc_get = pick(acts, "get_text", ctype="Document") or pick(acts, "get_text", ctype="Edit")
             if not step("the document is offered as set_text", doc_set, doc_set and doc_set["label"]):
                 return
+            tree = await call(s, "cig_tree", app=app, depth=1)
+            title = tree.get("target", {}).get("title", "")
+            step("GUARD: the active window/tab is the proof file (title names it)", PROOF_FILE.name.lower() in title.lower()
+                 or PROOF_FILE.stem.lower() in title.lower(), title)
             before = await call(s, "cig_read", app=app, element_id=doc_set["element"])
-            step("read the opened file's text back through UIA", ORIGINAL in str(before.get("state", {}).get("value", "")),
-                 before.get("state", {}).get("value", "")[:120])
+            step("GUARD: the opened document is the empty proof file", str(before.get("state", {}).get("value", "")).strip()
+                 == ORIGINAL, before.get("state", {}).get("value", "")[:120])
 
             new_text = NEW_TEXT.format(t=datetime.datetime.now().strftime("%H:%M:%S"))
             r4 = await call(s, "cig_do", app=app, action_id=doc_set["id"], args={"text": new_text})

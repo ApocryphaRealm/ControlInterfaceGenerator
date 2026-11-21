@@ -29,7 +29,7 @@ def test_renamed_element_found_from_cache_after_restart(idle):
     fx.resolve(APP)
     body = next(c for c in fx.state["editor"]["windows"][0]["children"] if c.get("name") == "Text editor")
     body["automation_id"], body["name"] = "", "Texteditor"
-    r = e2.do(APP, aid, {"text": "x"})
+    r = e2.do(APP, aid, {"text": "x"}, confirm="ok")
     assert r["ok"], r["reason"]
     from cig import actionlog
     assert actionlog.tail(1)[0]["resolved"].startswith("fingerprint")
