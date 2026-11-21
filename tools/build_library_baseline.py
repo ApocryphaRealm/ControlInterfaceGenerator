@@ -95,9 +95,16 @@ entries = [
       notes="VCL wraps Win32 common controls (TEdit = Edit, TButton = Button...), so UIA's Win32 and MSAA providers "
             "expose them; owner-drawn VCL controls (TSpeedButton, TLabel, grids) are often invisible to UIA."),
     E("delphi-fmx", "Delphi FireMonkey (FMX)",
-      {"window_class": [m(r"^FMT\w+$", 0.7)], "exe_strings": [m(r"FMX\.Forms|FireMonkey", 0.3), m(r"Embarcadero", 0.2)]},
-      [{"name": "uia", "base": 0.5}], {"exe_file_version": True}, specializes=["win32"],
-      notes="FMX draws its own controls in one window; accessibility depends on the app adding it."),
+      {"window_class": [m(r"^FMT\w+$", 0.7), m(r"^TFMAppClass$", 0.3)],
+       "modules": [m(r"^delphifmx\.pyd$", 0.3)],
+       "exe_strings": [m(r"FMX\.Forms|FireMonkey", 0.3), m(r"Embarcadero", 0.2)]},
+      [{"name": "uia", "base": 0.2}], {"exe_file_version": True}, specializes=["win32", "console"],
+      notes="Probed 2026-11-20 on CIG's FMX gallery (Embarcadero's official DelphiFMX4Python 1.1.0): FireMonkey "
+            "publishes NONE of its controls to UIA - 13 controls (button, checkbox, radios, edits, combo, list, "
+            "trackbar, spinbox, switch, tabs) and UIA sees only the window and its title-bar buttons. FMX draws "
+            "everything itself and has no accessibility provider unless the app adds one, so CIG offers window-level "
+            "actions only (close_window; keys as the last resort while the person is away). The top-level window "
+            "class is FMTForm (FMT + the form class), with a hidden TFMAppClass application window."),
     E("avalonia", "Avalonia UI (.NET)",
       {"window_class": [m(r"^Avalonia-", 0.6)], "modules": [m(r"^avalonia\.(base|win32|controls)\.dll$", 0.6)],
        "uia_framework_id": [m(r"^Avalonia$", 0.4)], "exe_strings": [m(r"Avalonia\.Base", 0.4)]},

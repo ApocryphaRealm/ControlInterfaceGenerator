@@ -93,3 +93,9 @@ def test_rank_avalonia_from_dll_class_or_single_file():
 def test_rank_tk():
     r = detect.rank(ev(window_classes=["TkTopLevel", "TkChild"], modules=[r"C:\Py\DLLs\tk86t.dll"]))
     assert r["framework"] == "tk" and r["adapters"][0]["name"] == "uia"
+
+
+def test_fmx_inside_a_console_host_still_reads_as_fmx():
+    """FMX through DelphiFMX4Python runs inside python.exe (a console program): the FMX window classes must win."""
+    r = detect.rank(ev(window_classes=["FMTForm", "TFMAppClass"], pe_subsystem="console"))
+    assert r["framework"] == "delphi-fmx"

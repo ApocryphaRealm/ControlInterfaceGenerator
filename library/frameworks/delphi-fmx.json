@@ -3,7 +3,8 @@
  "label": "Delphi FireMonkey (FMX)",
  "versions": "any",
  "source": [
-  "doc: plan 2.2 and learn.microsoft.com UIA overview (2026-10-24)"
+  "doc: plan 2.2 and learn.microsoft.com UIA overview (2026-10-24)",
+  "probe:2026-11-20 fmx-gallery (tools/probe.py --actions)"
  ],
  "adapter_in_v1": true,
  "detect": {
@@ -11,6 +12,16 @@
    {
     "re": "^FMT\\w+$",
     "w": 0.7
+   },
+   {
+    "re": "^TFMAppClass$",
+    "w": 0.3
+   }
+  ],
+  "modules": [
+   {
+    "re": "^delphifmx\\.pyd$",
+    "w": 0.3
    }
   ],
   "exe_strings": [
@@ -27,14 +38,74 @@
  "adapters": [
   {
    "name": "uia",
-   "base": 0.5
+   "base": 0.2
   }
  ],
  "version_from": {
   "exe_file_version": true
  },
  "specializes": [
-  "win32"
+  "win32",
+  "console"
  ],
- "notes": "FMX draws its own controls in one window; accessibility depends on the app adding it."
+ "notes": "Probed 2026-11-20 on CIG's FMX gallery (Embarcadero's official DelphiFMX4Python 1.1.0): FireMonkey publishes NONE of its controls to UIA - 13 controls (button, checkbox, radios, edits, combo, list, trackbar, spinbox, switch, tabs) and UIA sees only the window and its title-bar buttons. FMX draws everything itself and has no accessibility provider unless the app adds one, so CIG offers window-level actions only (close_window; keys as the last resort while the person is away). The top-level window class is FMTForm (FMT + the form class), with a hidden TFMAppClass application window.",
+ "probed": [
+  {
+   "probe": "fmx-gallery",
+   "date": "2026-11-20",
+   "app": {
+    "exe": "python.exe",
+    "title": "CIG FMX Gallery",
+    "adapter": "uia"
+   },
+   "control_types": {
+    "Button": {
+     "count": 3,
+     "patterns": [
+      "Invoke",
+      "LegacyIAccessible"
+     ],
+     "named_pct": 100,
+     "automation_id_pct": 0
+    },
+    "MenuBar": {
+     "count": 1,
+     "patterns": [
+      "LegacyIAccessible"
+     ],
+     "named_pct": 100,
+     "automation_id_pct": 100
+    },
+    "MenuItem": {
+     "count": 1,
+     "patterns": [
+      "ExpandCollapse",
+      "Invoke",
+      "LegacyIAccessible"
+     ],
+     "named_pct": 100,
+     "automation_id_pct": 0
+    },
+    "TitleBar": {
+     "count": 1,
+     "patterns": [
+      "LegacyIAccessible",
+      "Value"
+     ],
+     "named_pct": 0,
+     "automation_id_pct": 0
+    },
+    "Window": {
+     "count": 2,
+     "patterns": [
+      "LegacyIAccessible",
+      "Transform",
+      "Window"
+     ],
+     "named_pct": 100,
+     "automation_id_pct": 0
+    }
+   }
+  }
+ ]
 }
