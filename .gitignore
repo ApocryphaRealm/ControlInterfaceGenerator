@@ -7,3 +7,5 @@ build/
 dist/
 tools/galleries/avalonia_gallery/obj/
 tools/galleries/avalonia_gallery/bin/
+bridges/dotnet/obj/
+bridges/dotnet/bin/

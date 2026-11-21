@@ -96,7 +96,8 @@ def profile_dir(exe: str) -> str:
 
 
 def launch(exe: str, args: list[str], policy: Optional[Policy] = None, confirm: Optional[str] = None,
-           wait_s: float = 25.0, cdp: bool = False, profile_flag: Optional[str] = None) -> dict:
+           wait_s: float = 25.0, cdp: bool = False, profile_flag: Optional[str] = None,
+           bridge: Optional[str] = None) -> dict:
     """cdp=True: start with a debugging port on 127.0.0.1 and a separate data folder (profile_flag names the
     program's own option for it, e.g. Vortex '--user-data', Chromium '--user-data-dir='). Without a separate data
     folder a CDP launch is refused: CIG never drives a program over CDP inside someone's real profile (plan 2.6)."""
@@ -129,6 +130,19 @@ def launch(exe: str, args: list[str], policy: Optional[Policy] = None, confirm: 
     if iso:
         env = {**os.environ, **iso}
         entry["isolation_env"] = sorted(iso)
+    # an in-process bridge, loaded by the platform's own documented start-up mechanism (never injected later)
+    channel = None
+    if bridge:
+        from .adapters import bridge as bridge_mod
+        benv, channel = bridge_env(bridge, exe, args)
+        if benv is None:
+            entry.update(ok=False, refused=True, reason=channel)
+            return {**entry, "log_id": actionlog.write(entry)}
+        if bridge == "python":
+            exe, args = benv.pop("__exe__"), benv.pop("__args__")
+            name = os.path.basename(exe)
+        env = {**(env or os.environ), **benv}
+        entry["bridge"] = bridge
     # system side effects the library knows this program causes (e.g. Vortex takes over nxm://): export them first
     tag = f"pending-{os.path.splitext(name)[0].lower()}-{int(time.time() * 1000)}"
     try:
@@ -199,7 +213,46 @@ def launch(exe: str, args: list[str], policy: Optional[Policy] = None, confirm: 
                 entry.update(ok=False, reason=f"the program started but no debugger answered on 127.0.0.1:{port} "
                                               f"(it may strip the flag; fall back to UIA)")
             cdp_mod.register(pid, port)
+        if channel:
+            from .adapters import bridge as bridge_mod
+            t2 = time.time()
+            while time.time() - t2 < 20 and not os.path.exists(channel):
+                time.sleep(0.25)
+            if os.path.exists(channel):
+                import json as _json
+                info = _json.loads(open(channel, encoding="utf-8").read())
+                bridge_mod.register(pid, info)
+                entry["bridge_ready"] = True
+                if int(info.get("pid", pid)) != pid:          # a launcher stub started the real program
+                    bridge_mod.register(int(info["pid"]), info)
+                    entry["bridge_pid"] = int(info["pid"])
+            else:
+                err = channel + ".error"
+                entry.update(bridge_ready=False, bridge_note=(open(err, encoding="utf-8").read()[:300]
+                             if os.path.exists(err) else "the program did not load the bridge (for .NET: Native "
+                             "AOT, or startup hooks disabled); CIG falls back to UIA"))
     return {**entry, "log_id": actionlog.write(entry)}
+
+
+def bridge_env(kind: str, exe: str, args: list) -> tuple:
+    """(environment for the launch, channel file) - or (None, reason) when this bridge cannot be used."""
+    import uuid
+    from .adapters.bridge import bridge_dir
+    d = bridge_dir()
+    d.mkdir(parents=True, exist_ok=True)
+    channel = str(d / f"channel-{uuid.uuid4().hex}.json")
+    if kind == "dotnet":
+        dll = d / "dotnet" / "Cig.Bridge.DotNet.dll"
+        if not dll.is_file():
+            return None, f"the .NET bridge is not built ({dll}); run tools/build_bridges.py"
+        return {"DOTNET_STARTUP_HOOKS": str(dll), "CIG_BRIDGE_CHANNEL": channel}, channel
+    if kind == "python":
+        boot = config.REPO / "bridges" / "python" / "cig_bridge_boot.py"
+        if not boot.is_file():
+            return None, "the Python bridge is missing (bridges/python)"
+        # the program is a Python script: start the same interpreter with the bridge first, then the script itself
+        return {"CIG_BRIDGE_CHANNEL": channel, "__exe__": exe, "__args__": [str(boot), *args]}, channel
+    return None, f"unknown bridge '{kind}' (dotnet, python)"
 
 
 def close(pid: int, wait_s: float = 10.0) -> dict:

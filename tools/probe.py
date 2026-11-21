@@ -22,6 +22,7 @@ REPO = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(REPO))
 
 from cig import config, launch, locator  # noqa: E402
+from cig.adapters.bridge import BridgeAdapter  # noqa: E402
 from cig.adapters.cdp import CdpAdapter  # noqa: E402
 from cig.adapters.uia import UiaAdapter  # noqa: E402
 from cig.engine import Engine  # noqa: E402
@@ -201,18 +202,21 @@ def main():
     ap.add_argument("--launch", nargs=argparse.REMAINDER)
     ap.add_argument("--actions", action="store_true")
     ap.add_argument("--cdp")
+    ap.add_argument("--bridge", help="dotnet | python: probe through CIG's in-process bridge")
     ap.add_argument("--wait", type=float, default=3.0)
     ap.add_argument("--navigate", action="append", help="label to select before probing (repeatable, in order)")
     ap.add_argument("--skip-under", action="append", help="AutomationId or Name of a container whose elements are surveyed but not acted on (repeatable)")
     a = ap.parse_args()
-    e = Engine([CdpAdapter(), UiaAdapter()])
+    e = Engine([BridgeAdapter(), CdpAdapter(), UiaAdapter()])
     pid = None
     if a.launch:
-        r = launch.launch(a.launch[0], a.launch[1:], policy=e.policy, cdp=bool(a.cdp), profile_flag=a.cdp, wait_s=60)
+        r = launch.launch(a.launch[0], a.launch[1:], policy=e.policy, cdp=bool(a.cdp), profile_flag=a.cdp, wait_s=60,
+                          bridge=a.bridge)
         if not r.get("ok"):
             print("launch failed:", r.get("reason"))
             return 1
-        pid = r["pid"]
+        pid = r.get("bridge_pid") or r["pid"]
+        print("bridge:", r.get("bridge_ready"), r.get("bridge_note", ""))
         e.register_launch(pid, Path(a.launch[0]).name)
         app = str(pid)
         time.sleep(a.wait)

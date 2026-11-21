@@ -1,0 +1,341 @@
+{
+ "framework": "delphi-fmx",
+ "name": "fmx-gallery-bridge",
+ "date": "2026-11-20",
+ "app": {
+  "exe": "python.exe",
+  "title": "python bridge",
+  "adapter": "bridge:python"
+ },
+ "elements": 21,
+ "survey": {
+  "Button": {
+   "count": 1,
+   "named_pct": 100,
+   "automation_id_pct": 0,
+   "patterns": {
+    "Invoke": 1
+   },
+   "framework_ids": {
+    "FMX(bridge)": 1
+   },
+   "spec_required_missing": [],
+   "spec_forbidden_present": []
+  },
+  "CheckBox": {
+   "count": 2,
+   "named_pct": 100,
+   "automation_id_pct": 0,
+   "patterns": {
+    "Toggle": 2
+   },
+   "framework_ids": {
+    "FMX(bridge)": 2
+   },
+   "spec_required_missing": [],
+   "spec_forbidden_present": []
+  },
+  "ComboBox": {
+   "count": 1,
+   "named_pct": 100,
+   "automation_id_pct": 0,
+   "patterns": {
+    "Selection": 1,
+    "ExpandCollapse": 1
+   },
+   "framework_ids": {
+    "FMX(bridge)": 1
+   },
+   "spec_required_missing": [],
+   "spec_forbidden_present": []
+  },
+  "Edit": {
+   "count": 2,
+   "named_pct": 100,
+   "automation_id_pct": 0,
+   "patterns": {
+    "Value": 2
+   },
+   "framework_ids": {
+    "FMX(bridge)": 2
+   },
+   "spec_required_missing": [],
+   "spec_forbidden_present": []
+  },
+  "List": {
+   "count": 1,
+   "named_pct": 100,
+   "automation_id_pct": 0,
+   "patterns": {
+    "Selection": 1
+   },
+   "framework_ids": {
+    "FMX(bridge)": 1
+   },
+   "spec_required_missing": [],
+   "spec_forbidden_present": []
+  },
+  "ListItem": {
+   "count": 6,
+   "named_pct": 100,
+   "automation_id_pct": 0,
+   "patterns": {
+    "SelectionItem": 6
+   },
+   "framework_ids": {
+    "FMX(bridge)": 6
+   },
+   "spec_required_missing": [],
+   "spec_forbidden_present": []
+  },
+  "RadioButton": {
+   "count": 2,
+   "named_pct": 100,
+   "automation_id_pct": 0,
+   "patterns": {
+    "SelectionItem": 2
+   },
+   "framework_ids": {
+    "FMX(bridge)": 2
+   },
+   "spec_required_missing": [],
+   "spec_forbidden_present": []
+  },
+  "Slider": {
+   "count": 1,
+   "named_pct": 100,
+   "automation_id_pct": 0,
+   "patterns": {
+    "RangeValue": 1
+   },
+   "framework_ids": {
+    "FMX(bridge)": 1
+   },
+   "spec_required_missing": [],
+   "spec_forbidden_present": []
+  },
+  "Spinner": {
+   "count": 1,
+   "named_pct": 100,
+   "automation_id_pct": 0,
+   "patterns": {
+    "RangeValue": 1
+   },
+   "framework_ids": {
+    "FMX(bridge)": 1
+   },
+   "spec_required_missing": [],
+   "spec_forbidden_present": []
+  },
+  "Tab": {
+   "count": 1,
+   "named_pct": 100,
+   "automation_id_pct": 0,
+   "patterns": {
+    "Selection": 1
+   },
+   "framework_ids": {
+    "FMX(bridge)": 1
+   },
+   "spec_required_missing": [],
+   "spec_forbidden_present": []
+  },
+  "Text": {
+   "count": 2,
+   "named_pct": 100,
+   "automation_id_pct": 0,
+   "patterns": {},
+   "framework_ids": {
+    "FMX(bridge)": 2
+   },
+   "spec_required_missing": [],
+   "spec_forbidden_present": []
+  },
+  "Window": {
+   "count": 1,
+   "named_pct": 100,
+   "automation_id_pct": 0,
+   "patterns": {
+    "Window": 1
+   },
+   "framework_ids": {
+    "FMX(bridge)": 1
+   },
+   "spec_required_missing": [],
+   "spec_forbidden_present": []
+  }
+ },
+ "actions": true,
+ "action_results": [
+  {
+   "rule": "checkable",
+   "action": "set_checked",
+   "label": "set_checked CheckBox 'A checkbox'",
+   "args": {
+    "checked": true
+   },
+   "ok": true,
+   "verified": true,
+   "refused": false,
+   "reason": "",
+   "restored": true
+  },
+  {
+   "rule": "selectable",
+   "action": "select",
+   "label": "select RadioButton 'Radio two'",
+   "args": {},
+   "ok": true,
+   "verified": true,
+   "refused": false,
+   "reason": ""
+  },
+  {
+   "rule": "edit-value",
+   "action": "set_text",
+   "label": "set_text Edit 'Text field'",
+   "args": {
+    "text": "CIG probe"
+   },
+   "ok": true,
+   "verified": true,
+   "refused": false,
+   "reason": "",
+   "restored": true
+  },
+  {
+   "rule": "combo",
+   "action": "choose",
+   "label": "choose ComboBox 'combobox'",
+   "args": {
+    "option": "Beta"
+   },
+   "ok": true,
+   "verified": true,
+   "refused": false,
+   "reason": "",
+   "restored": true
+  },
+  {
+   "rule": "selectable",
+   "action": "select",
+   "label": "select ListItem 'Beta'",
+   "args": {},
+   "ok": true,
+   "verified": true,
+   "refused": false,
+   "reason": ""
+  },
+  {
+   "rule": "selectable",
+   "action": "select",
+   "label": "select ListItem 'Gamma'",
+   "args": {},
+   "ok": true,
+   "verified": true,
+   "refused": false,
+   "reason": ""
+  },
+  {
+   "rule": "selectable",
+   "action": "select",
+   "label": "select ListItem 'One'",
+   "args": {},
+   "ok": true,
+   "verified": true,
+   "refused": false,
+   "reason": ""
+  },
+  {
+   "rule": "selectable",
+   "action": "select",
+   "label": "select ListItem 'Two'",
+   "args": {},
+   "ok": true,
+   "verified": true,
+   "refused": false,
+   "reason": ""
+  },
+  {
+   "rule": "selectable",
+   "action": "select",
+   "label": "select ListItem 'Three'",
+   "args": {},
+   "ok": true,
+   "verified": true,
+   "refused": false,
+   "reason": ""
+  },
+  {
+   "rule": "range",
+   "action": "set_number",
+   "label": "set_number Slider 'trackbar'",
+   "args": {
+    "value": 10
+   },
+   "ok": true,
+   "verified": true,
+   "refused": false,
+   "reason": "",
+   "restored": true
+  },
+  {
+   "rule": "range",
+   "action": "set_number",
+   "label": "set_number Spinner 'spinbox'",
+   "args": {
+    "value": 10
+   },
+   "ok": true,
+   "verified": true,
+   "refused": false,
+   "reason": "",
+   "restored": true
+  },
+  {
+   "rule": "checkable",
+   "action": "set_checked",
+   "label": "set_checked CheckBox 'switch'",
+   "args": {
+    "checked": true
+   },
+   "ok": true,
+   "verified": true,
+   "refused": false,
+   "reason": "",
+   "restored": true
+  }
+ ],
+ "action_summary": {
+  "checkable:set_checked": {
+   "tried": 2,
+   "ok": 2,
+   "verified": 2,
+   "refused": 0
+  },
+  "selectable:select": {
+   "tried": 6,
+   "ok": 6,
+   "verified": 6,
+   "refused": 0
+  },
+  "edit-value:set_text": {
+   "tried": 1,
+   "ok": 1,
+   "verified": 1,
+   "refused": 0
+  },
+  "combo:choose": {
+   "tried": 1,
+   "ok": 1,
+   "verified": 1,
+   "refused": 0
+  },
+  "range:set_number": {
+   "tried": 2,
+   "ok": 2,
+   "verified": 2,
+   "refused": 0
+  }
+ }
+}

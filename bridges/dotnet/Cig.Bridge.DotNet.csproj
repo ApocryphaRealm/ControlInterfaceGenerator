@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <!-- CIG's .NET bridge: loaded by .NET's official startup-hook mechanism (DOTNET_STARTUP_HOOKS) into a program CIG
+       itself launches. No compile-time reference to any UI framework: it reads Avalonia (and later WPF/WinForms)
+       through reflection, so it works across their versions. Build: py -3 tools/build_bridges.py -->
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>disable</Nullable>
+    <AssemblyName>Cig.Bridge.DotNet</AssemblyName>
+    <RootNamespace>Cig.Bridge</RootNamespace>
+    <ImplicitUsings>disable</ImplicitUsings>
+    <GenerateDocumentationFile>false</GenerateDocumentationFile>
+  </PropertyGroup>
+</Project>

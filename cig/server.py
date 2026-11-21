@@ -39,6 +39,11 @@ def default_adapters() -> list:
     except ImportError:
         pass
     try:
+        from .adapters.bridge import BridgeAdapter     # in-process bridges: only programs CIG launched with bridge=
+        out.append(BridgeAdapter())
+    except ImportError:
+        pass
+    try:
         from .adapters.cdp import CdpAdapter         # M4: before UIA - only programs CIG launched with cdp=true
         out.append(CdpAdapter())
     except ImportError:
@@ -99,15 +104,19 @@ def cig_detect(target: str) -> dict:
 
 @mcp.tool(annotations=RW)
 def cig_launch(exe: str, args: Optional[list[str]] = None, cdp: bool = False,
-               profile_flag: Optional[str] = None) -> dict:
+               profile_flag: Optional[str] = None, bridge: Optional[str] = None) -> dict:
     """Start a program at normal integrity (never elevated). Refused while the person is using the machine.
     cdp=true (Chromium / Electron): also open a debugging port on 127.0.0.1 and use a SEPARATE data folder inside
     CIG's own space - profile_flag is the program's option for that folder (Vortex '--user-data', Chromium
-    '--user-data-dir='). The program is then driven through CDP instead of UIA."""
+    '--user-data-dir='). The program is then driven through CDP instead of UIA.
+    bridge='dotnet' | 'python': load CIG's in-process bridge at start-up (.NET startup hook; for a Python script, the
+    interpreter in exe starts the bridge first), so the program's own control tree is used - deeper than UIA."""
     from .launch import launch
-    r = _guard(launch, exe, args or [], engine().policy, None, 25.0, cdp, profile_flag)
+    r = _guard(launch, exe, args or [], engine().policy, None, 25.0, cdp, profile_flag, bridge)
     if r.get("ok") and r.get("pid"):
         engine().register_launch(r["pid"], exe)      # provenance: the only windows CIG may write into
+        if r.get("bridge_pid"):
+            engine().register_launch(r["bridge_pid"], exe)
     return r
 
 

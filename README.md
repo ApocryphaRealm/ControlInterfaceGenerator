@@ -66,6 +66,22 @@ CIG server ── safety layer: presence · deny lists · confirm · provenance 
 
 A short demo transcript of the 7-Zip run is in [docs/DEMO.md](docs/DEMO.md).
 
+## In-process bridges (beyond Windows accessibility)
+
+Some frameworks publish little or nothing to UI Automation. For programs CIG launches itself, a **bridge** reads the
+framework's own control tree from inside the program and acts through the framework's own properties. The bridge
+gets in only through each platform's documented start-up mechanism, never by injecting into a running process. It
+listens on loopback only, with a fresh token, and its tree feeds the same rules, locators and safety layer.
+
+| Bridge | How it gets in | Toolkits | Through UIA | Through the bridge |
+|---|---|---|---|---|
+| `dotnet` (`bridges/dotnet`) | .NET startup hook (`DOTNET_STARTUP_HOOKS`) | Avalonia (WPF/WinForms next) | 7/8; no combo options or list items | **14/14** |
+| `python` (`bridges/python`) | launch wrapper that starts the bridge, then runs the script | Tk (tkinter) | 0; Tk 8.6 has no accessibility | **17/17** |
+| `python` | same | FireMonkey through Embarcadero's delphifmx | 0; FMX publishes no controls | **12/12** |
+
+Use `cig_launch(..., bridge="dotnet" | "python")`. Native Delphi FireMonkey executables have no documented way in,
+so they stay at window level unless their developer adds accessibility.
+
 ## What went wrong on the way, and what it changed
 
 These are recorded because they are why the safety model looks the way it does:

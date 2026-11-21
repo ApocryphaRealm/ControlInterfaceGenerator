@@ -1,0 +1,407 @@
+{
+ "framework": "avalonia",
+ "name": "avalonia-gallery-bridge",
+ "date": "2026-11-20",
+ "app": {
+  "exe": "CigAvaloniaGallery.exe",
+  "title": "dotnet bridge",
+  "adapter": "bridge:dotnet"
+ },
+ "elements": 31,
+ "survey": {
+  "Button": {
+   "count": 1,
+   "named_pct": 100,
+   "automation_id_pct": 100,
+   "patterns": {
+    "Invoke": 1
+   },
+   "framework_ids": {
+    "Avalonia(bridge)": 1
+   },
+   "spec_required_missing": [],
+   "spec_forbidden_present": []
+  },
+  "CheckBox": {
+   "count": 2,
+   "named_pct": 100,
+   "automation_id_pct": 100,
+   "patterns": {
+    "Toggle": 2
+   },
+   "framework_ids": {
+    "Avalonia(bridge)": 2
+   },
+   "spec_required_missing": [],
+   "spec_forbidden_present": []
+  },
+  "ComboBox": {
+   "count": 1,
+   "named_pct": 100,
+   "automation_id_pct": 100,
+   "patterns": {
+    "Selection": 1,
+    "ExpandCollapse": 1
+   },
+   "framework_ids": {
+    "Avalonia(bridge)": 1
+   },
+   "spec_required_missing": [],
+   "spec_forbidden_present": []
+  },
+  "Edit": {
+   "count": 2,
+   "named_pct": 100,
+   "automation_id_pct": 100,
+   "patterns": {
+    "Value": 2
+   },
+   "framework_ids": {
+    "Avalonia(bridge)": 2
+   },
+   "spec_required_missing": [],
+   "spec_forbidden_present": []
+  },
+  "Group": {
+   "count": 2,
+   "named_pct": 0,
+   "automation_id_pct": 0,
+   "patterns": {},
+   "framework_ids": {
+    "Avalonia(bridge)": 2
+   },
+   "spec_required_missing": [],
+   "spec_forbidden_present": []
+  },
+  "List": {
+   "count": 1,
+   "named_pct": 100,
+   "automation_id_pct": 100,
+   "patterns": {
+    "Selection": 1
+   },
+   "framework_ids": {
+    "Avalonia(bridge)": 1
+   },
+   "spec_required_missing": [],
+   "spec_forbidden_present": []
+  },
+  "ListItem": {
+   "count": 6,
+   "named_pct": 100,
+   "automation_id_pct": 0,
+   "patterns": {
+    "SelectionItem": 6
+   },
+   "framework_ids": {
+    "Avalonia(bridge)": 6
+   },
+   "spec_required_missing": [],
+   "spec_forbidden_present": []
+  },
+  "RadioButton": {
+   "count": 2,
+   "named_pct": 100,
+   "automation_id_pct": 100,
+   "patterns": {
+    "SelectionItem": 2
+   },
+   "framework_ids": {
+    "Avalonia(bridge)": 2
+   },
+   "spec_required_missing": [],
+   "spec_forbidden_present": []
+  },
+  "Slider": {
+   "count": 1,
+   "named_pct": 100,
+   "automation_id_pct": 100,
+   "patterns": {
+    "RangeValue": 1
+   },
+   "framework_ids": {
+    "Avalonia(bridge)": 1
+   },
+   "spec_required_missing": [],
+   "spec_forbidden_present": []
+  },
+  "Spinner": {
+   "count": 1,
+   "named_pct": 100,
+   "automation_id_pct": 100,
+   "patterns": {
+    "RangeValue": 1
+   },
+   "framework_ids": {
+    "Avalonia(bridge)": 1
+   },
+   "spec_required_missing": [],
+   "spec_forbidden_present": []
+  },
+  "Tab": {
+   "count": 1,
+   "named_pct": 100,
+   "automation_id_pct": 100,
+   "patterns": {
+    "Selection": 1
+   },
+   "framework_ids": {
+    "Avalonia(bridge)": 1
+   },
+   "spec_required_missing": [],
+   "spec_forbidden_present": []
+  },
+  "TabItem": {
+   "count": 2,
+   "named_pct": 100,
+   "automation_id_pct": 0,
+   "patterns": {
+    "SelectionItem": 2
+   },
+   "framework_ids": {
+    "Avalonia(bridge)": 2
+   },
+   "spec_required_missing": [],
+   "spec_forbidden_present": []
+  },
+  "Text": {
+   "count": 7,
+   "named_pct": 100,
+   "automation_id_pct": 0,
+   "patterns": {},
+   "framework_ids": {
+    "Avalonia(bridge)": 7
+   },
+   "spec_required_missing": [],
+   "spec_forbidden_present": []
+  },
+  "TreeItem": {
+   "count": 1,
+   "named_pct": 100,
+   "automation_id_pct": 100,
+   "patterns": {
+    "ExpandCollapse": 1
+   },
+   "framework_ids": {
+    "Avalonia(bridge)": 1
+   },
+   "spec_required_missing": [],
+   "spec_forbidden_present": []
+  },
+  "Window": {
+   "count": 1,
+   "named_pct": 100,
+   "automation_id_pct": 0,
+   "patterns": {
+    "Window": 1
+   },
+   "framework_ids": {
+    "Avalonia(bridge)": 1
+   },
+   "spec_required_missing": [],
+   "spec_forbidden_present": []
+  }
+ },
+ "actions": true,
+ "action_results": [
+  {
+   "rule": "checkable",
+   "action": "set_checked",
+   "label": "set_checked CheckBox 'A checkbox'",
+   "args": {
+    "checked": true
+   },
+   "ok": true,
+   "verified": true,
+   "refused": false,
+   "reason": "",
+   "restored": true
+  },
+  {
+   "rule": "checkable",
+   "action": "set_checked",
+   "label": "set_checked CheckBox 'A toggle switch'",
+   "args": {
+    "checked": true
+   },
+   "ok": true,
+   "verified": true,
+   "refused": false,
+   "reason": "",
+   "restored": true
+  },
+  {
+   "rule": "selectable",
+   "action": "select",
+   "label": "select RadioButton 'Radio two'",
+   "args": {},
+   "ok": true,
+   "verified": true,
+   "refused": false,
+   "reason": ""
+  },
+  {
+   "rule": "edit-value",
+   "action": "set_text",
+   "label": "set_text Edit 'Text field'",
+   "args": {
+    "text": "CIG probe"
+   },
+   "ok": true,
+   "verified": true,
+   "refused": false,
+   "reason": "",
+   "restored": true
+  },
+  {
+   "rule": "combo",
+   "action": "choose",
+   "label": "choose ComboBox 'Choice'",
+   "args": {
+    "option": "Beta"
+   },
+   "ok": true,
+   "verified": true,
+   "refused": false,
+   "reason": "",
+   "restored": true
+  },
+  {
+   "rule": "selectable",
+   "action": "select",
+   "label": "select ListItem 'Beta'",
+   "args": {},
+   "ok": true,
+   "verified": true,
+   "refused": false,
+   "reason": ""
+  },
+  {
+   "rule": "selectable",
+   "action": "select",
+   "label": "select ListItem 'Gamma'",
+   "args": {},
+   "ok": true,
+   "verified": true,
+   "refused": false,
+   "reason": ""
+  },
+  {
+   "rule": "selectable",
+   "action": "select",
+   "label": "select ListItem 'One'",
+   "args": {},
+   "ok": true,
+   "verified": true,
+   "refused": false,
+   "reason": ""
+  },
+  {
+   "rule": "selectable",
+   "action": "select",
+   "label": "select ListItem 'Two'",
+   "args": {},
+   "ok": true,
+   "verified": true,
+   "refused": false,
+   "reason": ""
+  },
+  {
+   "rule": "selectable",
+   "action": "select",
+   "label": "select ListItem 'Three'",
+   "args": {},
+   "ok": true,
+   "verified": true,
+   "refused": false,
+   "reason": ""
+  },
+  {
+   "rule": "range",
+   "action": "set_number",
+   "label": "set_number Slider 'Slider'",
+   "args": {
+    "value": 10
+   },
+   "ok": true,
+   "verified": true,
+   "refused": false,
+   "reason": "",
+   "restored": true
+  },
+  {
+   "rule": "range",
+   "action": "set_number",
+   "label": "set_number Spinner 'Number'",
+   "args": {
+    "value": 10
+   },
+   "ok": true,
+   "verified": true,
+   "refused": false,
+   "reason": "",
+   "restored": true
+  },
+  {
+   "rule": "tree-expand",
+   "action": "expand",
+   "label": "expand TreeItem 'An expander'",
+   "args": {
+    "expanded": true
+   },
+   "ok": true,
+   "verified": true,
+   "refused": false,
+   "reason": "",
+   "restored": true
+  },
+  {
+   "rule": "selectable",
+   "action": "select",
+   "label": "select TabItem 'Second tab'",
+   "args": {},
+   "ok": true,
+   "verified": true,
+   "refused": false,
+   "reason": ""
+  }
+ ],
+ "action_summary": {
+  "checkable:set_checked": {
+   "tried": 2,
+   "ok": 2,
+   "verified": 2,
+   "refused": 0
+  },
+  "selectable:select": {
+   "tried": 7,
+   "ok": 7,
+   "verified": 7,
+   "refused": 0
+  },
+  "edit-value:set_text": {
+   "tried": 1,
+   "ok": 1,
+   "verified": 1,
+   "refused": 0
+  },
+  "combo:choose": {
+   "tried": 1,
+   "ok": 1,
+   "verified": 1,
+   "refused": 0
+  },
+  "range:set_number": {
+   "tried": 2,
+   "ok": 2,
+   "verified": 2,
+   "refused": 0
+  },
+  "tree-expand:expand": {
+   "tried": 1,
+   "ok": 1,
+   "verified": 1,
+   "refused": 0
+  }
+ }
+}
