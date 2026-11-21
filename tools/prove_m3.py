@@ -20,6 +20,7 @@ import datetime
 import hashlib
 import json
 import os
+import re
 import sys
 import tempfile
 import time
@@ -260,6 +261,13 @@ async def presence_refusal(a, app):
     step("the confirm note is in MO2 Agent Control's own log, beside the press", bool(hit), hit or tail[-3:])
 
 
+def scrub(text, instance):
+    """The record names no folder of the machine it ran on: the instance path, written with either slash and with or
+    without JSON's doubled backslashes, becomes <instance>."""
+    parts = [re.escape(p) for p in re.split(r"[\\/]+", instance.rstrip("\\/")) if p]
+    return re.sub(r"[\\/]+".join(parts), "<instance>", text, flags=re.I)
+
+
 def write(a, log):
     out = REPO / "docs" / "proofs" / "M3-mo2-host.md"
     ok = bool(steps) and all(x["ok"] for x in steps) and len(steps) >= 40
@@ -272,16 +280,15 @@ def write(a, log):
              "actions. No mouse or keyboard input was sent and no window was raised.", "",
              "| # | Step | Result | Detail |", "|---|---|---|---|"]
     for i, x in enumerate(steps, 1):
-        d = json.dumps(x["detail"], ensure_ascii=False, default=str).replace("|", "\\|").replace(a.instance, "<instance>")
-        d = d.replace(a.instance.replace("\\", "\\\\"), "<instance>").replace(a.instance.replace("\\", "/"), "<instance>")[:260]
+        d = scrub(json.dumps(x["detail"], ensure_ascii=False, default=str).replace("|", "\\|"), a.instance)[:260]
         lines.append(f"| {i} | {x['step']} | {'PASS' if x['ok'] else 'FAIL'} | {d} |")
     lines += ["", "## Action log entries for the run (from `cig_log`)", "", "```"]
     for e in log or []:
         if e.get("adapter") and not str(e.get("adapter")).startswith("host:"):
             continue
-        lines.append(json.dumps({k: e.get(k) for k in ("time", "app", "action", "action_id", "kind", "ok", "refused",
-                                                        "reason", "backup")}, ensure_ascii=False, default=str)[:400]
-                     .replace(a.instance, "<instance>"))
+        lines.append(scrub(json.dumps({k: e.get(k) for k in ("time", "app", "action", "action_id", "kind", "ok", "refused",
+                                                              "reason", "backup")}, ensure_ascii=False, default=str),
+                           a.instance)[:400])
     lines.append("```")
     out.parent.mkdir(parents=True, exist_ok=True)
     out.write_text("\n".join(lines) + "\n", encoding="utf-8")
