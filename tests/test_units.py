@@ -92,3 +92,11 @@ def test_backup_and_undo(tmp_path):
     r = backups.undo(bid)
     assert r["ok"] and f.read_text(encoding="utf-8") == "one" and not new.exists()
     assert not backups.undo("../../etc")["ok"]
+
+
+def test_list_and_tree_items_that_can_be_activated_get_invoke_as_well_as_select():
+    """Microsoft's WPF Gallery opens a page only on Enter / click, not on selection: items get an 'invoke'."""
+    tree = [{"control_type": "Window", "name": "w", "children": [{"control_type": "Tree", "name": "nav", "children": [
+        {"control_type": "TreeItem", "name": "CheckBox", "patterns": ["SelectionItem", "Invoke"], "selected": False}]}]}]
+    acts = {a["action"] for a in rules.actions_for(tree) if "'CheckBox'" in a["label"]}
+    assert {"select", "invoke"} <= acts

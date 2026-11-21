@@ -1,0 +1,360 @@
+{
+ "framework": "wpf",
+ "name": "wpf-gallery-official-bridge-ComboBox",
+ "date": "2026-11-20",
+ "app": {
+  "exe": "WPFGallery.exe",
+  "title": "dotnet bridge",
+  "adapter": "bridge:dotnet"
+ },
+ "elements": 92,
+ "survey": {
+  "Button": {
+   "count": 5,
+   "named_pct": 40,
+   "automation_id_pct": 100,
+   "patterns": {
+    "Invoke": 5
+   },
+   "framework_ids": {
+    "WPF(bridge)": 5
+   },
+   "spec_required_missing": [],
+   "spec_forbidden_present": []
+  },
+  "ComboBox": {
+   "count": 3,
+   "named_pct": 100,
+   "automation_id_pct": 0,
+   "patterns": {
+    "Selection": 3,
+    "ExpandCollapse": 3
+   },
+   "framework_ids": {
+    "WPF(bridge)": 3
+   },
+   "spec_required_missing": [],
+   "spec_forbidden_present": []
+  },
+  "Group": {
+   "count": 35,
+   "named_pct": 9,
+   "automation_id_pct": 11,
+   "patterns": {},
+   "framework_ids": {
+    "WPF(bridge)": 35
+   },
+   "spec_required_missing": [],
+   "spec_forbidden_present": []
+  },
+  "ListItem": {
+   "count": 22,
+   "named_pct": 100,
+   "automation_id_pct": 0,
+   "patterns": {
+    "SelectionItem": 22
+   },
+   "framework_ids": {
+    "WPF(bridge)": 22
+   },
+   "spec_required_missing": [],
+   "spec_forbidden_present": []
+  },
+  "Text": {
+   "count": 7,
+   "named_pct": 100,
+   "automation_id_pct": 29,
+   "patterns": {},
+   "framework_ids": {
+    "WPF(bridge)": 7
+   },
+   "spec_required_missing": [],
+   "spec_forbidden_present": []
+  },
+  "Tree": {
+   "count": 1,
+   "named_pct": 100,
+   "automation_id_pct": 100,
+   "patterns": {},
+   "framework_ids": {
+    "WPF(bridge)": 1
+   },
+   "spec_required_missing": [],
+   "spec_forbidden_present": []
+  },
+  "TreeItem": {
+   "count": 18,
+   "named_pct": 100,
+   "automation_id_pct": 0,
+   "patterns": {
+    "SelectionItem": 18,
+    "Invoke": 18,
+    "ExpandCollapse": 10
+   },
+   "framework_ids": {
+    "WPF(bridge)": 18
+   },
+   "spec_required_missing": [],
+   "spec_forbidden_present": []
+  },
+  "Window": {
+   "count": 1,
+   "named_pct": 100,
+   "automation_id_pct": 0,
+   "patterns": {
+    "Window": 1
+   },
+   "framework_ids": {
+    "WPF(bridge)": 1
+   },
+   "spec_required_missing": [],
+   "spec_forbidden_present": []
+  }
+ },
+ "actions": true,
+ "action_results": [
+  {
+   "rule": "combo",
+   "action": "choose",
+   "label": "choose ComboBox 'Sample defined inline'",
+   "args": {
+    "option": "Green"
+   },
+   "ok": true,
+   "verified": true,
+   "refused": false,
+   "reason": "",
+   "restored": true
+  },
+  {
+   "rule": "selectable",
+   "action": "select",
+   "label": "select ListItem 'Green'",
+   "args": {},
+   "ok": true,
+   "verified": true,
+   "refused": false,
+   "reason": ""
+  },
+  {
+   "rule": "selectable",
+   "action": "select",
+   "label": "select ListItem 'Red'",
+   "args": {},
+   "ok": true,
+   "verified": true,
+   "refused": false,
+   "reason": ""
+  },
+  {
+   "rule": "selectable",
+   "action": "select",
+   "label": "select ListItem 'Yellow'",
+   "args": {},
+   "ok": true,
+   "verified": true,
+   "refused": false,
+   "reason": ""
+  },
+  {
+   "rule": "combo",
+   "action": "choose",
+   "label": "choose ComboBox 'Sample item source set'",
+   "args": {
+    "option": "Comic Sans MS"
+   },
+   "ok": true,
+   "verified": true,
+   "refused": false,
+   "reason": "",
+   "restored": true
+  },
+  {
+   "rule": "selectable",
+   "action": "select",
+   "label": "select ListItem 'Comic Sans MS'",
+   "args": {},
+   "ok": true,
+   "verified": true,
+   "refused": false,
+   "reason": ""
+  },
+  {
+   "rule": "selectable",
+   "action": "select",
+   "label": "select ListItem 'Segoe UI'",
+   "args": {},
+   "ok": true,
+   "verified": true,
+   "refused": false,
+   "reason": ""
+  },
+  {
+   "rule": "selectable",
+   "action": "select",
+   "label": "select ListItem 'Times New Roman'",
+   "args": {},
+   "ok": true,
+   "verified": true,
+   "refused": false,
+   "reason": ""
+  },
+  {
+   "rule": "combo",
+   "action": "choose",
+   "label": "choose ComboBox 'Editable'",
+   "args": {
+    "option": "9"
+   },
+   "ok": true,
+   "verified": true,
+   "refused": false,
+   "reason": "",
+   "restored": true
+  },
+  {
+   "rule": "selectable",
+   "action": "select",
+   "label": "select ListItem '9'",
+   "args": {},
+   "ok": true,
+   "verified": true,
+   "refused": false,
+   "reason": ""
+  },
+  {
+   "rule": "selectable",
+   "action": "select",
+   "label": "select ListItem '10'",
+   "args": {},
+   "ok": true,
+   "verified": true,
+   "refused": false,
+   "reason": ""
+  },
+  {
+   "rule": "selectable",
+   "action": "select",
+   "label": "select ListItem '11'",
+   "args": {},
+   "ok": true,
+   "verified": true,
+   "refused": false,
+   "reason": ""
+  },
+  {
+   "rule": "selectable",
+   "action": "select",
+   "label": "select ListItem '12'",
+   "args": {},
+   "ok": true,
+   "verified": true,
+   "refused": false,
+   "reason": ""
+  },
+  {
+   "rule": "selectable",
+   "action": "select",
+   "label": "select ListItem '14'",
+   "args": {},
+   "ok": true,
+   "verified": true,
+   "refused": false,
+   "reason": ""
+  },
+  {
+   "rule": "selectable",
+   "action": "select",
+   "label": "select ListItem '16'",
+   "args": {},
+   "ok": true,
+   "verified": true,
+   "refused": false,
+   "reason": ""
+  },
+  {
+   "rule": "selectable",
+   "action": "select",
+   "label": "select ListItem '18'",
+   "args": {},
+   "ok": true,
+   "verified": true,
+   "refused": false,
+   "reason": ""
+  },
+  {
+   "rule": "selectable",
+   "action": "select",
+   "label": "select ListItem '20'",
+   "args": {},
+   "ok": true,
+   "verified": true,
+   "refused": false,
+   "reason": ""
+  },
+  {
+   "rule": "selectable",
+   "action": "select",
+   "label": "select ListItem '24'",
+   "args": {},
+   "ok": true,
+   "verified": true,
+   "refused": false,
+   "reason": ""
+  },
+  {
+   "rule": "selectable",
+   "action": "select",
+   "label": "select ListItem '28'",
+   "args": {},
+   "ok": true,
+   "verified": true,
+   "refused": false,
+   "reason": ""
+  },
+  {
+   "rule": "selectable",
+   "action": "select",
+   "label": "select ListItem '36'",
+   "args": {},
+   "ok": true,
+   "verified": true,
+   "refused": false,
+   "reason": ""
+  },
+  {
+   "rule": "selectable",
+   "action": "select",
+   "label": "select ListItem '48'",
+   "args": {},
+   "ok": true,
+   "verified": true,
+   "refused": false,
+   "reason": ""
+  },
+  {
+   "rule": "selectable",
+   "action": "select",
+   "label": "select ListItem '72'",
+   "args": {},
+   "ok": true,
+   "verified": true,
+   "refused": false,
+   "reason": ""
+  }
+ ],
+ "action_summary": {
+  "combo:choose": {
+   "tried": 3,
+   "ok": 3,
+   "verified": 3,
+   "refused": 0
+  },
+  "selectable:select": {
+   "tried": 19,
+   "ok": 19,
+   "verified": 19,
+   "refused": 0
+  }
+ }
+}

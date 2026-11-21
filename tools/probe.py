@@ -225,11 +225,15 @@ def main():
     for label in a.navigate or []:
         # reach a page first (a gallery's navigation): select / invoke the element with this label, then let it load
         acts = e.actions(app)["actions"]
-        nav = next((x for x in acts if x["action"] in ("select", "invoke") and x["label"].endswith(f"'{label}'")), None)
+        expand = label.startswith("expand:")
+        activate = label.startswith("activate:")
+        want = label.split(":", 1)[1] if (expand or activate) else label
+        kinds = ("expand",) if expand else ("invoke",) if activate else ("select", "invoke")
+        nav = next((x for x in acts if x["action"] in kinds and x["label"].endswith(f"'{want}'")), None)
         if not nav:
-            print(f"navigate: no '{label}' to select")
+            print(f"navigate: no '{want}' to {'expand' if expand else 'select'}")
             break
-        print("navigate:", label, e.do(app, nav["id"], {}).get("ok"))
+        print("navigate:", label, e.do(app, nav["id"], {"expanded": True} if expand else {}).get("ok"))
         time.sleep(2.5)
     try:
         target = e.resolve(app)[1]

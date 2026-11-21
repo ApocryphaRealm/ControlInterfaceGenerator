@@ -1,0 +1,11 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <!-- CIG reference gallery - Windows Forms on .NET 8 (startup hooks, and so the .NET bridge, need modern .NET; the
+       PowerShell gallery runs on .NET Framework). No packages: WinForms ships with the .NET SDK. -->
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <UseWindowsForms>true</UseWindowsForms>
+    <Nullable>disable</Nullable>
+    <AssemblyName>CigWinFormsGallery</AssemblyName>
+  </PropertyGroup>
+</Project>

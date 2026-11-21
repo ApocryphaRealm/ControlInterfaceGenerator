@@ -14,13 +14,20 @@ namespace Cig.Bridge
 {
     internal static class Ui
     {
-        static Assembly Asm(string name) =>
+        internal static Assembly Asm(string name) =>
             AppDomain.CurrentDomain.GetAssemblies().FirstOrDefault(a => a.GetName().Name == name);
 
-        public static string Framework() => Asm("Avalonia.Base") != null ? "avalonia" : "unknown";
+        // Which toolkit this program runs on: the first one that is loaded AND has a window open.
+        public static string Framework()
+        {
+            if (Asm("Avalonia.Base") != null && Asm("Avalonia.Controls") != null) return "avalonia";
+            if (Asm("PresentationFramework") != null && WpfUi.HasApp()) return "wpf";
+            if (Asm("System.Windows.Forms") != null && FormsUi.HasForms()) return "winforms";
+            return "unknown";
+        }
 
         // ---------------------------------------------------------------- reflection helpers
-        static object Get(object o, string prop)
+        internal static object Get(object o, string prop)
         {
             if (o == null) return null;
             for (var t = o.GetType(); t != null; t = t.BaseType)
@@ -31,7 +38,7 @@ namespace Cig.Bridge
             return null;
         }
 
-        static void Set(object o, string prop, object value)
+        internal static void Set(object o, string prop, object value)
         {
             var p = o.GetType().GetProperty(prop, BindingFlags.Public | BindingFlags.Instance);
             if (p == null) throw new InvalidOperationException($"{o.GetType().Name} has no {prop}");
@@ -39,7 +46,7 @@ namespace Cig.Bridge
             p.SetValue(o, value == null ? null : Convert.ChangeType(value, target));
         }
 
-        static bool Is(object o, string typeName)
+        internal static bool Is(object o, string typeName)
         {
             for (var t = o?.GetType(); t != null; t = t.BaseType)
                 if (t.Name == typeName) return true;
@@ -102,11 +109,18 @@ namespace Cig.Bridge
             try { return m?.Invoke(null, new[] { o }) as string; } catch { return null; }
         }
 
-        static string ItemText(object item) =>
+        internal static string ItemText(object item) =>
             item == null ? "" : (Get(item, "Content") as string ?? Get(item, "Header") as string ?? item.ToString());
 
         // ---------------------------------------------------------------- the tree
-        public static object Tree() => OnUi(() =>
+        public static object Tree() => Framework() switch
+        {
+            "wpf" => WpfUi.Tree(),
+            "winforms" => FormsUi.Tree(),
+            _ => AvaTree(),
+        };
+
+        static object AvaTree() => OnUi(() =>
         {
             var wins = Windows();
             var nodes = new List<Dictionary<string, object>>();
@@ -207,7 +221,14 @@ namespace Cig.Bridge
             return o;
         }
 
-        public static object Act(JsonElement args) => OnUi<object>(() =>
+        public static object Act(JsonElement args) => Framework() switch
+        {
+            "wpf" => WpfUi.Act(args),
+            "winforms" => FormsUi.Act(args),
+            _ => AvaAct(args),
+        };
+
+        static object AvaAct(JsonElement args) => OnUi<object>(() =>
         {
             string path = args.GetProperty("path").GetString();
             string action = args.GetProperty("action").GetString();

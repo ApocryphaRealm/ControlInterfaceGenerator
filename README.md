@@ -75,7 +75,9 @@ listens on loopback only, with a fresh token, and its tree feeds the same rules,
 
 | Bridge | How it gets in | Toolkits | Through UIA | Through the bridge |
 |---|---|---|---|---|
-| `dotnet` (`bridges/dotnet`) | .NET startup hook (`DOTNET_STARTUP_HOOKS`) | Avalonia (WPF/WinForms next) | 7/8; no combo options or list items | **14/14** |
+| `dotnet` (`bridges/dotnet`) | .NET startup hook (`DOTNET_STARTUP_HOOKS`) | Avalonia | 7/8; no combo options or list items | **14/14** |
+| `dotnet` | same | WPF: Microsoft's official **WPF Gallery** (.NET 10), CheckBox, ComboBox and RadioButton pages | reachable only page by page through UIA | **33/33** |
+| `dotnet` | same | WinForms (.NET 8) | 9/11; combo options unlistable | **16/16** |
 | `python` (`bridges/python`) | launch wrapper that starts the bridge, then runs the script | Tk (tkinter) | 0; Tk 8.6 has no accessibility | **17/17** |
 | `python` | same | FireMonkey through Embarcadero's delphifmx | 0; FMX publishes no controls | **12/12** |
 

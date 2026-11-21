@@ -9,3 +9,5 @@ tools/galleries/avalonia_gallery/obj/
 tools/galleries/avalonia_gallery/bin/
 bridges/dotnet/obj/
 bridges/dotnet/bin/
+tools/galleries/winforms_net/obj/
+tools/galleries/winforms_net/bin/

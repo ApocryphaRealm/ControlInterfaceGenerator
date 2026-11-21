@@ -5,7 +5,10 @@
  "source": [
   "doc: plan 2.2 and learn.microsoft.com UIA overview (2026-10-24)",
   "probe:2026-11-20 wpf-gallery (tools/probe.py --actions)",
-  "probe:2026-11-20 wpf-gallery-official (tools/probe.py --actions)"
+  "probe:2026-11-20 wpf-gallery-official (tools/probe.py --actions)",
+  "probe:2026-11-20 wpf-gallery-official-bridge-CheckBox (tools/probe.py --actions)",
+  "probe:2026-11-20 wpf-gallery-official-bridge-ComboBox (tools/probe.py --actions)",
+  "probe:2026-11-20 wpf-gallery-official-bridge-RadioButton (tools/probe.py --actions)"
  ],
  "adapter_in_v1": true,
  "detect": {
@@ -463,6 +466,248 @@
      "refused": 0
     },
     "range:set_number": {
+     "tried": 1,
+     "ok": 1,
+     "verified": 1,
+     "refused": 0
+    }
+   }
+  },
+  {
+   "probe": "wpf-gallery-official-bridge-CheckBox",
+   "date": "2026-11-20",
+   "app": {
+    "exe": "WPFGallery.exe",
+    "title": "dotnet bridge",
+    "adapter": "bridge:dotnet"
+   },
+   "control_types": {
+    "Button": {
+     "count": 5,
+     "patterns": [
+      "Invoke"
+     ],
+     "named_pct": 40,
+     "automation_id_pct": 100
+    },
+    "CheckBox": {
+     "count": 6,
+     "patterns": [
+      "Toggle"
+     ],
+     "named_pct": 100,
+     "automation_id_pct": 0
+    },
+    "Group": {
+     "count": 36,
+     "patterns": [],
+     "named_pct": 8,
+     "automation_id_pct": 11
+    },
+    "Text": {
+     "count": 7,
+     "patterns": [],
+     "named_pct": 100,
+     "automation_id_pct": 29
+    },
+    "Tree": {
+     "count": 1,
+     "patterns": [],
+     "named_pct": 100,
+     "automation_id_pct": 100
+    },
+    "TreeItem": {
+     "count": 18,
+     "patterns": [
+      "ExpandCollapse",
+      "Invoke",
+      "SelectionItem"
+     ],
+     "named_pct": 100,
+     "automation_id_pct": 0
+    },
+    "Window": {
+     "count": 1,
+     "patterns": [
+      "Window"
+     ],
+     "named_pct": 100,
+     "automation_id_pct": 0
+    }
+   },
+   "actions": {
+    "checkable:set_checked": {
+     "tried": 6,
+     "ok": 6,
+     "verified": 6,
+     "refused": 0
+    }
+   }
+  },
+  {
+   "probe": "wpf-gallery-official-bridge-ComboBox",
+   "date": "2026-11-20",
+   "app": {
+    "exe": "WPFGallery.exe",
+    "title": "dotnet bridge",
+    "adapter": "bridge:dotnet"
+   },
+   "control_types": {
+    "Button": {
+     "count": 5,
+     "patterns": [
+      "Invoke"
+     ],
+     "named_pct": 40,
+     "automation_id_pct": 100
+    },
+    "ComboBox": {
+     "count": 3,
+     "patterns": [
+      "ExpandCollapse",
+      "Selection"
+     ],
+     "named_pct": 100,
+     "automation_id_pct": 0
+    },
+    "Group": {
+     "count": 35,
+     "patterns": [],
+     "named_pct": 9,
+     "automation_id_pct": 11
+    },
+    "ListItem": {
+     "count": 22,
+     "patterns": [
+      "SelectionItem"
+     ],
+     "named_pct": 100,
+     "automation_id_pct": 0
+    },
+    "Text": {
+     "count": 7,
+     "patterns": [],
+     "named_pct": 100,
+     "automation_id_pct": 29
+    },
+    "Tree": {
+     "count": 1,
+     "patterns": [],
+     "named_pct": 100,
+     "automation_id_pct": 100
+    },
+    "TreeItem": {
+     "count": 18,
+     "patterns": [
+      "ExpandCollapse",
+      "Invoke",
+      "SelectionItem"
+     ],
+     "named_pct": 100,
+     "automation_id_pct": 0
+    },
+    "Window": {
+     "count": 1,
+     "patterns": [
+      "Window"
+     ],
+     "named_pct": 100,
+     "automation_id_pct": 0
+    }
+   },
+   "actions": {
+    "combo:choose": {
+     "tried": 3,
+     "ok": 3,
+     "verified": 3,
+     "refused": 0
+    },
+    "selectable:select": {
+     "tried": 19,
+     "ok": 19,
+     "verified": 19,
+     "refused": 0
+    }
+   }
+  },
+  {
+   "probe": "wpf-gallery-official-bridge-RadioButton",
+   "date": "2026-11-20",
+   "app": {
+    "exe": "WPFGallery.exe",
+    "title": "dotnet bridge",
+    "adapter": "bridge:dotnet"
+   },
+   "control_types": {
+    "Button": {
+     "count": 5,
+     "patterns": [
+      "Invoke"
+     ],
+     "named_pct": 40,
+     "automation_id_pct": 100
+    },
+    "CheckBox": {
+     "count": 1,
+     "patterns": [
+      "Toggle"
+     ],
+     "named_pct": 100,
+     "automation_id_pct": 0
+    },
+    "Group": {
+     "count": 39,
+     "patterns": [],
+     "named_pct": 5,
+     "automation_id_pct": 10
+    },
+    "RadioButton": {
+     "count": 6,
+     "patterns": [
+      "SelectionItem"
+     ],
+     "named_pct": 100,
+     "automation_id_pct": 0
+    },
+    "Text": {
+     "count": 7,
+     "patterns": [],
+     "named_pct": 100,
+     "automation_id_pct": 29
+    },
+    "Tree": {
+     "count": 1,
+     "patterns": [],
+     "named_pct": 100,
+     "automation_id_pct": 100
+    },
+    "TreeItem": {
+     "count": 18,
+     "patterns": [
+      "ExpandCollapse",
+      "Invoke",
+      "SelectionItem"
+     ],
+     "named_pct": 100,
+     "automation_id_pct": 0
+    },
+    "Window": {
+     "count": 1,
+     "patterns": [
+      "Window"
+     ],
+     "named_pct": 100,
+     "automation_id_pct": 0
+    }
+   },
+   "actions": {
+    "selectable:select": {
+     "tried": 4,
+     "ok": 4,
+     "verified": 4,
+     "refused": 0
+    },
+    "checkable:set_checked": {
      "tried": 1,
      "ok": 1,
      "verified": 1,
