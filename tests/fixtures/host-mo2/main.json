@@ -1,0 +1,337 @@
+{
+ "ok": true,
+ "windows": [
+  {
+   "title": "Skyrim Special Edition – Mod Organizer v2.5.2-ML1.5 (ApocryphaRealm*)",
+   "name": "MainWindow",
+   "class": "QMainWindow",
+   "modal": false,
+   "active": true
+  }
+ ],
+ "modal": null,
+ "controls": [
+  {
+   "kind": "combo",
+   "class": "QComboBox",
+   "name": "executablesListBox",
+   "enabled": true,
+   "visible": true,
+   "where": "centralWidget > categoriesSplitter > splitter > layoutWidget_2 > startGroup",
+   "value": "Skyrim Special Edition",
+   "index": 1,
+   "items": [
+    "<Edit...>",
+    "Skyrim Special Edition",
+    "Skyrim Special Edition Launcher",
+    "Creation Kit"
+   ],
+   "count": 4,
+   "editable": false
+  },
+  {
+   "kind": "button",
+   "class": "QPushButton",
+   "name": "startButton",
+   "enabled": true,
+   "visible": true,
+   "where": "centralWidget > categoriesSplitter > splitter > layoutWidget_2 > startGroup",
+   "text": "Run"
+  },
+  {
+   "kind": "button",
+   "class": "QPushButton",
+   "name": "linkButton",
+   "enabled": true,
+   "visible": true,
+   "where": "centralWidget > categoriesSplitter > splitter > layoutWidget_2 > startGroup",
+   "text": "Shortcut"
+  },
+  {
+   "kind": "button",
+   "class": "QPushButton",
+   "name": "sortButton",
+   "enabled": true,
+   "visible": true,
+   "where": "centralWidget > categoriesSplitter > splitter > layoutWidget_2 > tabWidget > Plugins > espTab",
+   "text": "Sort"
+  },
+  {
+   "kind": "button",
+   "class": "QPushButton",
+   "name": "restoreButton",
+   "enabled": true,
+   "visible": true,
+   "where": "centralWidget > categoriesSplitter > splitter > layoutWidget_2 > tabWidget > Plugins > espTab",
+   "text": "",
+   "tooltip": "Restore a backup."
+  },
+  {
+   "kind": "button",
+   "class": "QPushButton",
+   "name": "saveButton",
+   "enabled": true,
+   "visible": true,
+   "where": "centralWidget > categoriesSplitter > splitter > layoutWidget_2 > tabWidget > Plugins > espTab",
+   "text": "",
+   "tooltip": "Create a backup."
+  },
+  {
+   "kind": "edit",
+   "class": "QLineEdit",
+   "name": "espFilterEdit",
+   "enabled": true,
+   "visible": true,
+   "where": "centralWidget > categoriesSplitter > splitter > layoutWidget_2 > tabWidget > Plugins > espTab",
+   "value": "",
+   "read_only": false,
+   "placeholder": "Filter"
+  },
+  {
+   "kind": "tabs",
+   "class": "QTabBar",
+   "name": "qt_tabwidget_tabbar",
+   "enabled": true,
+   "visible": true,
+   "where": "centralWidget > categoriesSplitter > splitter > layoutWidget_2 > tabWidget",
+   "items": [
+    "Plugins",
+    "Archives",
+    "Data",
+    "Saves",
+    "Downloads"
+   ],
+   "index": 0,
+   "value": "Plugins"
+  },
+  {
+   "kind": "combo",
+   "class": "QComboBox",
+   "name": "profileBox",
+   "enabled": true,
+   "visible": true,
+   "where": "centralWidget > categoriesSplitter > splitter > layoutWidget",
+   "value": "Default",
+   "index": 1,
+   "items": [
+    "<Manage...>",
+    "Default"
+   ],
+   "count": 2,
+   "editable": false,
+   "text": "Profile"
+  },
+  {
+   "kind": "button",
+   "class": "QPushButton",
+   "name": "listOptionsBtn",
+   "enabled": true,
+   "visible": true,
+   "where": "centralWidget > categoriesSplitter > splitter > layoutWidget",
+   "text": "",
+   "tooltip": "Open list options..."
+  },
+  {
+   "kind": "button",
+   "class": "QPushButton",
+   "name": "openFolderMenu",
+   "enabled": true,
+   "visible": true,
+   "where": "centralWidget > categoriesSplitter > splitter > layoutWidget",
+   "text": "",
+   "tooltip": "Show Open Folders menu..."
+  },
+  {
+   "kind": "button",
+   "class": "QPushButton",
+   "name": "restoreModsButton",
+   "enabled": true,
+   "visible": true,
+   "where": "centralWidget > categoriesSplitter > splitter > layoutWidget",
+   "text": "",
+   "tooltip": "Restore Backup..."
+  },
+  {
+   "kind": "button",
+   "class": "QPushButton",
+   "name": "saveModsButton",
+   "enabled": true,
+   "visible": true,
+   "where": "centralWidget > categoriesSplitter > splitter > layoutWidget",
+   "text": "",
+   "tooltip": "Create Backup"
+  },
+  {
+   "kind": "button",
+   "class": "QPushButton",
+   "name": "displayCategoriesBtn",
+   "enabled": true,
+   "visible": true,
+   "where": "centralWidget > categoriesSplitter > splitter > layoutWidget",
+   "text": "»",
+   "checked": false
+  },
+  {
+   "kind": "combo",
+   "class": "QComboBox",
+   "name": "groupCombo",
+   "enabled": true,
+   "visible": true,
+   "where": "centralWidget > categoriesSplitter > splitter > layoutWidget",
+   "value": "No groups",
+   "index": 0,
+   "items": [
+    "No groups",
+    "Categories",
+    "Nexus IDs"
+   ],
+   "count": 3,
+   "editable": false
+  },
+  {
+   "kind": "edit",
+   "class": "QLineEdit",
+   "name": "modFilterEdit",
+   "enabled": true,
+   "visible": true,
+   "where": "centralWidget > categoriesSplitter > splitter > layoutWidget",
+   "value": "",
+   "read_only": false,
+   "placeholder": "Filter"
+  },
+  {
+   "kind": "button",
+   "class": "QToolButton",
+   "name": "",
+   "enabled": true,
+   "visible": true,
+   "where": "toolBar",
+   "text": "Install Mod"
+  },
+  {
+   "kind": "button",
+   "class": "QToolButton",
+   "name": "",
+   "enabled": true,
+   "visible": true,
+   "where": "toolBar",
+   "text": "Browse Mod Page"
+  },
+  {
+   "kind": "button",
+   "class": "QToolButton",
+   "name": "",
+   "enabled": true,
+   "visible": true,
+   "where": "toolBar",
+   "text": "Profiles"
+  },
+  {
+   "kind": "button",
+   "class": "QToolButton",
+   "name": "",
+   "enabled": true,
+   "visible": true,
+   "where": "toolBar",
+   "text": "Refresh"
+  },
+  {
+   "kind": "button",
+   "class": "QToolButton",
+   "name": "",
+   "enabled": true,
+   "visible": true,
+   "where": "toolBar",
+   "text": "Executables"
+  },
+  {
+   "kind": "button",
+   "class": "QToolButton",
+   "name": "",
+   "enabled": true,
+   "visible": true,
+   "where": "toolBar",
+   "text": "Tools"
+  },
+  {
+   "kind": "button",
+   "class": "QToolButton",
+   "name": "",
+   "enabled": true,
+   "visible": true,
+   "where": "toolBar",
+   "text": "Settings"
+  },
+  {
+   "kind": "button",
+   "class": "QToolButton",
+   "name": "",
+   "enabled": true,
+   "visible": true,
+   "where": "toolBar",
+   "text": "Endorse ModOrganizer"
+  },
+  {
+   "kind": "button",
+   "class": "QToolButton",
+   "name": "",
+   "enabled": true,
+   "visible": true,
+   "where": "toolBar",
+   "text": "Notifications"
+  },
+  {
+   "kind": "button",
+   "class": "QToolButton",
+   "name": "",
+   "enabled": false,
+   "visible": true,
+   "where": "toolBar",
+   "text": "Update Mod Organizer"
+  },
+  {
+   "kind": "button",
+   "class": "QToolButton",
+   "name": "",
+   "enabled": true,
+   "visible": true,
+   "where": "toolBar",
+   "text": "Help"
+  },
+  {
+   "kind": "button",
+   "class": "QToolButton",
+   "name": "MO2ModlistManagerBtn",
+   "enabled": true,
+   "visible": true,
+   "where": "toolBar",
+   "text": "MO2 Modlist Manager"
+  },
+  {
+   "kind": "button",
+   "class": "QAbstractButton",
+   "name": "qt_dockwidget_floatbutton",
+   "enabled": true,
+   "visible": true,
+   "where": "logDock",
+   "text": ""
+  },
+  {
+   "kind": "button",
+   "class": "QAbstractButton",
+   "name": "qt_dockwidget_closebutton",
+   "enabled": true,
+   "visible": true,
+   "where": "logDock",
+   "text": ""
+  }
+ ],
+ "truncated": false,
+ "window": {
+  "title": "Skyrim Special Edition – Mod Organizer v2.5.2-ML1.5 (ApocryphaRealm*)",
+  "name": "MainWindow",
+  "class": "QMainWindow",
+  "modal": false,
+  "active": true
+ }
+}

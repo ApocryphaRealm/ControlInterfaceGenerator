@@ -1,0 +1,105 @@
+{
+ "ok": true,
+ "windows": [
+  {
+   "title": "Plugins would be switched off",
+   "name": "",
+   "class": "QMessageBox",
+   "modal": true,
+   "active": true
+  },
+  {
+   "title": "MO2 Modlist Manager",
+   "name": "",
+   "class": "RulerDialog",
+   "modal": true,
+   "active": false
+  },
+  {
+   "title": "Skyrim Special Edition – Mod Organizer v2.5.2-ML1.5 (ApocryphaRealm*)",
+   "name": "MainWindow",
+   "class": "QMainWindow",
+   "modal": false,
+   "active": false
+  }
+ ],
+ "modal": {
+  "title": "Plugins would be switched off",
+  "name": "",
+  "class": "QMessageBox",
+  "modal": true,
+  "active": true,
+  "text": "Apply would move or switch off 2 plugin(s) or mod(s), so the game would not load them. 1 of them only because a master of theirs is switched off too (a chain).\n\nNothing has been written yet. Check the list (Show Details) before you choose.",
+  "informative": "Either way, Apply adds 9 separator(s), retires 0 and re-sorts the left pane (8 mod(s) move). \"Apply, leave plugins as they are\" leaves plugins.txt and loadorder.txt exactly as they are: no plugin is moved, ticked, unticked or reordered.\n\nCascade Needs A Missing Mod.esp  (Cascade - Needs A Missing Mod): needs Not Installed Anywhere.esm - not in any enabled mod, the game's Data folder or Overwrite\nCascade Chain From The Missing One.esp  (Cascade - Chain From The Missing One): needs Cascade Needs A Missing Mod.esp, which cannot load either (a chain from Cascade Needs A Missing Mod.esp)",
+  "detailed": "Cascade Needs A Missing Mod.esp  (Cascade - Needs A Missing Mod): needs Not Installed Anywhere.esm - not in any enabled mod, the game's Data folder or Overwrite\nCascade Chain From The Missing One.esp  (Cascade - Chain From The Missing One): needs Cascade Needs A Missing Mod.esp, which cannot load either (a chain from Cascade Needs A Missing Mod.esp)",
+  "buttons": [
+   {
+    "text": "Apply and switch them off",
+    "role": "accept",
+    "enabled": true
+   },
+   {
+    "text": "Apply, leave plugins as they are",
+    "role": "accept",
+    "enabled": true
+   },
+   {
+    "text": "Cancel",
+    "role": "reject",
+    "enabled": true,
+    "default": true
+   },
+   {
+    "text": "Show Details...",
+    "role": "action",
+    "enabled": true
+   }
+  ]
+ },
+ "controls": [
+  {
+   "kind": "button",
+   "class": "QPushButton",
+   "name": "",
+   "enabled": true,
+   "visible": true,
+   "where": "",
+   "text": "Show Details..."
+  },
+  {
+   "kind": "button",
+   "class": "QPushButton",
+   "name": "",
+   "enabled": true,
+   "visible": true,
+   "where": "",
+   "text": "Apply and switch them off"
+  },
+  {
+   "kind": "button",
+   "class": "QPushButton",
+   "name": "",
+   "enabled": true,
+   "visible": true,
+   "where": "",
+   "text": "Apply, leave plugins as they are"
+  },
+  {
+   "kind": "button",
+   "class": "QPushButton",
+   "name": "",
+   "enabled": true,
+   "visible": true,
+   "where": "",
+   "text": "Cancel"
+  }
+ ],
+ "truncated": false,
+ "window": {
+  "title": "Plugins would be switched off",
+  "name": "",
+  "class": "QMessageBox",
+  "modal": true,
+  "active": true
+ }
+}

@@ -35,6 +35,8 @@ class Engine:
         when it is empty or still holds exactly what CIG wrote there."""
         if not self.policy.write_only_to_launched:
             return None
+        if target.adapter == "cli":
+            return None                        # a CLI run is a process CIG itself starts, for this one call
         if (target.exe or "").lower() in self.policy.first_party and (target.adapter or "").startswith("host:"):
             # our own host programs (MO2) are driven where the owner runs them - but ONLY through their own channel,
             # whose in-use check and backups apply (Main Agent, 2026-11-20); UIA / CDP writes into an MO2 that CIG
@@ -129,7 +131,7 @@ class Engine:
     def actions(self, app: str, depth: int = 12) -> dict:
         adapter, target = self.resolve(app)
         snap = self._snapshot(adapter, target, depth)
-        acts = rules.actions_for(snap["windows"])
+        acts = rules.actions_for(snap["windows"], getattr(adapter, "rules_name", "uia"))
         for a in acts:
             a.pop("locator", None)
             if a["action"] == "menu" and snap.get("menu_paths"):
@@ -179,7 +181,7 @@ class Engine:
             entry["args"] = "<redacted>"                 # never log what was meant for a password field
         entry["element"] = loc
         entry["resolved"] = how
-        rule = rules.find_rule(action, node)
+        rule = rules.find_rule(action, node, getattr(adapter, "rules_name", "uia"))
         if not rule:
             return finish(refused=True, reason=f"the element no longer offers '{action}' (call cig_actions)")
         schema = rules._schema(rule, node)
@@ -190,6 +192,8 @@ class Engine:
 
         texts = [node.get("name", "")]
         texts += [str(args[k]) for k in ("button", "path", "option") if k in args]
+        if hasattr(adapter, "classify_texts"):
+            texts += adapter.classify_texts(node, args)      # e.g. the descriptions of the CLI switches used
         kind, why = classify.classify(action, rule.get("kind"), texts if action != "set_text" else [])
         before = adapter.read(target, loc, node)
         # Replacing text that is already there is an overwrite (plan 2.6: destructive), whatever the element is called:
@@ -213,20 +217,30 @@ class Engine:
                       element=loc, confirm=confirm, dry_run=dry_run, elevated_target=target.elevated)
         dec = decide(req, pres, self.policy)
         entry["policy"] = dec.as_dict()
+        files = _files_written(adapter, target, action, args, node)
         preview = {"element": loc, "label": node.get("name") or node.get("control_type"), "action": action,
-                   "args": args, "kind": kind, "before": before,
-                   "will_back_up": adapter.files_written(target, action, args)}
+                   "args": args, "kind": kind, "before": before, "will_back_up": files}
+        if hasattr(adapter, "describe"):
+            preview["would_run"] = adapter.describe(target, node, action, args)
         if not dec.allowed:
             return finish(refused=True, reason=dec.reason, status=dec.status, preview=preview)
         if dec.status == "dry_run":
+            if hasattr(adapter, "dry_run_preview"):
+                # the program's own dry run where it has one (PowerShell -WhatIf): it changes nothing by contract
+                preview["program_dry_run"] = adapter.dry_run_preview(target, node, action, args)
             return finish(ok=True, status="dry_run", reason="dry run - nothing done", preview=preview)
 
-        files = adapter.files_written(target, action, args)
         if files:
             result["backup"] = backups.take(target.exe, action, files)
+        if hasattr(adapter, "set_confirm"):
+            # a host channel has its own in-use check and logs who approved: it gets the same note (M3)
+            adapter.set_confirm(confirm)
         try:
             detail = adapter.execute(target, loc, node, action, args)
         except AdapterError as e:
+            if getattr(e, "refused", False):
+                # the program itself said no (a host channel's in-use check): a refusal, not a failure
+                return finish(refused=True, status="refused", reason=str(e), preview=preview)
             # An action that closes its own element (a dialog button, a window) can raise because the element died
             # during the call (seen: Qt 5 QMessageBox OK, 2026-11-20). The read-back decides, not the exception.
             if rule.get("verify") == "gone":
@@ -276,6 +290,15 @@ class Engine:
             if time.time() - t0 > timeout_s:
                 return {"ok": False, "error": "timeout", "waited_s": round(time.time() - t0, 2)}
             time.sleep(0.25)
+
+
+def _files_written(adapter, target, action, args, node) -> list:
+    """Adapters that need the element to know what a call writes (the CLI: a command's archive argument) take it as
+    a keyword; the others keep the plain signature."""
+    try:
+        return adapter.files_written(target, action, args, node=node)
+    except TypeError:
+        return adapter.files_written(target, action, args)
 
 
 def _norm_text(s: str) -> str:

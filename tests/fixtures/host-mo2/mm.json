@@ -1,0 +1,175 @@
+{
+ "ok": true,
+ "windows": [
+  {
+   "title": "MO2 Modlist Manager",
+   "name": "",
+   "class": "RulerDialog",
+   "modal": true,
+   "active": true
+  },
+  {
+   "title": "Skyrim Special Edition – Mod Organizer v2.5.2-ML1.5 (ApocryphaRealm*)",
+   "name": "MainWindow",
+   "class": "QMainWindow",
+   "modal": false,
+   "active": false
+  }
+ ],
+ "modal": {
+  "title": "MO2 Modlist Manager",
+  "name": "",
+  "class": "RulerDialog",
+  "modal": true,
+  "active": true,
+  "buttons": [
+   {
+    "text": "Write decided categories to MO2 (4 to write)",
+    "role": "",
+    "enabled": true
+   },
+   {
+    "text": "Compute again",
+    "role": "",
+    "enabled": true
+   },
+   {
+    "text": "Restore backup...",
+    "role": "",
+    "enabled": true
+   },
+   {
+    "text": "Apply",
+    "role": "",
+    "enabled": true
+   },
+   {
+    "text": "Close",
+    "role": "",
+    "enabled": true
+   }
+  ]
+ },
+ "controls": [
+  {
+   "kind": "label",
+   "class": "QLabel",
+   "name": "",
+   "enabled": true,
+   "visible": true,
+   "where": "",
+   "text": "8 mods - no Nexus request; 49 Nexus category names read from nexuscatmap.dat - 8 mod(s) change separator or line - 9 separator(s) created, 0 retired - 1 in a block of another category, 0 displaced by a master, loader, refit or rule - 0 file conflicts decided by evidence, 0 left to category order, 0 rule(s) ignored as contradictory - 85 plugins ordered (0 to activate, 2 to Optional ESPs, 0 back from Optional ESPs) (no Bethesda Plugin Manager: no groups)"
+  },
+  {
+   "kind": "tabs",
+   "class": "QTabBar",
+   "name": "qt_tabwidget_tabbar",
+   "enabled": true,
+   "visible": true,
+   "where": "",
+   "items": [
+    "Moves",
+    "Separators",
+    "Minorities / displaced",
+    "Review",
+    "Every placement",
+    "Plugins (2)",
+    "Rules",
+    "Settings"
+   ],
+   "index": 0,
+   "value": "Moves"
+  },
+  {
+   "kind": "label",
+   "class": "QLabel",
+   "name": "",
+   "enabled": true,
+   "visible": true,
+   "where": "",
+   "text": "Order: tier by evidence, general before specific; masters, outputs, loaders, refits and your rules enforced."
+  },
+  {
+   "kind": "label",
+   "class": "QLabel",
+   "name": "",
+   "enabled": true,
+   "visible": true,
+   "where": "",
+   "text": "Smallest block:"
+  },
+  {
+   "kind": "spin",
+   "class": "QSpinBox",
+   "name": "",
+   "enabled": true,
+   "visible": true,
+   "where": "",
+   "value": 2,
+   "min": 1,
+   "max": 60
+  },
+  {
+   "kind": "label",
+   "class": "QLabel",
+   "name": "",
+   "enabled": true,
+   "visible": true,
+   "where": "",
+   "text": "Nothing is written until Apply. Apply backs up modlist.txt, plugins.txt, loadorder.txt and the retired separators first."
+  },
+  {
+   "kind": "button",
+   "class": "QPushButton",
+   "name": "",
+   "enabled": true,
+   "visible": true,
+   "where": "",
+   "text": "Write decided categories to MO2 (4 to write)"
+  },
+  {
+   "kind": "button",
+   "class": "QPushButton",
+   "name": "",
+   "enabled": true,
+   "visible": true,
+   "where": "",
+   "text": "Compute again"
+  },
+  {
+   "kind": "button",
+   "class": "QPushButton",
+   "name": "",
+   "enabled": true,
+   "visible": true,
+   "where": "",
+   "text": "Restore backup..."
+  },
+  {
+   "kind": "button",
+   "class": "QPushButton",
+   "name": "",
+   "enabled": true,
+   "visible": true,
+   "where": "",
+   "text": "Apply"
+  },
+  {
+   "kind": "button",
+   "class": "QPushButton",
+   "name": "",
+   "enabled": true,
+   "visible": true,
+   "where": "",
+   "text": "Close"
+  }
+ ],
+ "truncated": false,
+ "window": {
+  "title": "MO2 Modlist Manager",
+  "name": "",
+  "class": "RulerDialog",
+  "modal": true,
+  "active": true
+ }
+}

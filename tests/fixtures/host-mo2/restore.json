@@ -1,0 +1,102 @@
+{
+ "ok": true,
+ "windows": [
+  {
+   "title": "MO2 Modlist Manager",
+   "name": "",
+   "class": "RulerDialog",
+   "modal": true,
+   "active": false
+  },
+  {
+   "title": "Skyrim Special Edition – Mod Organizer v2.5.2-ML1.5 (ApocryphaRealm*)",
+   "name": "MainWindow",
+   "class": "QMainWindow",
+   "modal": false,
+   "active": false
+  },
+  {
+   "title": "Choose backup to restore",
+   "name": "",
+   "class": "QInputDialog",
+   "modal": true,
+   "active": true
+  }
+ ],
+ "modal": {
+  "title": "Choose backup to restore",
+  "name": "",
+  "class": "QInputDialog",
+  "modal": true,
+  "active": true,
+  "buttons": [
+   {
+    "text": "OK",
+    "role": "accept",
+    "enabled": true,
+    "default": true
+   },
+   {
+    "text": "Cancel",
+    "role": "reject",
+    "enabled": true
+   }
+  ]
+ },
+ "controls": [
+  {
+   "kind": "label",
+   "class": "QLabel",
+   "name": "",
+   "enabled": true,
+   "visible": true,
+   "where": "",
+   "text": "Restore into the profile 'Default':"
+  },
+  {
+   "kind": "combo",
+   "class": "QComboBox",
+   "name": "",
+   "enabled": true,
+   "visible": true,
+   "where": "",
+   "value": "20 Nov 2026 19:20:37  -  Default  -  before a restore",
+   "index": 0,
+   "items": [
+    "20 Nov 2026 19:20:37  -  Default  -  before a restore",
+    "20 Nov 2026 19:20:29  -  Default  -  before an Apply",
+    "20 Nov 2026 19:20:15  -  Default  -  before a restore",
+    "20 Nov 2026 19:20:09  -  Default  -  before an Apply"
+   ],
+   "count": 4,
+   "editable": false,
+   "text": "Restore into the profile 'Default':"
+  },
+  {
+   "kind": "button",
+   "class": "QPushButton",
+   "name": "",
+   "enabled": true,
+   "visible": true,
+   "where": "",
+   "text": "OK"
+  },
+  {
+   "kind": "button",
+   "class": "QPushButton",
+   "name": "",
+   "enabled": true,
+   "visible": true,
+   "where": "",
+   "text": "Cancel"
+  }
+ ],
+ "truncated": false,
+ "window": {
+  "title": "Choose backup to restore",
+  "name": "",
+  "class": "QInputDialog",
+  "modal": true,
+  "active": true
+ }
+}

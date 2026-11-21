@@ -1,0 +1,36 @@
+{
+ "ok": true,
+ "instance": "X:/MO2",
+ "profile": "Default",
+ "game": "Skyrim Special Edition",
+ "pid": 4242,
+ "version": "1.1.0",
+ "protocol": 1,
+ "reads": [
+  "backups",
+  "executables",
+  "info",
+  "mods",
+  "overwrite",
+  "plugins",
+  "profiles",
+  "ui_tree"
+ ],
+ "writes": [
+  "call",
+  "mm",
+  "refresh",
+  "run",
+  "select_profile",
+  "set_mods",
+  "set_plugins",
+  "ui_answer_modal",
+  "ui_click",
+  "ui_set"
+ ],
+ "in_use": false,
+ "in_use_why": "MO2 is in front but idle 11 min",
+ "extensions": [
+  "MO2ModlistManager"
+ ]
+}
