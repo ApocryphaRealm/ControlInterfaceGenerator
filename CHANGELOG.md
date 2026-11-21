@@ -39,4 +39,9 @@
   - It records into `library/probes/` and the framework entries (`probed`, plus quirks with a probe source).
   - Galleries for Win32, WinForms and WPF are built from what Windows ships. Qt 6, WinUI 3 and Electron were probed read-only.
   - Launcher: console programs get a hidden console instead of none, and a window that ignores WM_CLOSE is closed through UIA's WindowPattern.Close.
+- M7: never-scripted programs.
+  - 7-Zip File Manager by UIA (15/15). Two fixes came out of it: the window's title-bar menu is a separate `system_menu`, and text pre-filled in a dialog CIG itself opened counts as the program's default.
+  - FreeTube by CDP on a proven-isolated profile (13/13; `library/apps/freetube.json`).
+  - Portfolio write-up: README and `docs/DEMO.md`.
+- M6 follow-ups: combo boxes probed through `choose`; a WPF combo read through Selection; a CDP Document's text read for its Text pattern.
 
