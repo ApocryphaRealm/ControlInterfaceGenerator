@@ -62,6 +62,7 @@ CIG server ── safety layer: presence · deny lists · confirm · provenance 
 | M1 | detection on 12 installed programs (Qt 6, Qt 5, Electron, CEF, Chromium, Win32, WinUI 3, UWP, WinForms, console) | 12 of 12 correct | [M1](docs/proofs/M1-detection.md) |
 | M2 | Notepad (WinUI 3): open a file through the menus and file dialog, set the text, save | 19/19 | [M2](docs/proofs/M2-notepad.md) |
 | M3 | Mod Organizer 2 (Qt 6) through its plugin channel, including its modal dialogs | 44/44 | [M3](docs/proofs/M3-mo2-host.md) |
+| M3b | Mod Organizer 2's own lists, trees and menus (MO2 Agent Control 1.1.0) | 12/12 | [M3b](docs/proofs/M3b-mo2-lists.md) |
 | M4 | Vortex (Electron) over CDP: custom-drawn switches, on an isolated profile | 14/14 | [M4](docs/proofs/M4-vortex.md) |
 | M5 | 7z.exe and a PowerShell module as typed tools (`-WhatIf` dry runs) | 14/14 | [M5](docs/proofs/M5-cli.md) |
 | M6 | probe harness on CIG's own galleries (Win32, WinForms, WPF) | 9/9 · 9/11 · 14/14 actions verified | [M6](docs/proofs/M6-probes.md) |
