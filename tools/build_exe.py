@@ -5,6 +5,7 @@
 The version resource is not decoration: SignPath Foundation requires every signed binary to carry the project's
 product name and the release's product version, the same in each build (docs/SIGNING.md).
 """
+import re
 import subprocess
 import sys
 from pathlib import Path
@@ -39,6 +40,25 @@ def version_file(version: str) -> Path:
     return out
 
 
+def machine_paths() -> list:
+    """Every file that goes into the exe, checked for an absolute Windows path (a drive letter, then a folder name) in
+    ASCII or UTF-16 - a build-machine path must never ship (rule 45). Build output, so it runs after the bridge build."""
+    pat = re.compile(rb"(?<![A-Za-z0-9])[A-Za-z]:(?:\\\\?|/)[A-Za-z_]")
+    roots = [REPO / "cig", REPO / "library", REPO / "config", REPO / "var" / "bridges" / "dotnet",
+             REPO / "bridges" / "python", REPO / "cig_cli.py"]
+    hits = []
+    for root in roots:
+        files = [root] if root.is_file() else [p for p in root.rglob("*") if p.is_file() and "__pycache__" not in p.parts]
+        for f in files:
+            raw = f.read_bytes()
+            for blob in (raw, raw.replace(b"\x00", b"")):
+                m = pat.search(blob)
+                if m:
+                    hits.append(f"{f.relative_to(REPO)}: ...{blob[max(0, m.start() - 20):m.end() + 40]!r}")
+                    break
+    return hits
+
+
 def main() -> int:
     version = (REPO / "VERSION").read_text(encoding="utf-8").strip()
     vf = version_file(version)
@@ -48,6 +68,10 @@ def main() -> int:
     dll = REPO / "var" / "bridges" / "dotnet" / "Cig.Bridge.DotNet.dll"
     if rc != 0 or not dll.is_file():
         print(f"the .NET bridge did not build ({dll}); refusing to make an exe without it")
+        return 1
+    hits = machine_paths()
+    if hits:
+        print("refusing to build: an absolute path would ship inside cig.exe (rule 45)\n  " + "\n  ".join(hits))
         return 1
     cmd = [sys.executable, "-m", "PyInstaller", "--noconfirm", "--clean", "--onefile", "--console", "--name", "cig",
            "--version-file", str(vf),

@@ -1,5 +1,19 @@
 # Changelog
 
+## 1.1.0 - 2026-11-23 - untested
+
+### Added
+- A survey of thirteen modding tools read through Windows accessibility (read-only): what CIG can drive today and what is missing (docs).
+- Mod Organizer 2: its lists, trees and menus, through MO2 Agent Control's own channel.
+- Detection and library entries for Delphi (VCL and FireMonkey), Avalonia and Tk. Avalonia was probed live (7/8); FireMonkey is detected, but it publishes no controls to Windows accessibility, which CIG reports instead of guessing.
+- cig.exe carries both bridges: one download, nothing else to install, and `cig version` reports whether each bridge is present.
+- In-process bridges: CIG reads and drives a program's own control tree where Windows accessibility shows little. The .NET bridge covers WPF and WinForms (proven on Microsoft's WPF Gallery, 33/33, and a .NET 8 WinForms gallery, 16/16); a Python bridge is included too.
+
+### Fixed
+- Mod Organizer 2: a row whose box cannot be ticked (Skyrim.esm) is selectable and readable, never settable; a long list is read in full, page by page, instead of its first 60 rows.
+- Three faults from the tool survey: the folder a program is launched in, a button that ends the program, and questions a program asks at start-up.
+- Password fields are guarded by their name as well as by their password flag.
+
 ## 1.0.0 (untested)
 
 - M0: the safety layer, made of presence (the owner-input watcher's real-input file, with GetLastInputInfo as a fallback), a policy with deny lists that `confirm` cannot override, a third-party foreground rule, confirm-first for destructive actions, and dry run. Also added: an append-only action log with redaction, backups with undo, the fixture format and its JSON schema, locators with a fingerprint second chance (an element CIG cannot find is refused, never guessed), and adapter rules as data.

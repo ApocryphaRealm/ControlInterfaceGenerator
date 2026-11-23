@@ -10,18 +10,23 @@ from pathlib import Path
 FROZEN = bool(getattr(sys, "frozen", False))
 REPO = Path(getattr(sys, "_MEIPASS", "")) if FROZEN else Path(__file__).resolve().parent.parent
 LIBRARY_DIR = REPO / "library"
-RESOLVER = Path(r"D:\Claude output\.MD\resolvers\resolve.py")
+
+# The development project's role resolver, when CIG runs from its source tree inside that project (the repo sits two
+# folders below the project root). Derived, never written as a literal, so no machine path ships in cig.exe; a frozen
+# build uses only the CIG_RESOLVER environment variable.
+_PROJECT = None if FROZEN else REPO.parent.parent
+RESOLVER = Path(os.environ.get("CIG_RESOLVER") or (_PROJECT / ".MD" / "resolvers" / "resolve.py" if _PROJECT else ""))
 
 # Last-known locations, used only when the project resolver cannot be asked (rule 70: ask by role first).
 _FALLBACK = {
-    "owner-real-input": r"D:\Claude output\.MD\logs\owner-real-input.json",
+    "owner-real-input": str(_PROJECT / ".MD" / "logs" / "owner-real-input.json") if _PROJECT else "",
 }
 
 
 @functools.lru_cache(maxsize=None)
 def resolve_role(role: str) -> str:
     """Ask the project resolver for a role's path; fall back to the last-known path."""
-    if RESOLVER.exists():
+    if RESOLVER.is_file():
         try:
             out = subprocess.run(["py", "-3", str(RESOLVER), "find", role], capture_output=True, text=True,
                                  timeout=15, stdin=subprocess.DEVNULL)

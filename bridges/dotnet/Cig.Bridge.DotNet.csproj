@@ -9,5 +9,9 @@
     <RootNamespace>Cig.Bridge</RootNamespace>
     <ImplicitUsings>disable</ImplicitUsings>
     <GenerateDocumentationFile>false</GenerateDocumentationFile>
+    <!-- No build-machine path in the shipped DLL (rule 45): source and pdb paths are mapped to /_/, the pdb is embedded. -->
+    <Deterministic>true</Deterministic>
+    <PathMap>$(MSBuildProjectDirectory)=/_/</PathMap>
+    <DebugType>embedded</DebugType>
   </PropertyGroup>
 </Project>

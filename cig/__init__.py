@@ -2,7 +2,6 @@
 
 Lets AI agents operate desktop programs headlessly: detect what framework a program is built on, look up what that
 framework exposes for automation (the capability library), generate named typed operations, and serve them over MCP.
-Plan: D:\\Claude output\\4. plans\\software-control-interface\\PLAN.md.
 """
 from pathlib import Path as _P
 

@@ -2,7 +2,8 @@ r"""CIG MCP server (stdio) - the fixed meta tools (plan 2.5). The safety layer i
 annotations are hints for the client only.
 
 Register (user scope):
-  claude mcp add --scope user cig -- py -3 "D:\Claude output\6. current wip mods\ControlInterfaceGenerator\cig_server.py"
+  claude mcp add --scope user cig -- "<path to>\cig.exe" serve
+  (from source: claude mcp add --scope user cig -- py -3 "<repo>\cig_server.py")
 """
 from __future__ import annotations
 
