@@ -13,9 +13,9 @@ LIBRARY_DIR = REPO / "library"
 
 # The development project's role resolver, when CIG runs from its source tree inside that project (the repo sits two
 # folders below the project root). Derived, never written as a literal, so no machine path ships in cig.exe; a frozen
-# build uses only the CIG_RESOLVER environment variable.
+# build has none (from source, CIG_RESOLVER may point elsewhere).
 _PROJECT = None if FROZEN else REPO.parent.parent
-RESOLVER = Path(os.environ.get("CIG_RESOLVER") or (_PROJECT / ".MD" / "resolvers" / "resolve.py" if _PROJECT else ""))
+RESOLVER = Path(os.environ.get("CIG_RESOLVER") or _PROJECT / ".MD" / "resolvers" / "resolve.py") if _PROJECT else Path("")
 
 # Last-known locations, used only when the project resolver cannot be asked (rule 70: ask by role first).
 _FALLBACK = {
@@ -69,5 +69,8 @@ def policy_file() -> Path:
 
 
 def owner_input_file() -> str:
-    return (os.environ.get("CIG_OWNER_REAL_INPUT_FILE") or os.environ.get("OWNER_REAL_INPUT_FILE")
+    # in cig.exe there is no watcher file: presence is Windows' own idle reading, which no environment can replace
+    if FROZEN:
+        return ""
+    return (seam("CIG_OWNER_REAL_INPUT_FILE") or seam("OWNER_REAL_INPUT_FILE")
             or resolve_role("owner-real-input"))

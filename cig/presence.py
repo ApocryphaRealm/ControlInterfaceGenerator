@@ -7,7 +7,8 @@ Two sources, most trustworthy first:
   2. Windows' GetLastInputInfo. It counts injected input too, so it can only make the answer MORE cautious.
 
 Test seams (environment): CIG_OWNER_REAL_INPUT_FILE (or OWNER_REAL_INPUT_FILE), CIG_SYSTEM_IDLE_MIN ("none" = no
-reading), CIG_FOREGROUND_PID ("none" = no foreground window), CIG_NOW (epoch seconds).
+reading), CIG_FOREGROUND_PID ("none" = no foreground window), CIG_NOW (epoch seconds). All of them, and the watcher
+file itself, are honoured only when CIG runs from source; cig.exe uses Windows' own readings (config.seam).
 """
 from __future__ import annotations
 

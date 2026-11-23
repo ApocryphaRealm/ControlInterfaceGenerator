@@ -34,8 +34,9 @@ CIG server ── safety layer: presence · deny lists · confirm · provenance 
   a fallback.
   - For third-party programs, a write into the window in front is refused outright until the last input is 30 minutes old.
   - While a game on the policy's `hold_screen_apps` list is in front, nothing is written or launched.
-  - In `cig.exe` the test seams (the presence readings, the clock, the policy file path) are not read from the
-    environment, so an MCP client's configuration cannot loosen them; they work only from source.
+  - In `cig.exe` the test seams (the clock, the idle time, the foreground window, the watcher file, the policy file
+    path, the role resolver) are not read from the environment, so an MCP client's configuration cannot loosen them;
+    `cig.exe` takes presence from Windows' own readings. The seams work only from source.
 - **Confirm-first.** Anything destructive needs `confirm`: the agent has to pass the person's own words, and CIG logs them. This
   covers delete, discard and "Don't Save" in eleven languages, ConfirmImpact=High, switches that delete, and replacing
   text that is already there.

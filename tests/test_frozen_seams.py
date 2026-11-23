@@ -21,3 +21,13 @@ def test_seams_ignored_when_frozen(monkeypatch, tmp_path):
     assert presence.now() > 1
     assert presence.exe_of(None) != "x.exe"
     assert config.policy_file().name == "policy.json" and config.policy_file().parent.name == "config"
+
+
+def test_no_watcher_file_or_resolver_when_frozen(monkeypatch, tmp_path):
+    w = tmp_path / "w.json"
+    w.write_text('{"watcher_alive_epoch": 9e9, "last_real_input_epoch": 1}', encoding="utf-8")
+    monkeypatch.setattr(config, "FROZEN", True)
+    monkeypatch.setenv("CIG_OWNER_REAL_INPUT_FILE", str(w))
+    monkeypatch.setenv("OWNER_REAL_INPUT_FILE", str(w))
+    assert config.owner_input_file() == ""
+    assert presence.read().source in ("system", "unknown")
