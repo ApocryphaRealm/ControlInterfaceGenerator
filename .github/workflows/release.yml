@@ -54,6 +54,13 @@ jobs:
           path: dist/cig.exe
           if-no-files-found: error
 
+      - name: upload the third-party notices    # a separate artifact, so the signing request still holds cig.exe alone
+        uses: actions/upload-artifact@v7
+        with:
+          name: cig-notices
+          path: dist/THIRD-PARTY-NOTICES.txt
+          if-no-files-found: error
+
       # Runs only once the owner's SignPath Foundation project exists and its ids are set as repository variables
       # (Settings > Secrets and variables > Actions): SIGNPATH_ORGANIZATION_ID, SIGNPATH_PROJECT_SLUG,
       # SIGNPATH_SIGNING_POLICY_SLUG (variables) and SIGNPATH_API_TOKEN (secret). See docs/SIGNING.md.
@@ -89,4 +96,4 @@ jobs:
         run: |
           Copy-Item "${{ steps.pick.outputs.file }}" cig.exe -Force -ErrorAction SilentlyContinue
           $note = if ("${{ steps.pick.outputs.signed }}" -eq "True") { "Signed by SignPath Foundation." } else { "Unsigned build (code signing not yet set up)." }
-          gh release create "${{ github.ref_name }}" cig.exe cig.exe.sha256 --title "CIG ${{ github.ref_name }}" --notes "$note See README.md and CHANGELOG.md."
+          gh release create "${{ github.ref_name }}" cig.exe cig.exe.sha256 dist/THIRD-PARTY-NOTICES.txt LICENSE --title "CIG ${{ github.ref_name }}" --notes "$note See README.md and CHANGELOG.md."

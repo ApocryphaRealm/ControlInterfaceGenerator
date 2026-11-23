@@ -88,7 +88,12 @@ def main() -> int:
            "--specpath", str(REPO / "build"),
            str(REPO / "cig_cli.py")]
     print(" ".join(cmd))
-    return subprocess.call(cmd, cwd=str(REPO))
+    rc = subprocess.call(cmd, cwd=str(REPO))
+    if rc != 0:
+        return rc
+    # the bundled packages' licences travel beside the exe (dist/THIRD-PARTY-NOTICES.txt)
+    return subprocess.call([sys.executable, str(REPO / "tools" / "third_party_notices.py"),
+                            str(REPO / "dist" / "THIRD-PARTY-NOTICES.txt")], cwd=str(REPO))
 
 
 if __name__ == "__main__":
