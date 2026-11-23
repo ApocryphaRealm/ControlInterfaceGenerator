@@ -1,6 +1,6 @@
-# Changelog
+﻿# Changelog
 
-## 1.1.0 - 2026-11-23 - untested
+## 1.1.0 - 2026-11-23 - working
 
 ### Added
 - A survey of thirteen modding tools read through Windows accessibility (read-only): what CIG can drive today and what is missing (docs).
