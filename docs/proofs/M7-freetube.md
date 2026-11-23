@@ -9,7 +9,7 @@ the freetube:// guard) and the shared rules.
 
 | # | Step | Result | Detail |
 |---|---|---|---|
-| 1 | cig_launch FreeTube with cdp on CIG's own profile | PASS | {"pid": 23292, "port": 64679, "profile": "D:\\Claude output\\6. current wip mods\\ControlInterfaceGenerator\\var\\profiles\\freetube-cig", "guarded": ["HKCU\\Software\\Classes\\freetube"], "reason": n |
+| 1 | cig_launch FreeTube with cdp on CIG's own profile | PASS | {"pid": 23292, "port": 64679, "profile": "<repo>\\var\\profiles\\freetube-cig", "guarded": ["HKCU\\Software\\Classes\\freetube"], "reason": n |
 | 2 | cig_detect: Electron, CDP first | PASS | {"framework": "electron", "version": "44.10.0"} |
 | 3 | 'Settings' is offered over CDP | PASS | "invoke Button 'Settings'" |
 | 4 | invoke Settings | PASS | {"reason": "", "detail": {"detail": "DOM click()"}} |

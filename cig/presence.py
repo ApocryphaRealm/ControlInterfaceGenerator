@@ -24,7 +24,7 @@ WATCHER_STALE_MIN = 3.0
 
 
 def now() -> float:
-    seam = os.environ.get("CIG_NOW")
+    seam = config.seam("CIG_NOW")
     return float(seam) if seam else time.time()
 
 
@@ -40,7 +40,7 @@ def _read_watcher() -> Optional[dict]:
 
 
 def system_idle_minutes() -> Optional[float]:
-    seam = os.environ.get("CIG_SYSTEM_IDLE_MIN")
+    seam = config.seam("CIG_SYSTEM_IDLE_MIN")
     if seam:
         return None if seam.lower() == "none" else float(seam)
 
@@ -57,7 +57,7 @@ def system_idle_minutes() -> Optional[float]:
 
 
 def foreground_pid() -> Optional[int]:
-    seam = os.environ.get("CIG_FOREGROUND_PID")
+    seam = config.seam("CIG_FOREGROUND_PID")
     if seam:
         return None if seam.lower() == "none" else int(seam)
     try:
@@ -73,7 +73,7 @@ def foreground_pid() -> Optional[int]:
 
 
 def exe_of(pid: Optional[int]) -> str:
-    seam = os.environ.get("CIG_FOREGROUND_EXE")
+    seam = config.seam("CIG_FOREGROUND_EXE")
     if seam is not None:
         return seam
     if not pid:

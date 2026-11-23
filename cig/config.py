@@ -58,8 +58,14 @@ def cache_dir() -> Path:
     return d
 
 
+def seam(name: str):
+    """A test seam's environment value - honoured only when CIG runs from source. In cig.exe the safety readings
+    (presence, the clock) and the policy file cannot be replaced through the environment an MCP client sets."""
+    return None if FROZEN else os.environ.get(name)
+
+
 def policy_file() -> Path:
-    return Path(os.environ.get("CIG_POLICY") or (REPO / "config" / "policy.json"))
+    return Path(seam("CIG_POLICY") or (REPO / "config" / "policy.json"))
 
 
 def owner_input_file() -> str:

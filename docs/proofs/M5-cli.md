@@ -15,10 +15,10 @@ disk by the script (SHA-256), independent of CIG's own report.
 | 5 | 7z l (read): the listing names both files | PASS | ":25 ....A            7               sub\\gamma.txt\n------------------- ----- ------------ ------------  ------------------------\n2026-11-20 19:34:25               1079           53  3 files, 1 fol |
 | 6 | 7z d (destructive) without confirm is refused | PASS | "destructive action: needs confirm with the person's own words (preview returned)" |
 | 7 | a switch whose description deletes (-sdel) makes 'a' destructive | PASS | "destructive action: needs confirm with the person's own words (preview returned)" |
-| 8 | dry run shows the exact command line and runs nothing | PASS | "\"C:\\Program Files\\7-Zip\\7z.exe\" x \"-oD:\\Claude output\\6. current wip mods\\ControlInterfaceGenerator\\var\\proof\\m5\\out7z\" -y \"D:\\Claude output\\6. current wip mods\\ControlInterfaceGene |
+| 8 | dry run shows the exact command line and runs nothing | PASS | "\"C:\\Program Files\\7-Zip\\7z.exe\" x \"-o<repo>\\var\\proof\\m5\\out7z\" -y \"<repo> |
 | 9 | 7z x: extracted files are byte-identical to the sources | PASS | "" |
 | 10 | the PowerShell module's cmdlets became typed commands (schemas from Get-Command) | PASS | {"Compress-Archive": ["Path", "LiteralPath", "DestinationPath", "CompressionLevel", "Update", "Force"]} |
-| 11 | dry run uses the cmdlet's own -WhatIf, and no zip is created | PASS | "What if: Performing the operation \"Compress-Archive\" on target \"\nD:\\Claude output\\6. current wip mods\\ControlInterfaceGenerator\\var\\proof\\m5\\src\\alpha.txt\nD:\\Cl" |
+| 11 | dry run uses the cmdlet's own -WhatIf, and no zip is created | PASS | "What if: Performing the operation \"Compress-Archive\" on target \"\n<repo>\\var\\proof\\m5\\src\\alpha.txt\n<repo>..." |
 | 12 | Compress-Archive: the zip is created (and its creation was recorded as a backup) | PASS | {"reason": "", "backup": "20261120-193427-207782-powershell-exe-run"} |
 | 13 | Expand-Archive: files byte-identical to the sources | PASS | "" |
-| 14 | cig_undo removes the zip the cmdlet created | PASS | {"ok": true, "restored": [], "removed": ["D:\\Claude output\\6. current wip mods\\ControlInterfaceGenerator\\var\\proof\\m5\\proof.zip"]} |
+| 14 | cig_undo removes the zip the cmdlet created | PASS | {"ok": true, "restored": [], "removed": ["<repo>\\var\\proof\\m5\\proof.zip"]} |

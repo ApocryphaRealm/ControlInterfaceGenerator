@@ -5,7 +5,7 @@ mouse, using typed, safety-checked actions generated from what each program's UI
 
 You point CIG at a program. It works out what the program is built with, looks that framework up in a capability
 library, turns every control it finds into a typed action with a JSON schema, and serves those actions to the agent.
-CIG has no code for any particular program. A new program is handled by library entries and rules, which are data.
+Apart from the Mod Organizer 2 channel, CIG has no code for any particular program. A new program is handled by library entries and rules, which are data.
 
 ```
 agent (Claude Code / any MCP client)
@@ -29,15 +29,19 @@ CIG server ── safety layer: presence · deny lists · confirm · provenance 
 
 ## Safety model (enforced in the server, never left to the client)
 
-- **The person comes first.** Writes are refused while the person at the machine is using it. Presence comes from a
-  watcher that sees only *real* input, with Windows' idle clock as a fallback.
-  - For third-party programs, a write into the window in front during recent input is refused outright.
-  - While a game holds the screen, nothing is written or launched.
-- **Confirm-first.** Anything destructive needs `confirm` with the person's own words, and that text is logged. This
+- **The person comes first.** While the person at the machine is using it, a write needs `confirm` and simulated key
+  presses are refused outright. Presence comes from a watcher that sees only *real* input, with Windows' idle clock as
+  a fallback.
+  - For third-party programs, a write into the window in front is refused outright until the last input is 30 minutes old.
+  - While a game on the policy's `hold_screen_apps` list is in front, nothing is written or launched.
+  - In `cig.exe` the test seams (the presence readings, the clock, the policy file path) are not read from the
+    environment, so an MCP client's configuration cannot loosen them; they work only from source.
+- **Confirm-first.** Anything destructive needs `confirm`: the agent has to pass the person's own words, and CIG logs them. This
   covers delete, discard and "Don't Save" in eleven languages, ConfirmImpact=High, switches that delete, and replacing
   text that is already there.
 - **Deny lists cannot be overridden:** password fields, credential and security windows, browsers, UAC.
-- **Provenance.** CIG writes only into programs it launched. A document is written only when it is empty or holds
+- **Provenance.** CIG writes only into programs it launched (first-party host programs - Mod Organizer 2 through MO2
+  Agent Control - excepted). A document is written only when it is empty or holds
   CIG's own text. Text a program pre-fills into a dialog CIG itself just opened counts as the program's default.
 - **Isolation, then proof of isolation.** A browser-engine program runs on a separate profile inside CIG's own folder,
   using the library's isolation recipe. Isolation is accepted only when the program reached its main UI AND the real

@@ -10,8 +10,8 @@ Vortex code.
 | # | Step | Result | Detail |
 |---|---|---|---|
 | 1 | server up | PASS | {"adapters": ["host:mo2-agent-control", "cli", "cdp", "uia"], "presence": {"idle_min": 111.55, "source": "watcher", "foreground_pid": 21388, "foreground_exe": "claude.exe"}} |
-| 2 | cig_launch Vortex with cdp on a test data folder | PASS | {"pid": 21792, "port": 54475, "profile": "D:\\Claude output\\6. current wip mods\\ControlInterfaceGenerator\\var\\profiles\\vortex-cig", "guarded": ["HKCU\\Software\\Classes\\nxm"], "reason": null} |
-| 3 | the test data folder is inside CIG's own space, not the owner's | PASS | "D:\\Claude output\\6. current wip mods\\ControlInterfaceGenerator\\var\\profiles\\vortex-cig" |
+| 2 | cig_launch Vortex with cdp on a test data folder | PASS | {"pid": 21792, "port": 54475, "profile": "<repo>\\var\\profiles\\vortex-cig", "guarded": ["HKCU\\Software\\Classes\\nxm"], "reason": null} |
+| 3 | the test data folder is inside CIG's own space, not the owner's | PASS | "<repo>\\var\\profiles\\vortex-cig" |
 | 4 | cig_detect: Electron, CDP first | PASS | {"framework": "electron", "version": "44.2.0"} |
 | 5 | Vortex's 'Settings' button is offered (over CDP) | PASS | "invoke Button 'Settings'" |
 | 6 | invoke Settings | PASS | {"reason": "", "detail": {"detail": "DOM click()"}} |

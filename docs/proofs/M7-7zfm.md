@@ -8,7 +8,7 @@ UIA adapter. The folder on disk and the CRC-32 are checked by the script itself.
 
 | # | Step | Result | Detail |
 |---|---|---|---|
-| 1 | cig_launch 7zFM.exe on the proof folder | PASS | {"pid": 14712, "title": "D:\\Claude output\\6. current wip mods\\ControlInterfaceGenerator\\var\\proof\\m7\\", "reason": null} |
+| 1 | cig_launch 7zFM.exe on the proof folder | PASS | {"pid": 14712, "title": "<repo>\\var\\proof\\m7\\", "reason": null} |
 | 2 | cig_detect: Win32, UIA | PASS | {"framework": "win32", "version": "26.02"} |
 | 3 | a generated 'menu' action and the file list are offered | PASS | {"menu": "menu MenuBar 'Application'", "file": true} |
 | 4 | menu File/Create Folder | PASS | {"reason": "", "detail": {"detail": "menu File > Create Folder\tF7"}} |
